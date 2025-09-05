@@ -18,7 +18,6 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Filter, Search } from "lucide-react";
 import { useState } from "react";
-import CoursesLoader from "./loading";
 
 // Mock course data based on the schema
 const mockCourses = [
@@ -287,7 +286,7 @@ export default function CoursesPage() {
         </div>
 
         {/* Course Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {sortedCourses.map((course) => (
             <CourseCard key={course.id} course={course} />
           ))}
