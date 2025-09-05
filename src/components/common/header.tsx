@@ -6,6 +6,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { logo } from "@/assets";
+import { ModeToggle } from "../ui/ModeToggle";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -45,13 +46,19 @@ export function Header() {
             </Link>
           </nav>
 
-          <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/auth/signin">Sign In</Link>
-            </Button>
-            <Button size="sm" asChild>
-              <Link href="/auth/signup">Get Started</Link>
-            </Button>
+          <div className="flex items-center justify-center gap-2">
+            <div>
+              <ModeToggle />
+            </div>
+
+            <div className="hidden md:flex items-center space-x-4">
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="/auth/signin">Sign In</Link>
+              </Button>
+              <Button size="sm" asChild>
+                <Link href="/auth/signup">Get Started</Link>
+              </Button>
+            </div>
           </div>
 
           <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>

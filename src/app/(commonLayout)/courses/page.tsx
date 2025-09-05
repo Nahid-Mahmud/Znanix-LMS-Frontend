@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Filter, Search } from "lucide-react";
 import { useState } from "react";
+import CoursesLoader from "./loading";
 
 // Mock course data based on the schema
 const mockCourses = [
