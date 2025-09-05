@@ -33,7 +33,7 @@ export interface CourseCardProps {
 
 export default function CourseCard({ course }: CourseCardProps) {
   return (
-    <Card key={course.id} className="group hover:shadow-lg transition-shadow duration-300">
+    <Card key={course.id} className="group hover:shadow-lg transition-shadow duration-300 pt-0 flex flex-col h-full">
       <CardHeader className="p-0">
         <div className="relative overflow-hidden rounded-t-lg">
           <Image
@@ -60,7 +60,7 @@ export default function CourseCard({ course }: CourseCardProps) {
         </div>
       </CardHeader>
 
-      <CardContent className="p-4">
+      <CardContent className="flex-1">
         <div className="flex items-center gap-2 mb-2">
           <Badge variant="secondary" className="text-xs">
             {course.category}
@@ -112,7 +112,7 @@ export default function CourseCard({ course }: CourseCardProps) {
         </div>
       </CardContent>
 
-      <CardFooter className="p-4 pt-0">
+      <CardFooter className="pt-0 mt-auto">
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-2">
             {course.type === "FREE" ? (
@@ -126,7 +126,7 @@ export default function CourseCard({ course }: CourseCardProps) {
               </>
             )}
           </div>
-          <Button size="sm">{course.type === "FREE" ? "Enroll Free" : "Enroll Now"}</Button>
+          <Button size="sm">View Details</Button>
         </div>
       </CardFooter>
     </Card>
