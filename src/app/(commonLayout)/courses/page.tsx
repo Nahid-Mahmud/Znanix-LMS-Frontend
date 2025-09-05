@@ -1,26 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import CourseCard from "@/components/CourseCard";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Filter, Star, Clock, Users, Award, Play } from "lucide-react";
-import Image from "next/image";
-import webDevThumb from "@/assets/web-development-coding.png";
 import dataScienceThumb from "@/assets/data-science-python-analytics.jpg";
-import reactNextThumb from "@/assets/react-nextjs-programming.jpg";
 import digitalMarketingThumb from "@/assets/digital-marketing-course.png";
-import uiuxThumb from "@/assets/ui-ux-design-course.png";
-import mlThumb from "@/assets/machine-learning-course.png";
-import instructorSarah from "@/assets/instructor-sarah.jpg";
-import instructorMichael from "@/assets/instructor-michael.jpg";
 import instructorAlex from "@/assets/instructor-alex.jpg";
 import instructorEmma from "@/assets/instructor-emma.jpg";
 import instructorJessica from "@/assets/instructor-jessica.jpg";
+import instructorMichael from "@/assets/instructor-michael.jpg";
 import instructorRobert from "@/assets/instructor-robert.jpg";
+import instructorSarah from "@/assets/instructor-sarah.jpg";
+import mlThumb from "@/assets/machine-learning-course.png";
+import reactNextThumb from "@/assets/react-nextjs-programming.jpg";
+import uiuxThumb from "@/assets/ui-ux-design-course.png";
+import webDevThumb from "@/assets/web-development-coding.png";
+import CourseCard from "@/components/CourseCard";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Filter, Search } from "lucide-react";
+import { useState } from "react";
 
 // Mock course data based on the schema
 const mockCourses = [

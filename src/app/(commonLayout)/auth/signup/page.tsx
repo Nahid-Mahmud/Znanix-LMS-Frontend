@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { BookOpen, Eye, EyeOff, Loader2 } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -58,6 +58,7 @@ export default function SignUpPage() {
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-bold">Create Account</CardTitle>
             <CardDescription>Join thousands of learners and start your journey today</CardDescription>
+            <CardDescription>Enter your details to create an account and start learning</CardDescription>
           </CardHeader>
 
           <CardContent>

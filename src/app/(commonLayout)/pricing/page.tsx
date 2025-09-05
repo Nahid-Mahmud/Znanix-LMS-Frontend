@@ -133,8 +133,8 @@ export default function PricingPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Yes, you can cancel your subscription at any time. You'll continue to have access until the end of
-                  your billing period.
+                  Yes, you can cancel your subscription at any time. You&apos;ll continue to have access until the end
+                  of your billing period.
                 </p>
               </CardContent>
             </Card>

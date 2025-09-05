@@ -15,8 +15,8 @@ export default function AboutPage() {
             Empowering Learners Worldwide
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto text-pretty">
-            At Zanix, we believe that quality education should be accessible to everyone, everywhere. We're on a mission
-            to democratize learning and help millions of people achieve their goals.
+            At Zanix, we believe that quality education should be accessible to everyone, everywhere. We&apos;re on a
+            mission to democratize learning and help millions of people achieve their goals.
           </p>
         </div>
 

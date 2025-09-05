@@ -47,19 +47,17 @@ export default function ForgotPasswordPage() {
               </div>
               <CardTitle className="text-2xl font-bold">Check Your Email</CardTitle>
               <CardDescription>
-                We've sent a password reset link to <strong>{email}</strong>
+                We&apos;ve sent a password reset link to <strong>{email}</strong>
               </CardDescription>
             </CardHeader>
-
             <CardContent className="text-center space-y-4">
               <p className="text-sm text-muted-foreground">
-                Didn't receive the email? Check your spam folder or try again.
+                Didn&apos;t receive the email? Check your spam folder or try again.
               </p>
               <Button variant="outline" onClick={() => setSuccess(false)}>
                 Try Again
               </Button>
             </CardContent>
-
             <CardFooter className="text-center">
               <Link href="/auth/signin" className="text-sm text-primary hover:underline flex items-center">
                 <ArrowLeft className="h-4 w-4 mr-1" />
@@ -86,7 +84,9 @@ export default function ForgotPasswordPage() {
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-bold">Forgot Password?</CardTitle>
-            <CardDescription>Enter your email address and we'll send you a link to reset your password</CardDescription>
+            <CardDescription>
+              Enter your email address and we&apos;ll send you a link to reset your password
+            </CardDescription>
           </CardHeader>
 
           <CardContent>

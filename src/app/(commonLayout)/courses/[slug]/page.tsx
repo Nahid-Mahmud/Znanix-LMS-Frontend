@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Progress } from "@/components/ui/progress"
+import { useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Progress } from "@/components/ui/progress";
 import {
   Star,
   Clock,
@@ -21,7 +21,7 @@ import {
   BookOpen,
   Target,
   TrendingUp,
-} from "lucide-react"
+} from "lucide-react";
 
 // Mock course data - in real app this would come from API
 const courseData = {
@@ -51,7 +51,7 @@ const courseData = {
   featured: true,
   rating: 4.8,
   students: 12543,
-  reviews: 2847,
+  reviewsCount: 2847,
   category: "Web Development",
   level: "Beginner to Advanced",
   language: "English",
@@ -162,15 +162,13 @@ const courseData = {
         "Great content and teaching style. The only minor issue is that some videos could be a bit shorter, but overall fantastic value.",
     },
   ],
-}
+};
 
 export default function CourseDetailsPage() {
-  const [activeTab, setActiveTab] = useState("overview")
+  const [activeTab, setActiveTab] = useState("overview");
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Main Content */}
@@ -193,7 +191,7 @@ export default function CourseDetailsPage() {
                 <div className="flex items-center gap-1">
                   <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                   <span className="font-medium">{courseData.rating}</span>
-                  <span>({courseData.reviews} reviews)</span>
+                  <span>({courseData.reviewsCount} reviews)</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <Users className="h-4 w-4" />
@@ -210,9 +208,11 @@ export default function CourseDetailsPage() {
               </div>
 
               <div className="flex items-center gap-4 mb-6">
-                <img
+                <Image
                   src={courseData.instructor.avatar || "/placeholder.svg"}
                   alt={courseData.instructor.name}
+                  width={48}
+                  height={48}
                   className="w-12 h-12 rounded-full"
                 />
                 <div>
@@ -228,10 +228,11 @@ export default function CourseDetailsPage() {
             <Card>
               <CardContent className="p-0">
                 <div className="relative aspect-video bg-muted rounded-lg overflow-hidden">
-                  <img
+                  <Image
                     src={courseData.thumbnail || "/placeholder.svg"}
                     alt={courseData.name}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                   <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                     <Button size="lg" className="bg-white text-black hover:bg-white/90">
@@ -257,7 +258,7 @@ export default function CourseDetailsPage() {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Target className="h-5 w-5 text-primary" />
-                      What you'll learn
+                      What you&apos;ll learn
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -318,9 +319,11 @@ export default function CourseDetailsPage() {
                 <Card>
                   <CardContent className="pt-6">
                     <div className="flex items-start gap-4 mb-6">
-                      <img
+                      <Image
                         src={courseData.instructor.avatar || "/placeholder.svg"}
                         alt={courseData.instructor.name}
+                        width={80}
+                        height={80}
                         className="w-20 h-20 rounded-full"
                       />
                       <div className="flex-1">
@@ -363,7 +366,7 @@ export default function CourseDetailsPage() {
                         />
                       ))}
                     </div>
-                    <div className="text-sm text-muted-foreground">{courseData.reviews} reviews</div>
+                    <div className="text-sm text-muted-foreground">{courseData.reviewsCount} reviews</div>
                   </div>
                   <div className="flex-1 space-y-2">
                     {[5, 4, 3, 2, 1].map((rating) => (
@@ -383,9 +386,11 @@ export default function CourseDetailsPage() {
                     <Card key={review.id}>
                       <CardContent className="pt-4">
                         <div className="flex items-start gap-3">
-                          <img
+                          <Image
                             src={review.avatar || "/placeholder.svg"}
                             alt={review.name}
+                            width={40}
+                            height={40}
                             className="w-10 h-10 rounded-full"
                           />
                           <div className="flex-1">
@@ -421,10 +426,11 @@ export default function CourseDetailsPage() {
             <Card className="sticky top-24">
               <CardContent className="p-6">
                 <div className="aspect-video bg-muted rounded-lg mb-4 overflow-hidden">
-                  <img
+                  <Image
                     src={courseData.thumbnail || "/placeholder.svg"}
                     alt={courseData.name}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                 </div>
 
@@ -494,8 +500,6 @@ export default function CourseDetailsPage() {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import { BookOpen, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
 import { logo } from "@/assets";
 import Image from "next/image";

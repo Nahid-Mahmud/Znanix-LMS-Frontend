@@ -1,10 +1,9 @@
 import { baseApi } from "@/redux/baseApi";
-import type { TResponse } from "@/types/response.types";
-import type { IUser } from "@/types/user.types";
+import { TResponse } from "@/types/response.types";
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    register: builder.mutation<TResponse<IUser>, Partial<IUser>>({
+    register: builder.mutation<TResponse<unknown>, Partial<unknown>>({
       query: (data) => ({
         url: "/user/create",
         method: "POST",
@@ -12,7 +11,7 @@ export const userApi = baseApi.injectEndpoints({
       }),
     }),
 
-    userInfo: builder.query<TResponse<IUser>, void>({
+    userInfo: builder.query<TResponse<unknown>, void>({
       query: () => ({
         url: "/user/me",
         method: "GET",
@@ -20,7 +19,7 @@ export const userApi = baseApi.injectEndpoints({
       providesTags: ["User"],
     }),
 
-    getAllUsers: builder.query<TResponse<IUser[]>, Record<string, string>>({
+    getAllUsers: builder.query<TResponse<unknown[]>, Record<string, string>>({
       query: (params) => ({
         url: "/user/get-all",
         method: "GET",

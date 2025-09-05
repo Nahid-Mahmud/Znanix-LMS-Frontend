@@ -64,7 +64,6 @@ axiosInstance.interceptors.response.use(
 
         return axiosInstance(originalRequest);
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error("Error refreshing token:", error);
         processQQueue(error);
         return Promise.reject(error);
