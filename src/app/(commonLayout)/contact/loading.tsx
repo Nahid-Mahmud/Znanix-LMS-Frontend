@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ContactLoader() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header Skeleton */}
         <div className="text-center mb-12">
