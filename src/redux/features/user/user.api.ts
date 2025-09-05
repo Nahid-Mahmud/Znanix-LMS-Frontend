@@ -1,17 +1,16 @@
 import { baseApi } from "@/redux/baseApi";
-import { TResponse } from "@/types/response.types";
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    register: builder.mutation<TResponse<unknown>, Partial<unknown>>({
+    register: builder.mutation({
       query: (data) => ({
-        url: "/user/create",
+        url: "/user/register",
         method: "POST",
         data: data,
       }),
     }),
 
-    userInfo: builder.query<TResponse<unknown>, void>({
+    userInfo: builder.query({
       query: () => ({
         url: "/user/me",
         method: "GET",
@@ -19,7 +18,7 @@ export const userApi = baseApi.injectEndpoints({
       providesTags: ["User"],
     }),
 
-    getAllUsers: builder.query<TResponse<unknown[]>, Record<string, string>>({
+    getAllUsers: builder.query({
       query: (params) => ({
         url: "/user/get-all",
         method: "GET",
@@ -37,7 +36,7 @@ export const userApi = baseApi.injectEndpoints({
       invalidatesTags: ["User"],
     }),
 
-    changePin: builder.mutation<TResponse<null>, { oldPin: string; newPin: string }>({
+    changePin: builder.mutation({
       query: (data) => ({
         url: "/user/change-pin",
         method: "PATCH",
@@ -46,7 +45,7 @@ export const userApi = baseApi.injectEndpoints({
       invalidatesTags: ["User"],
     }),
 
-    setPin: builder.mutation<TResponse<null>, { pin: string }>({
+    setPin: builder.mutation({
       query: (data) => ({
         url: "/user/set-pin",
         method: "PATCH",

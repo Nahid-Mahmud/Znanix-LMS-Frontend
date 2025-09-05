@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Star, Clock, Users, Award, Play } from "lucide-react";
-import Image from "next/image";
+import { Award, Clock, Star, Users } from "lucide-react";
 import type { StaticImageData } from "next/image";
+import Image from "next/image";
 
 export interface CourseCardProps {
   course: {
@@ -51,12 +51,6 @@ export default function CourseCard({ course }: CourseCardProps) {
           {course.type === "FREE" && (
             <Badge className="absolute top-3 right-3 bg-green-500 hover:bg-green-600 text-white">Free</Badge>
           )}
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-            <Button size="sm" className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <Play className="h-4 w-4 mr-2" />
-              Preview
-            </Button>
-          </div>
         </div>
       </CardHeader>
 
