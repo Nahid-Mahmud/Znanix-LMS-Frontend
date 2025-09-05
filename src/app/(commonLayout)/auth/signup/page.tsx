@@ -11,7 +11,31 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { useRegisterMutation } from "@/redux/features/user/user.api";
+
+// User Role enum
+enum UserRole {
+  STUDENT = "STUDENT",
+  INSTRUCTOR = "INSTRUCTOR",
+}
+
+const passwordValidation = z
+  .string()
+  .min(8, { message: "Password must be at least 8 characters long" })
+  .regex(/[A-Z]/, {
+    message: "Password must contain at least one uppercase letter",
+  })
+  .regex(/[a-z]/, {
+    message: "Password must contain at least one lowercase letter",
+  })
+  .regex(/[0-9]/, {
+    message: "Password must contain at least one number",
+  })
+  .regex(/[^A-Za-z0-9]/, {
+    message: "Password must contain at least one special character",
+  });
 
 const signUpSchema = z
   .object({
@@ -24,10 +48,9 @@ const signUpSchema = z
     email: z.string().email({
       message: "Please enter a valid email address.",
     }),
-    password: z.string().min(8, {
-      message: "Password must be at least 8 characters.",
-    }),
+    password: passwordValidation,
     confirmPassword: z.string(),
+    role: z.enum([UserRole.STUDENT, UserRole.INSTRUCTOR]),
     terms: z.boolean().refine((val) => val === true, {
       message: "You must agree to the terms and conditions.",
     }),
@@ -37,11 +60,14 @@ const signUpSchema = z
     path: ["confirmPassword"],
   });
 
+type SignUpFormData = z.infer<typeof signUpSchema>;
+
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [registerFn, { isLoading }] = useRegisterMutation();
 
-  const form = useForm<z.infer<typeof signUpSchema>>({
+  const form = useForm<SignUpFormData>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       firstName: "",
@@ -49,22 +75,33 @@ export default function SignUpPage() {
       email: "",
       password: "",
       confirmPassword: "",
+      role: UserRole.STUDENT,
       terms: false,
     },
   });
 
-  function onSubmit(data: z.infer<typeof signUpSchema>) {
-    toast("Account created successfully!", {
-      description: (
-        <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
+  const onSubmit = async (data: SignUpFormData) => {
+    // toast("Account created successfully!", {
+    //   description: (
+    //     <pre className="mt-2 w-[320px] rounded-md bg-neutral-950 p-4">
+    //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+    //     </pre>
+    //   ),
+    // });
+
+    try {
+      const res = await registerFn(data).unwrap();
+      if (res.success) {
+        toast.success("Account Registration Successful. Verify your email");
+      }
+    } catch (error) {
+      toast.error("Failed to create account. Please try again.");
+      console.log(error);
+    }
 
     // Simulate API call
     console.log("Form submitted:", data);
-  }
+  };
 
   return (
     <div className="min-h-[80vh] bg-gradient-to-br from-background to-muted flex items-center justify-center p-4">
@@ -126,6 +163,28 @@ export default function SignUpPage() {
 
                 <FormField
                   control={form.control}
+                  name="role"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Account Type</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select your account type" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value={UserRole.STUDENT}>Student</SelectItem>
+                          <SelectItem value={UserRole.INSTRUCTOR}>Instructor</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
                   name="password"
                   render={({ field }) => (
                     <FormItem>
@@ -141,10 +200,14 @@ export default function SignUpPage() {
                             type="button"
                             variant="ghost"
                             size="sm"
-                            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                            className="absolute right-0 hover:text-black dark:hover:text-white/80 top-0 h-full px-3 py-2 hover:bg-transparent"
                             onClick={() => setShowPassword(!showPassword)}
                           >
-                            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                            {showPassword ? (
+                              <EyeOff className="h-4 w-4 hover:text-black" />
+                            ) : (
+                              <Eye className="h-4 w-4" />
+                            )}
                           </Button>
                         </div>
                       </FormControl>
@@ -164,14 +227,14 @@ export default function SignUpPage() {
                           <Input
                             type={showConfirmPassword ? "text" : "password"}
                             placeholder="Confirm your password"
-                            className="bg-white dark:bg-background"
+                            className=""
                             {...field}
                           />
                           <Button
                             type="button"
                             variant="ghost"
                             size="sm"
-                            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent hover:text-black dark:hover:text-white/80"
                             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                           >
                             {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}

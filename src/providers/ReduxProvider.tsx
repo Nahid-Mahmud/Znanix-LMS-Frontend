@@ -15,7 +15,13 @@ export default function ReduxProvider({ children }: PageProps) {
   return (
     <Provider store={store}>
       {children}
-      <Toaster position="top-right" richColors={true} offset={16} theme={resolvedTheme as ToasterProps["theme"]} />
+      <Toaster
+        position="top-right"
+        richColors={true}
+        offset={16}
+        closeButton
+        theme={resolvedTheme as ToasterProps["theme"]}
+      />
     </Provider>
   );
 }

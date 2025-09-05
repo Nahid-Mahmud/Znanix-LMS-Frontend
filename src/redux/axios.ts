@@ -1,7 +1,9 @@
 import axios, { type AxiosRequestConfig } from "axios";
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 export const axiosInstance = axios.create({
-  baseURL: "",
+  baseURL: BACKEND_URL,
   withCredentials: true,
 });
 
