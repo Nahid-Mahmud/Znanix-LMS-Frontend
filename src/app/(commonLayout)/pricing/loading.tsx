@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function CoursesLoader() {
+export default function PricingLoader() {
   return (
     <div className="space-y-4">
       <Skeleton className="h-8 w-1/2" />
