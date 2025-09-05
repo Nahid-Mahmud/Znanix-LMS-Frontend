@@ -1,5 +1,5 @@
-import { Card, CardContent } from "@/components/ui/card"
-import { Award, Clock, Users, Smartphone, Globe, HeadphonesIcon } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card";
+import { Award, Clock, Users, Smartphone, Globe, HeadphonesIcon } from "lucide-react";
 
 const features = [
   {
@@ -32,14 +32,14 @@ const features = [
     title: "24/7 Support",
     description: "Get help whenever you need it with our dedicated support team",
   },
-]
+];
 
 export function WhyChooseUs() {
   return (
     <section className="py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center space-y-4 mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold text-balance">Why Choose LearnHub?</h2>
+          <h2 className="text-3xl lg:text-4xl font-bold text-balance">Why Choose Zanix?</h2>
           <p className="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto">
             We provide everything you need to succeed in your learning journey
           </p>
@@ -60,5 +60,5 @@ export function WhyChooseUs() {
         </div>
       </div>
     </section>
-  )
+  );
 }

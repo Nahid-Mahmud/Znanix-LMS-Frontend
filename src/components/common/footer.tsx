@@ -1,5 +1,7 @@
 import { BookOpen, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
+import { logo } from "@/assets";
+import Image from "next/image";
 
 export function Footer() {
   return (
@@ -7,11 +9,9 @@ export function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <BookOpen className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold">LearnHub</span>
-            </div>
-            <p className="text-muted-foreground text-pretty">
+            <Image alt="logo" height={120} width={120} className="aspect-square " src={logo}></Image>
+
+            <p className="text-muted-foreground text-pretty -top-5 relative">
               Empowering learners worldwide with high-quality, accessible education from industry experts.
             </p>
             <div className="flex space-x-4">

@@ -1,8 +1,8 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const faqs = [
   {
-    question: "How do I get started with LearnHub?",
+    question: "How do I get started with Zanix?",
     answer:
       "Simply create a free account and browse our course catalog. You can start with free courses immediately or upgrade to Pro for access to premium content.",
   },
@@ -31,7 +31,7 @@ const faqs = [
     answer:
       "Yes! Our platform is fully responsive and we also have mobile apps for iOS and Android for learning on the go.",
   },
-]
+];
 
 export function FAQSection() {
   return (
@@ -40,7 +40,7 @@ export function FAQSection() {
         <div className="text-center space-y-4 mb-12">
           <h2 className="text-3xl lg:text-4xl font-bold text-balance">Frequently Asked Questions</h2>
           <p className="text-lg text-muted-foreground text-pretty max-w-2xl mx-auto">
-            Everything you need to know about LearnHub
+            Everything you need to know about Zanix
           </p>
         </div>
 
@@ -56,5 +56,5 @@ export function FAQSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
