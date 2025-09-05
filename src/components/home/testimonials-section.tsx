@@ -29,7 +29,7 @@ const testimonials = [
     name: "David Kim",
     role: "Marketing Manager",
     content:
-      "LearnHub's digital marketing course gave me the skills I needed to advance in my career. The practical projects were incredibly valuable.",
+      "Zanix's digital marketing course gave me the skills I needed to advance in my career. The practical projects were incredibly valuable.",
     rating: 5,
     avatar: professionalHeadshotManMarketingManager,
   },

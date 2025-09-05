@@ -30,6 +30,7 @@ import studentsLearningOnlineWithLaptopsAndBooksIn from "./students-learning-onl
 import uiUxDesignCourse from "./ui-ux-design-course.png";
 import webDevelopmentCodingScreenWithHtmlCssJavasc from "./web-development-coding-screen-with-html-css-javasc.jpg";
 import webDevelopmentCodingPng from "./web-development-coding.png";
+import logo from "./logo.png";
 
 export {
   dataSciencePythonAnalytics,
@@ -63,4 +64,5 @@ export {
   uiUxDesignCourse,
   webDevelopmentCodingScreenWithHtmlCssJavasc,
   webDevelopmentCodingPng,
+  logo,
 };

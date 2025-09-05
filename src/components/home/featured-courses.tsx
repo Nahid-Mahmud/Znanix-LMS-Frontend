@@ -1,8 +1,5 @@
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Clock, Users, Star } from "lucide-react";
-import Image from "next/image";
+import CourseCard from "@/components/CourseCard";
 import {
   webDevelopmentCodingScreenWithHtmlCssJavasc,
   dataSciencePythonProgrammingChartsGraphsAnal,
@@ -12,46 +9,73 @@ import {
 
 const featuredCourses = [
   {
-    id: 1,
+    id: "1",
     name: "Complete Web Development Bootcamp",
     description: "Master HTML, CSS, JavaScript, React, and Node.js in this comprehensive course",
     thumbnail: webDevelopmentCodingScreenWithHtmlCssJavasc,
     price: 99,
-    instructor: "Sarah Johnson",
-    courseDuration: "40 hours",
-    students: 15420,
-    rating: 4.8,
+    originalPrice: 0,
+    introVideo: "",
     tags: ["Web Development", "JavaScript", "React"],
-    featured: true,
+    slug: "complete-web-development-bootcamp",
     type: "PAID",
+    instructor: {
+      name: "Sarah Johnson",
+      avatar: placeholderSvg,
+    },
+    courseDuration: "40 hours",
+    certificate: false,
+    discount: 0,
+    featured: true,
+    rating: 4.8,
+    students: 15420,
+    category: "Web Development",
   },
   {
-    id: 2,
+    id: "2",
     name: "Data Science with Python",
     description: "Learn data analysis, machine learning, and visualization with Python",
     thumbnail: dataSciencePythonProgrammingChartsGraphsAnal,
     price: 79,
-    instructor: "Dr. Michael Chen",
-    courseDuration: "35 hours",
-    students: 8930,
-    rating: 4.9,
+    originalPrice: 0,
+    introVideo: "",
     tags: ["Data Science", "Python", "Machine Learning"],
-    featured: true,
+    slug: "data-science-with-python",
     type: "PAID",
+    instructor: {
+      name: "Dr. Michael Chen",
+      avatar: placeholderSvg,
+    },
+    courseDuration: "35 hours",
+    certificate: false,
+    discount: 0,
+    featured: true,
+    rating: 4.9,
+    students: 8930,
+    category: "Data Science",
   },
   {
-    id: 3,
+    id: "3",
     name: "Digital Marketing Mastery",
     description: "Complete guide to SEO, social media, and online advertising strategies",
     thumbnail: digitalMarketingSocialMediaAdvertisingAnalyti,
     price: 0,
-    instructor: "Emma Rodriguez",
-    courseDuration: "25 hours",
-    students: 12500,
-    rating: 4.7,
+    originalPrice: 0,
+    introVideo: "",
     tags: ["Marketing", "SEO", "Social Media"],
-    featured: true,
+    slug: "digital-marketing-mastery",
     type: "FREE",
+    instructor: {
+      name: "Emma Rodriguez",
+      avatar: placeholderSvg,
+    },
+    courseDuration: "25 hours",
+    certificate: false,
+    discount: 0,
+    featured: true,
+    rating: 4.7,
+    students: 12500,
+    category: "Marketing",
   },
 ];
 
@@ -68,59 +92,7 @@ export function FeaturedCourses() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuredCourses.map((course) => (
-            <Card key={course.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-              <CardHeader className="p-0">
-                <div className="relative">
-                  <Image
-                    src={course.thumbnail || placeholderSvg}
-                    alt={course.name}
-                    className="w-full h-48 object-cover"
-                    width={400}
-                    height={192}
-                    style={{ objectFit: "cover" }}
-                  />
-                  {course.type === "FREE" && <Badge className="absolute top-3 left-3 bg-accent">Free</Badge>}
-                  {course.featured && <Badge className="absolute top-3 right-3 bg-primary">Featured</Badge>}
-                </div>
-              </CardHeader>
-
-              <CardContent className="p-6 space-y-4">
-                <div className="space-y-2">
-                  <h3 className="font-semibold text-lg line-clamp-2">{course.name}</h3>
-                  <p className="text-sm text-muted-foreground line-clamp-2">{course.description}</p>
-                </div>
-
-                <div className="flex flex-wrap gap-1">
-                  {course.tags.slice(0, 2).map((tag) => (
-                    <Badge key={tag} variant="secondary" className="text-xs">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-
-                <div className="flex items-center justify-between text-sm text-muted-foreground">
-                  <div className="flex items-center gap-1">
-                    <Clock className="h-4 w-4" />
-                    {course.courseDuration}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Users className="h-4 w-4" />
-                    {course.students.toLocaleString()}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    {course.rating}
-                  </div>
-                </div>
-
-                <p className="text-sm text-muted-foreground">by {course.instructor}</p>
-              </CardContent>
-
-              <CardFooter className="p-6 pt-0 flex items-center justify-between">
-                <div className="text-2xl font-bold">{course.price === 0 ? "Free" : `$${course.price}`}</div>
-                <Button>Enroll Now</Button>
-              </CardFooter>
-            </Card>
+            <CourseCard key={course.id} course={course} />
           ))}
         </div>
 
