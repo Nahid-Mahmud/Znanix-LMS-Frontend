@@ -69,7 +69,7 @@ export default function ContactPage() {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-foreground mb-4 text-balance">Get in Touch</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Have questions about our courses or need support? We're here to help you on your learning journey.
+            Have questions about our courses or need support? We&apos;re here to help you on your learning journey.
           </p>
         </div>
 
@@ -159,7 +159,7 @@ export default function ContactPage() {
               <CardHeader>
                 <CardTitle className="text-2xl">Send us a Message</CardTitle>
                 <CardDescription>
-                  Fill out the form below and we'll get back to you as soon as possible.
+                  Fill out the form below and we&apos;ll get back to you as soon as possible.
                 </CardDescription>
               </CardHeader>
 
@@ -169,7 +169,7 @@ export default function ContactPage() {
                     <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
                     <h3 className="text-xl font-semibold mb-2">Message Sent Successfully!</h3>
                     <p className="text-muted-foreground mb-6">
-                      Thank you for contacting us. We'll get back to you within 24 hours.
+                      Thank you for contacting us. We&apos;ll get back to you within 24 hours.
                     </p>
                     <Button onClick={resetForm}>Send Another Message</Button>
                   </div>
@@ -290,7 +290,7 @@ export default function ContactPage() {
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-foreground mb-4">Frequently Asked Questions</h2>
             <p className="text-muted-foreground">
-              Quick answers to common questions. Can't find what you're looking for? Contact us above.
+              Quick answers to common questions. Can&apos;t find what you&apos;re looking for? Contact us above.
             </p>
           </div>
 
@@ -301,8 +301,8 @@ export default function ContactPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Simply browse our course catalog, select the course you're interested in, and click "Enroll Now". You
-                  can pay securely and start learning immediately.
+                  Simply browse our course catalog, select the course you&apos;re interested in, and click &quot;Enroll
+                  Now&quot;. You can pay securely and start learning immediately.
                 </p>
               </CardContent>
             </Card>
@@ -313,7 +313,7 @@ export default function ContactPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Yes! Most of our courses offer certificates of completion. You'll receive your certificate after
+                  Yes! Most of our courses offer certificates of completion. You&apos;ll receive your certificate after
                   successfully completing all course requirements.
                 </p>
               </CardContent>
@@ -325,7 +325,7 @@ export default function ContactPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  We offer a 30-day money-back guarantee on all paid courses. If you're not satisfied, contact our
+                  We offer a 30-day money-back guarantee on all paid courses. If you&apos;re not satisfied, contact our
                   support team for a full refund.
                 </p>
               </CardContent>

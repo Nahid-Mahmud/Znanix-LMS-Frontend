@@ -47,7 +47,7 @@ export default function ResendVerificationPage() {
               </div>
               <CardTitle className="text-2xl font-bold">Verification Email Sent</CardTitle>
               <CardDescription>
-                We've sent a new verification email to <strong>{email}</strong>
+                We&apos;ve sent a new verification email to <strong>{email}</strong>
               </CardDescription>
             </CardHeader>
 
@@ -59,7 +59,7 @@ export default function ResendVerificationPage() {
                 </p>
               </div>
               <p className="text-xs text-muted-foreground">
-                Didn't receive the email? Check your spam folder or try again in a few minutes.
+                Didn&apos;t receive the email? Check your spam folder or try again in a few minutes.
               </p>
               <Button variant="outline" onClick={() => setSuccess(false)}>
                 Resend Again
@@ -92,7 +92,7 @@ export default function ResendVerificationPage() {
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-bold">Resend Verification</CardTitle>
-            <CardDescription>Enter your email address and we'll send you a new verification link</CardDescription>
+            <CardDescription>Enter your email address and we&apos;ll send you a new verification link</CardDescription>
           </CardHeader>
 
           <CardContent>
@@ -119,7 +119,7 @@ export default function ResendVerificationPage() {
               <Alert>
                 <Mail className="h-4 w-4" />
                 <AlertDescription>
-                  Make sure to check your spam folder if you don't see the verification email in your inbox.
+                  Make sure to check your spam folder if you don&apos;t see the verification email in your inbox.
                 </AlertDescription>
               </Alert>
 

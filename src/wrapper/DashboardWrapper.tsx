@@ -1,8 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/components/ui/breadcrumb";
 import { ModeToggle } from "@/components/ui/ModeToggle";
-import { NavActions } from "@/components/ui/nav-actions";
-import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function DashboardWrapper({ children }: { children: React.ReactNode }) {

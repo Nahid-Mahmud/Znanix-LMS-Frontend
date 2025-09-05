@@ -1,12 +1,12 @@
+import {
+  placeholderSvg,
+  professionalHeadshotManMarketingManager,
+  professionalHeadshotWomanDataAnalyst,
+  professionalHeadshotYoungManSoftwareDeveloper,
+} from "@/assets";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import Image from "next/image";
-import {
-  professionalHeadshotYoungManSoftwareDeveloper,
-  professionalHeadshotWomanDataAnalyst,
-  professionalHeadshotManMarketingManager,
-  placeholderSvg,
-} from "@/assets";
 
 const testimonials = [
   {
@@ -55,7 +55,7 @@ export function TestimonialsSection() {
                     <Star key={i} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                   ))}
                 </div>
-                <p className="text-muted-foreground italic">"{testimonial.content}"</p>
+                <p className="text-muted-foreground italic">&quot;{testimonial.content}&quot;</p>
                 <div className="flex items-center gap-3">
                   <Image
                     src={testimonial.avatar || placeholderSvg}

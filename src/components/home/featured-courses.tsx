@@ -77,6 +77,29 @@ const featuredCourses = [
     students: 12500,
     category: "Marketing",
   },
+  {
+    id: "4",
+    name: "UI/UX Design Fundamentals",
+    description: "Learn the essentials of UI/UX design, prototyping, and user research with hands-on projects.",
+    thumbnail: placeholderSvg,
+    price: 59,
+    originalPrice: 99,
+    introVideo: "",
+    tags: ["Design", "UI/UX", "Prototyping"],
+    slug: "ui-ux-design-fundamentals",
+    type: "PAID",
+    instructor: {
+      name: "Jessica Park",
+      avatar: placeholderSvg,
+    },
+    courseDuration: "28 hours",
+    certificate: true,
+    discount: 40,
+    featured: true,
+    rating: 4.8,
+    students: 5100,
+    category: "Design",
+  },
 ];
 
 export function FeaturedCourses() {
@@ -90,7 +113,7 @@ export function FeaturedCourses() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-8">
           {featuredCourses.map((course) => (
             <CourseCard key={course.id} course={course} />
           ))}

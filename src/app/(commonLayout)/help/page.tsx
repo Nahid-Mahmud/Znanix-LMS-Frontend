@@ -132,7 +132,7 @@ export default function HelpPage() {
 
             <Card>
               <CardContent className="p-4">
-                <h3 className="font-semibold mb-2">What's included in my course certificate?</h3>
+                <h3 className="font-semibold mb-2">What&apos;s included in my course certificate?</h3>
                 <p className="text-sm text-muted-foreground">
                   Understand what information is included in your completion certificate...
                 </p>
@@ -154,7 +154,7 @@ export default function HelpPage() {
         <div className="bg-muted rounded-lg p-8 text-center mt-12">
           <h2 className="text-2xl font-bold mb-4">Still Need Help?</h2>
           <p className="text-muted-foreground mb-6">
-            Can't find what you're looking for? Our support team is here to help.
+            Can&apos;t find what you&apos;re looking for? Our support team is here to help.
           </p>
           <Button size="lg">Contact Support</Button>
         </div>

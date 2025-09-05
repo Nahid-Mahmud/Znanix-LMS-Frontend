@@ -1,4 +1,4 @@
-import { BookOpen, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 import Link from "next/link";
 import { logo } from "@/assets";
 import Image from "next/image";
@@ -9,9 +9,9 @@ export function Footer() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <Image alt="logo" height={120} width={120} className="aspect-square " src={logo}></Image>
+            <Image alt="logo" height={200} width={200} className=" h-20 w-auto" src={logo}></Image>
 
-            <p className="text-muted-foreground text-pretty -top-5 relative">
+            <p className="text-muted-foreground text-pretty relative">
               Empowering learners worldwide with high-quality, accessible education from industry experts.
             </p>
             <div className="flex space-x-4">
@@ -102,7 +102,7 @@ export function Footer() {
         </div>
 
         <div className="border-t mt-12 pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; 2024 LearnHub. All rights reserved.</p>
+          <p>&copy; 2025 Zanix. All rights reserved.</p>
         </div>
       </div>
     </footer>
