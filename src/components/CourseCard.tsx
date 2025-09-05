@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Star, Clock, Users, Award, Play } from "lucide-react";
-import Image from "next/image";
+import { Award, Clock, Star, Users } from "lucide-react";
 import type { StaticImageData } from "next/image";
+import Image from "next/image";
 
 export interface CourseCardProps {
   course: {

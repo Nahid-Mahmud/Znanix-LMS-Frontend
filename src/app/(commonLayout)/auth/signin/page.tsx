@@ -1,18 +1,18 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useLoginMutation } from "@/redux/features/auth/auth.api";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { useState } from "react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
-import { useLoginMutation } from "@/redux/features/auth/auth.api";
 
 const signInSchema = z.object({
   email: z.string().email({
@@ -116,8 +116,8 @@ export default function SignInPage() {
                   </Link>
                 </div>
 
-                <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
-                  {form.formState.isSubmitting ? (
+                <Button type="submit" className="w-full" disabled={form.formState.isSubmitting || isLoading}>
+                  {form.formState.isSubmitting || isLoading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       Signing in...

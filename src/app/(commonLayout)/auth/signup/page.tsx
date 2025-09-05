@@ -271,8 +271,8 @@ export default function SignUpPage() {
                   )}
                 />
 
-                <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
-                  {form.formState.isSubmitting ? (
+                <Button type="submit" className="w-full" disabled={form.formState.isSubmitting || isLoading}>
+                  {form.formState.isSubmitting || isLoading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       Creating account...

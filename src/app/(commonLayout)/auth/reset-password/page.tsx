@@ -1,18 +1,18 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useResetPasswordMutation } from "@/redux/features/auth/auth.api";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { useState } from "react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Eye, EyeOff, Loader2, CheckCircle, BookOpen } from "lucide-react";
-import { useResetPasswordMutation } from "@/redux/features/auth/auth.api";
-import { useRouter, useSearchParams } from "next/navigation";
 
 const passwordValidation = z
   .string()
@@ -80,6 +80,7 @@ export default function ResetPasswordPage() {
         form.reset();
         router.push("/auth/signin");
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error?.data?.message === "jwt expired") {
         toast.error("Your session has expired. Please try again.");
