@@ -1,16 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowLeft, Edit, BookOpen, Users, Clock, DollarSign, Star, Award, Globe } from "lucide-react";
+import { reactNextjsProgramming } from "@/assets";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
-import { reactNextjsProgramming } from "@/assets";
+import { ArrowLeft, Award, BookOpen, Clock, DollarSign, Edit, Globe, Star, Users } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 // Mock course data - replace with actual API call
 const mockCourse = {
@@ -67,7 +66,6 @@ const mockModules = [
 ];
 
 export default function CourseDetailPage() {
-  const params = useParams();
   const router = useRouter();
   const [course] = useState(mockCourse);
   const [modules] = useState(mockModules);

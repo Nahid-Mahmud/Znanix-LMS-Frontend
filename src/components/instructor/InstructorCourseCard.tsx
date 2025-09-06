@@ -1,13 +1,13 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Award, Clock, Star, Users, Edit, Eye, Trash2, BookOpen, DollarSign, MoreVertical } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Award, BookOpen, Clock, DollarSign, Edit, Eye, MoreVertical, Trash2, Users } from "lucide-react";
 import type { StaticImageData } from "next/image";
 import Image from "next/image";
 import Link from "next/link";

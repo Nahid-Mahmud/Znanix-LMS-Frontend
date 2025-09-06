@@ -1,15 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { TrendingUp, TrendingDown, Users, Star, BookOpen, PlayCircle, Award, DollarSign } from "lucide-react";
+import { Award, BookOpen, DollarSign, PlayCircle, Star, TrendingUp, Users } from "lucide-react";
+import { useState } from "react";
 
 interface CourseAnalyticsProps {
   courseId: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function CourseAnalytics({ courseId }: CourseAnalyticsProps) {
   // Mock analytics data - replace with actual API call
   const [analytics] = useState({
@@ -111,7 +112,7 @@ export default function CourseAnalytics({ courseId }: CourseAnalyticsProps) {
         {/* Recent Activity */}
         <Card>
           <CardHeader>
-            <CardTitle>Today's Activity</CardTitle>
+            <CardTitle>Today&apos;s Activity</CardTitle>
             <CardDescription>Recent student interactions</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">

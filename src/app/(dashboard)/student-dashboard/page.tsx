@@ -1,21 +1,18 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Play, BookOpen, Clock, Star, CheckCircle, Trophy, TrendingUp, Calendar, User, Award } from "lucide-react";
+import { Play, BookOpen, Clock, Star, CheckCircle, Trophy, TrendingUp, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress as ProgressBar } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   reactNextjsProgramming,
-  webDevelopmentCodingPng,
   digitalMarketingCourse,
   dataSciencePythonAnalytics,
   uiUxDesignCourse,
-  machineLearningCourse,
   instructorAlex,
   instructorEmma,
   instructorSarah,
@@ -109,14 +106,6 @@ const learningStats = {
 };
 
 export default function StudentDashboard() {
-  const [selectedCourse, setSelectedCourse] = useState(null);
-
-  const getProgressColor = (progress: number) => {
-    if (progress < 30) return "bg-red-500";
-    if (progress < 70) return "bg-yellow-500";
-    return "bg-green-500";
-  };
-
   return (
     <div className="min-h-screen bg-background p-6">
       <div className="max-w-7xl mx-auto space-y-6">

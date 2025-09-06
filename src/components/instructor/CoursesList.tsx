@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Edit, Eye, Trash2, Plus, BookOpen, Users, Clock, DollarSign } from "lucide-react";
+import { Edit, Eye, Trash2, Plus, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -14,15 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import InstructorCourseCard from "./InstructorCourseCard";
-import {
-  reactNextjsProgramming,
-  webDevelopmentCodingPng,
-  digitalMarketingCourse,
-  instructorAlex,
-  instructorEmma,
-  instructorSarah,
-  placeholderJpg,
-} from "@/assets";
+import { reactNextjsProgramming, webDevelopmentCodingPng, digitalMarketingCourse } from "@/assets";
 
 // Mock course data - replace with actual API data
 const mockCourses = [

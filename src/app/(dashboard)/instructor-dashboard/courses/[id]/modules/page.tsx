@@ -1,13 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import Link from "next/link";
-import { ArrowLeft, Plus, Edit, Trash2, Play, FileText } from "lucide-react";
+import CreateModuleModal from "@/components/instructor/CreateModuleModal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import CreateModuleModal from "@/components/instructor/CreateModuleModal";
+import { ArrowLeft, Edit, FileText, Play, Plus, Trash2 } from "lucide-react";
+import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
+import { useState } from "react";
 
 // Mock modules data
 const mockModules = [
@@ -48,7 +47,7 @@ const mockModules = [
 export default function ModulesManagementPage() {
   const params = useParams();
   const router = useRouter();
-  const [modules, setModules] = useState(mockModules);
+  const [modules] = useState(mockModules);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
   return (
