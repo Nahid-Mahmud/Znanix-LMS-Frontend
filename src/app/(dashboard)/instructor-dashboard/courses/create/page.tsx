@@ -1,22 +1,22 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { toast } from "sonner";
-import { ArrowLeft, Save, Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import FileUploader from "@/components/FileUploader";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { type FileWithPreview } from "@/hooks/use-file-upload";
 import { useCreateCourseMutation } from "@/redux/features/courses/courses.api";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2, Save } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
 // Course types
 enum CourseType {
@@ -67,7 +67,6 @@ type CreateCourseFormData = z.infer<typeof createCourseSchema>;
 
 export default function CreateCoursePage() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
 
   // File upload state using FileWithPreview type
   const [thumbnailFiles, setThumbnailFiles] = useState<FileWithPreview[]>([]);
@@ -119,7 +118,6 @@ export default function CreateCoursePage() {
   }, [watchedType, form]);
 
   const onSubmit = async (data: CreateCourseFormData) => {
-    setIsLoading(true);
     try {
       // Convert tags string to array
       const tagsArray = data.tags
@@ -148,16 +146,12 @@ export default function CreateCoursePage() {
           description: `Your course "${data.name}" has been created.`,
         });
       }
-      console.log(tagsArray);
-      console.log("thumbnail", thumbnailFiles);
-      console.log("introVideo", videoFiles);
 
-      // router.push("/instructor-dashboard");
+      router.push("/instructor-dashboard");
     } catch (error) {
       toast.error("Failed to create course. Please try again.");
       console.log(error);
     } finally {
-      setIsLoading(false);
     }
   };
 
@@ -202,7 +196,11 @@ export default function CreateCoursePage() {
                     <FormItem>
                       <FormLabel>Description *</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="Describe your course..." className="min-h-[120px]" {...field} />
+                        <Textarea
+                          placeholder="Describe your course within one or two sentences"
+                          className="min-h-[120px]"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -372,8 +370,8 @@ export default function CreateCoursePage() {
                   <Button type="button" variant="outline" onClick={() => router.back()}>
                     Cancel
                   </Button>
-                  <Button type="submit" disabled={isLoading}>
-                    {isLoading ? (
+                  <Button type="submit" disabled={isCreating}>
+                    {isCreating ? (
                       <>
                         <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                         Creating...
