@@ -1,29 +1,20 @@
 "use client";
 
 import {
-    dataSciencePythonAnalytics,
-    digitalMarketingCourse,
-    instructorAlex,
-    instructorEmma,
-    instructorSarah,
-    reactNextjsProgramming,
-    uiUxDesignCourse
+  dataSciencePythonAnalytics,
+  digitalMarketingCourse,
+  instructorAlex,
+  instructorEmma,
+  instructorSarah,
+  reactNextjsProgramming,
+  uiUxDesignCourse,
 } from "@/assets";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-    ArrowLeft,
-    CheckCircle,
-    Clock,
-    Pause,
-    Play,
-    SkipBack,
-    SkipForward,
-    Star
-} from "lucide-react";
+import { ArrowLeft, CheckCircle, Clock, Pause, Play, SkipBack, SkipForward, Star } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
@@ -362,16 +353,21 @@ export default function StudentCoursePage() {
           <div className="relative aspect-video bg-black">
             {currentVideo ? (
               <ReactPlayer
-                {...({
-                  url: currentVideo.url,
-                  width: "100%",
-                  height: "100%",
-                  playing: playing,
-                  controls: true,
-                  onPlay: () => setPlaying(true),
-                  onPause: () => setPlaying(false),
-                  onEnded: handleVideoComplete,
-                } as any)}
+                src={currentVideo.url}
+                width="100%"
+                height="100%"
+                playing={playing}
+                controls={true}
+                // {...({
+                //   url: currentVideo.url,
+                //   width: "100%",
+                //   height: "100%",
+                //   playing: playing,
+                //   controls: true,
+                //   onPlay: () => setPlaying(true),
+                //   onPause: () => setPlaying(false),
+                //   onEnded: handleVideoComplete,
+                // } as any)}
               />
             ) : (
               <div className="flex items-center justify-center h-full">
