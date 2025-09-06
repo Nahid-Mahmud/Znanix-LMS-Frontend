@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import InstructorCourseCard from "./InstructorCourseCard";
+import { useMyCoursesQuery } from "@/redux/features/courses/courses.api";
 
 interface Course {
   _id: string;
@@ -31,6 +32,7 @@ interface Course {
   totalStudents: number;
   totalModules: number;
   createdAt: string;
+  slug: string;
 }
 
 function CoursesListSkeleton() {

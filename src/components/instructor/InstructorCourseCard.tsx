@@ -28,6 +28,7 @@ export interface InstructorCourseCardProps {
     totalStudents: number;
     totalModules: number;
     createdAt: string;
+    slug: string;
   };
 }
 
@@ -148,7 +149,7 @@ export default function InstructorCourseCard({ course }: InstructorCourseCardPro
             </span>
           </div>
           <Button size="sm" asChild>
-            <Link href={`/instructor-dashboard/courses/${course._id}`}>Manage</Link>
+            <Link href={`/instructor-dashboard/courses/${course.slug}`}>Manage</Link>
           </Button>
         </div>
       </CardFooter>
