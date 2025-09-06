@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { MDXEditor } from "@/components/ui/mdx-editor";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { type FileWithPreview } from "@/hooks/use-file-upload";
@@ -48,6 +49,10 @@ const createCourseSchema = z
     thumbnail: z.string().min(1, { message: "Please upload a course thumbnail." }),
     introVideo: z.string().min(1, { message: "Please upload an intro video." }),
     discount: z.number().min(0).max(100).optional(),
+    longDescription: z
+      .string("Long description is required")
+      .min(20, "Long description must be at least 20 characters long")
+      .max(10000, "Long description must be at most 5000 characters long"),
   })
   .refine(
     (data) => {
@@ -105,6 +110,7 @@ export default function CreateCoursePage() {
       thumbnail: "",
       introVideo: "",
       discount: 0,
+      longDescription: "",
     },
   });
 
@@ -194,12 +200,34 @@ export default function CreateCoursePage() {
                   name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Description *</FormLabel>
+                      <FormLabel>Short Description *</FormLabel>
                       <FormControl>
                         <Textarea
                           placeholder="Describe your course within one or two sentences"
                           className="min-h-[120px]"
                           {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="longDescription"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Long Description *</FormLabel>
+                      <FormControl>
+                        <MDXEditor
+                          value={field.value || ""}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
+                          name={field.name}
+                          placeholder="Write a detailed description of your course using markdown. You can format text, add headings, lists, links, and more..."
+                          className="min-h-[200px]"
+                          showPreview={true}
                         />
                       </FormControl>
                       <FormMessage />
