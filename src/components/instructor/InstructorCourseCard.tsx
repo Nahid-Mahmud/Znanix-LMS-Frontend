@@ -8,16 +8,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Award, BookOpen, Clock, DollarSign, Edit, Eye, MoreVertical, Trash2, Users } from "lucide-react";
-import type { StaticImageData } from "next/image";
 import Image from "next/image";
 import Link from "next/link";
 
 export interface InstructorCourseCardProps {
   course: {
-    id: string;
+    _id: string;
     name: string;
     description: string;
-    thumbnail: string | StaticImageData;
+    thumbnail: string;
     price: number;
     type: string;
     published: string;
@@ -26,7 +25,7 @@ export interface InstructorCourseCardProps {
     certificate: boolean;
     courseDuration: string;
     tags: string[];
-    enrolledStudents: number;
+    totalStudents: number;
     totalModules: number;
     createdAt: string;
   };
@@ -69,19 +68,19 @@ export default function InstructorCourseCard({ course }: InstructorCourseCardPro
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
                 <DropdownMenuItem asChild>
-                  <Link href={`/instructor-dashboard/courses/${course.id}`}>
+                  <Link href={`/instructor-dashboard/courses/${course._id}`}>
                     <Eye className="w-4 h-4 mr-2" />
                     View Details
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href={`/instructor-dashboard/courses/${course.id}/edit`}>
+                  <Link href={`/instructor-dashboard/courses/${course._id}/edit`}>
                     <Edit className="w-4 h-4 mr-2" />
                     Edit Course
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href={`/instructor-dashboard/courses/${course.id}/modules`}>
+                  <Link href={`/instructor-dashboard/courses/${course._id}/modules`}>
                     <BookOpen className="w-4 h-4 mr-2" />
                     Manage Modules
                   </Link>
@@ -111,7 +110,7 @@ export default function InstructorCourseCard({ course }: InstructorCourseCardPro
         <div className="grid grid-cols-2 gap-4 text-sm text-muted-foreground mb-3">
           <div className="flex items-center gap-1">
             <Users className="w-4 h-4" />
-            {course.enrolledStudents} students
+            {course.totalStudents} students
           </div>
           <div className="flex items-center gap-1">
             <BookOpen className="w-4 h-4" />
@@ -119,10 +118,10 @@ export default function InstructorCourseCard({ course }: InstructorCourseCardPro
           </div>
           <div className="flex items-center gap-1">
             <Clock className="w-4 h-4" />
-            {course.courseDuration}
+            {course.courseDuration} hours
           </div>
           <div className="flex items-center gap-1">
-            <DollarSign className="w-4 h-4" />${(course.enrolledStudents * course.price).toLocaleString()}
+            <DollarSign className="w-4 h-4" />${(course.totalStudents * course.price).toLocaleString()}
           </div>
         </div>
 
@@ -149,7 +148,7 @@ export default function InstructorCourseCard({ course }: InstructorCourseCardPro
             </span>
           </div>
           <Button size="sm" asChild>
-            <Link href={`/instructor-dashboard/courses/${course.id}`}>Manage</Link>
+            <Link href={`/instructor-dashboard/courses/${course._id}`}>Manage</Link>
           </Button>
         </div>
       </CardFooter>

@@ -44,6 +44,14 @@ export const coursesApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Course"],
     }),
+
+    getMyCourseStats: builder.query({
+      query: () => ({
+        url: "/courses/my-courses-stats",
+        method: "GET",
+      }),
+      providesTags: ["Course"],
+    }),
   }),
 });
 
@@ -53,4 +61,5 @@ export const {
   useMyCoursesQuery,
   useGetAllCoursesQuery,
   useDeleteCourseMutation,
+  useGetMyCourseStatsQuery,
 } = coursesApi;
