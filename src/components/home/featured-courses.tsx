@@ -6,6 +6,7 @@ import {
   digitalMarketingSocialMediaAdvertisingAnalyti,
   placeholderSvg,
 } from "@/assets";
+import Link from "next/link";
 
 const featuredCourses = [
   {
@@ -120,9 +121,11 @@ export function FeaturedCourses() {
         </div>
 
         <div className="text-center mt-12">
-          <Button variant="outline" size="lg">
-            View All Courses
-          </Button>
+          <Link href="/courses">
+            <Button variant="outline" size="lg">
+              View All Courses
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
