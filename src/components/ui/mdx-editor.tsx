@@ -230,7 +230,7 @@ const MDXEditorComponent = forwardRef<MDXEditorMethods, MDXEditorProps>(
                       <ListsToggle />
                       <Separator />
                       <CreateLink />
-                      <InsertImage />
+                      {/* <InsertImage /> */}
                       <Separator />
                       <InsertTable />
                       <InsertThematicBreak />

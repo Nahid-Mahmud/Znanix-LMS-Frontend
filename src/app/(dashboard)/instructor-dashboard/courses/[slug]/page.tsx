@@ -294,7 +294,7 @@ export default function CourseDetailPage() {
               </CardHeader>
               <CardContent className="space-y-3">
                 <Button className="w-full" asChild>
-                  <Link href={`/instructor-dashboard/courses/${courseData._id}/modules`}>
+                  <Link href={`/instructor-dashboard/courses/${slug}/modules`}>
                     <BookOpen className="w-4 h-4 mr-2" />
                     Manage Modules
                   </Link>
