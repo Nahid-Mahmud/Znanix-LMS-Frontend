@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
-import { ArrowLeft, Save, Upload, Loader2 } from "lucide-react";
+import { ArrowLeft, Save, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -14,6 +14,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import FileUploader from "@/components/FileUploader";
+import { type FileWithPreview } from "@/hooks/use-file-upload";
 
 // Course types
 enum CourseType {
@@ -21,26 +23,42 @@ enum CourseType {
   FREE = "FREE",
 }
 
-const createCourseSchema = z.object({
-  name: z.string().min(2, { message: "Course name must be at least 2 characters." }),
-  description: z.string().min(10, { message: "Description must be at least 10 characters." }),
-  price: z.number().min(0, { message: "Price must be 0 or greater." }),
-  courseDuration: z.string().optional(),
-  type: z.nativeEnum(CourseType),
-  certificate: z.boolean(),
-  featured: z.boolean(),
-  tags: z.string().min(1, { message: "Please add at least one tag." }),
-  thumbnail: z.string().optional(),
-  introVideo: z.string().optional(),
-});
+const createCourseSchema = z
+  .object({
+    name: z.string().min(2, { message: "Course name must be at least 2 characters." }),
+    description: z.string().min(10, { message: "Description must be at least 10 characters." }),
+    price: z.number().min(0, { message: "Price must be 0 or greater." }),
+    courseDuration: z.string().optional(),
+    type: z.nativeEnum(CourseType),
+    certificate: z.boolean(),
+    featured: z.boolean(),
+    tags: z.string().min(1, { message: "Please add at least one tag." }),
+    thumbnail: z.string().optional(),
+    introVideo: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      // If course type is PAID, price must be greater than 0
+      if (data.type === CourseType.PAID && data.price <= 0) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: "Paid courses must have a price greater than 0.",
+      path: ["price"],
+    }
+  );
 
 type CreateCourseFormData = z.infer<typeof createCourseSchema>;
 
 export default function CreateCoursePage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
-  const [videoFile, setVideoFile] = useState<File | null>(null);
+
+  // File upload state using FileWithPreview type
+  const [thumbnailFiles, setThumbnailFiles] = useState<FileWithPreview[]>([]);
+  const [videoFiles, setVideoFiles] = useState<FileWithPreview[]>([]);
 
   const form = useForm<CreateCourseFormData>({
     resolver: zodResolver(createCourseSchema),
@@ -56,7 +74,22 @@ export default function CreateCoursePage() {
     },
   });
 
+  // Watch for course type changes to automatically set price
+  const watchedType = form.watch("type");
+
+  useEffect(() => {
+    if (watchedType === CourseType.FREE) {
+      form.setValue("price", 0);
+    }
+  }, [watchedType, form]);
+
   const onSubmit = async (data: CreateCourseFormData) => {
+    // Validate thumbnail is uploaded
+    if (thumbnailFiles.length === 0) {
+      toast.error("Please upload a course thumbnail.");
+      return;
+    }
+
     setIsLoading(true);
     try {
       // Convert tags string to array
@@ -65,19 +98,40 @@ export default function CreateCoursePage() {
         .map((tag) => tag.trim())
         .filter((tag) => tag.length > 0);
 
-      const courseData = {
-        ...data,
-        tags: tagsArray,
-        thumbnail: thumbnailFile ? URL.createObjectURL(thumbnailFile) : "",
-        introVideo: videoFile ? URL.createObjectURL(videoFile) : "",
-      };
+      // Prepare FormData for file uploads
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("description", data.description);
+      // Set price to 0 for FREE courses, otherwise use the form value
+      const finalPrice = data.type === CourseType.FREE ? 0 : data.price;
+      formData.append("price", finalPrice.toString());
+      formData.append("type", data.type);
+      formData.append("certificate", data.certificate.toString());
+      formData.append("featured", data.featured.toString());
+      formData.append("tags", JSON.stringify(tagsArray));
 
-      console.log("Creating course:", courseData);
+      if (data.courseDuration) {
+        formData.append("courseDuration", data.courseDuration);
+      }
+
+      // Add files if they exist
+      if (thumbnailFiles[0]?.file instanceof File) {
+        formData.append("thumbnail", thumbnailFiles[0].file);
+      }
+      if (videoFiles[0]?.file instanceof File) {
+        formData.append("introVideo", videoFiles[0].file);
+      }
+
+      console.log("Creating course with FormData");
 
       // TODO: Implement API call to create course
-      // const result = await createCourseMutation(courseData).unwrap();
+      // const result = await createCourseMutation(formData).unwrap();
 
       toast.success("Course created successfully!");
+      form.reset();
+      // Clear files
+      setThumbnailFiles([]);
+      setVideoFiles([]);
       // router.push(`/instructor-dashboard/courses/${result.id}`);
       router.push("/instructor-dashboard");
     } catch (error) {
@@ -85,20 +139,6 @@ export default function CreateCoursePage() {
       console.error(error);
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const handleThumbnailUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setThumbnailFile(file);
-    }
-  };
-
-  const handleVideoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setVideoFile(file);
     }
   };
 
@@ -192,9 +232,15 @@ export default function CreateCoursePage() {
                             type="number"
                             placeholder="0.00"
                             {...field}
+                            disabled={watchedType === CourseType.FREE}
                             onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
                           />
                         </FormControl>
+                        {watchedType === CourseType.FREE && (
+                          <p className="text-sm text-muted-foreground">
+                            Price is automatically set to $0 for free courses
+                          </p>
+                        )}
                         <FormMessage />
                       </FormItem>
                     )}
@@ -238,46 +284,27 @@ export default function CreateCoursePage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Thumbnail Upload */}
                   <div className="space-y-2">
-                    <FormLabel>Course Thumbnail</FormLabel>
-                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleThumbnailUpload}
-                        className="hidden"
-                        id="thumbnail-upload"
-                      />
-                      <label htmlFor="thumbnail-upload" className="cursor-pointer">
-                        <Upload className="w-8 h-8 mx-auto mb-2 text-gray-400" />
-                        <p className="text-sm font-medium mb-1">
-                          {thumbnailFile ? thumbnailFile.name : "Upload Thumbnail"}
-                        </p>
-                        <p className="text-xs text-gray-500">
-                          {thumbnailFile ? "Click to change" : "Click to browse or drag and drop"}
-                        </p>
-                      </label>
-                    </div>
+                    <FormLabel>Course Thumbnail *</FormLabel>
+                    <FileUploader
+                      maxSize={20 * 1024 * 1024}
+                      accept="image/*"
+                      onFilesChange={setThumbnailFiles}
+                      placeholder="Upload thumbnail image"
+                    />
+                    {thumbnailFiles.length === 0 && (
+                      <p className="text-sm text-muted-foreground">Thumbnail image is required for the course</p>
+                    )}
                   </div>
 
                   {/* Intro Video Upload */}
                   <div className="space-y-2">
                     <FormLabel>Intro Video</FormLabel>
-                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-                      <input
-                        type="file"
-                        accept="video/*"
-                        onChange={handleVideoUpload}
-                        className="hidden"
-                        id="video-upload"
-                      />
-                      <label htmlFor="video-upload" className="cursor-pointer">
-                        <Upload className="w-8 h-8 mx-auto mb-2 text-gray-400" />
-                        <p className="text-sm font-medium mb-1">{videoFile ? videoFile.name : "Upload Intro Video"}</p>
-                        <p className="text-xs text-gray-500">
-                          {videoFile ? "Click to change" : "Click to browse or drag and drop"}
-                        </p>
-                      </label>
-                    </div>
+                    <FileUploader
+                      maxSize={20 * 1024 * 1024}
+                      accept="video/*"
+                      onFilesChange={setVideoFiles}
+                      placeholder="Upload intro video"
+                    />
                   </div>
                 </div>
 

@@ -1,12 +1,10 @@
 "use client";
 
 import CoursesList from "@/components/instructor/CoursesList";
-import CreateCourseModal from "@/components/instructor/CreateCourseModal";
-import CourseAnalytics from "@/components/instructor/CourseAnalytics";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BookOpen, Plus, Star, Users } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function InstructorDashboard() {
@@ -29,9 +27,11 @@ export default function InstructorDashboard() {
             <h1 className="text-3xl font-bold">Instructor Dashboard</h1>
             <p className="text-muted-foreground">Manage your courses and track your progress</p>
           </div>
-          <Button onClick={() => setIsCreateModalOpen(true)} className="flex items-center gap-2">
-            <Plus className="w-4 h-4" />
-            Create Course
+          <Button asChild>
+            <Link href="/instructor-dashboard/courses/create" className="flex items-center gap-2">
+              <Plus className="w-4 h-4" />
+              Create Course
+            </Link>
           </Button>
         </div>
 
@@ -79,37 +79,7 @@ export default function InstructorDashboard() {
           </Card>
         </div>
 
-        {/* Tabs for different sections */}
-        <Tabs defaultValue="courses" className="space-y-6">
-          <TabsList>
-            <TabsTrigger value="courses">My Courses</TabsTrigger>
-            <TabsTrigger value="analytics">Analytics</TabsTrigger>
-            <TabsTrigger value="settings">Settings</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="courses">
-            <CoursesList />
-          </TabsContent>
-
-          <TabsContent value="analytics">
-            <CourseAnalytics courseId="overall" />
-          </TabsContent>
-
-          <TabsContent value="settings">
-            <Card>
-              <CardHeader>
-                <CardTitle>Instructor Settings</CardTitle>
-                <CardDescription>Manage your instructor profile and preferences</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-center text-muted-foreground py-12">Settings panel coming soon...</p>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
-
-        {/* Create Course Modal */}
-        <CreateCourseModal isOpen={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} />
+        <CoursesList />
       </div>
     </div>
   );

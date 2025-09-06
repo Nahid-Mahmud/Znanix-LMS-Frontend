@@ -96,12 +96,6 @@ export default function CoursesList() {
           <h2 className="text-2xl font-bold">My Courses</h2>
           <p className="text-muted-foreground">Manage your courses and track their performance</p>
         </div>
-        <Button asChild>
-          <Link href="/instructor-dashboard/courses/create" className="flex items-center gap-2">
-            <Plus className="w-4 h-4" />
-            Create Course
-          </Link>
-        </Button>
       </div>
 
       {/* Courses Grid View */}

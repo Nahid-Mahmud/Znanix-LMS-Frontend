@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -21,18 +21,32 @@ enum CourseType {
   FREE = "FREE",
 }
 
-const createCourseSchema = z.object({
-  name: z.string().min(2, { message: "Course name must be at least 2 characters." }),
-  description: z.string().min(10, { message: "Description must be at least 10 characters." }),
-  price: z.number().min(0, { message: "Price must be 0 or greater." }),
-  courseDuration: z.string().optional(),
-  type: z.nativeEnum(CourseType),
-  certificate: z.boolean(),
-  featured: z.boolean(),
-  tags: z.string().min(1, { message: "Please add at least one tag." }),
-  thumbnail: z.string().optional(),
-  introVideo: z.string().optional(),
-});
+const createCourseSchema = z
+  .object({
+    name: z.string().min(2, { message: "Course name must be at least 2 characters." }),
+    description: z.string().min(10, { message: "Description must be at least 10 characters." }),
+    price: z.number().min(0, { message: "Price must be 0 or greater." }),
+    courseDuration: z.string().optional(),
+    type: z.nativeEnum(CourseType),
+    certificate: z.boolean(),
+    featured: z.boolean(),
+    tags: z.string().min(1, { message: "Please add at least one tag." }),
+    thumbnail: z.string().optional(),
+    introVideo: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      // If course type is PAID, price must be greater than 0
+      if (data.type === CourseType.PAID && data.price <= 0) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: "Paid courses must have a price greater than 0.",
+      path: ["price"],
+    }
+  );
 
 type CreateCourseFormData = z.infer<typeof createCourseSchema>;
 
@@ -63,7 +77,22 @@ export default function CreateCourseModal({ isOpen, onClose }: CreateCourseModal
     },
   });
 
+  // Watch for course type changes to automatically set price
+  const watchedType = form.watch("type");
+
+  useEffect(() => {
+    if (watchedType === CourseType.FREE) {
+      form.setValue("price", 0);
+    }
+  }, [watchedType, form]);
+
   const onSubmit = async (data: CreateCourseFormData) => {
+    // Validate thumbnail is uploaded
+    if (thumbnailFiles.length === 0) {
+      toast.error("Please upload a course thumbnail.");
+      return;
+    }
+
     setIsLoading(true);
     try {
       // Convert tags string to array
@@ -76,7 +105,9 @@ export default function CreateCourseModal({ isOpen, onClose }: CreateCourseModal
       const formData = new FormData();
       formData.append("name", data.name);
       formData.append("description", data.description);
-      formData.append("price", data.price.toString());
+      // Set price to 0 for FREE courses, otherwise use the form value
+      const finalPrice = data.type === CourseType.FREE ? 0 : data.price;
+      formData.append("price", finalPrice.toString());
       formData.append("type", data.type);
       formData.append("certificate", data.certificate.toString());
       formData.append("featured", data.featured.toString());
@@ -187,9 +218,13 @@ export default function CreateCourseModal({ isOpen, onClose }: CreateCourseModal
                         type="number"
                         placeholder="0.00"
                         {...field}
+                        disabled={watchedType === CourseType.FREE}
                         onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
                       />
                     </FormControl>
+                    {watchedType === CourseType.FREE && (
+                      <p className="text-sm text-muted-foreground">Price is automatically set to $0 for free courses</p>
+                    )}
                     <FormMessage />
                   </FormItem>
                 )}
@@ -233,13 +268,16 @@ export default function CreateCourseModal({ isOpen, onClose }: CreateCourseModal
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Thumbnail Upload */}
               <div className="space-y-2">
-                <FormLabel>Course Thumbnail</FormLabel>
+                <FormLabel>Course Thumbnail *</FormLabel>
                 <FileUploader
                   maxSize={20 * 1024 * 1024}
                   accept="image/*"
                   onFilesChange={setThumbnailFiles}
                   placeholder="Upload thumbnail image"
                 />
+                {thumbnailFiles.length === 0 && (
+                  <p className="text-sm text-muted-foreground">Thumbnail image is required for the course</p>
+                )}
               </div>
 
               {/* Intro Video Upload */}
