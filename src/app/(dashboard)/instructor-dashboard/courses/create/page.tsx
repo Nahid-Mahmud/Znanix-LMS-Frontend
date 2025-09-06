@@ -16,6 +16,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import FileUploader from "@/components/FileUploader";
 import { type FileWithPreview } from "@/hooks/use-file-upload";
+import { useCreateCourseMutation } from "@/redux/features/courses/courses.api";
 
 // Course types
 enum CourseType {
@@ -28,13 +29,25 @@ const createCourseSchema = z
     name: z.string().min(2, { message: "Course name must be at least 2 characters." }),
     description: z.string().min(10, { message: "Description must be at least 10 characters." }),
     price: z.number().min(0, { message: "Price must be 0 or greater." }),
-    courseDuration: z.string().optional(),
+    courseDuration: z.number().min(0, { message: "Course duration is required" }),
     type: z.nativeEnum(CourseType),
     certificate: z.boolean(),
-    featured: z.boolean(),
-    tags: z.string().min(1, { message: "Please add at least one tag." }),
-    thumbnail: z.string().optional(),
-    introVideo: z.string().optional(),
+    tags: z
+      .string()
+      .min(1, { message: "Please add at least one tag." })
+      .refine(
+        (val) => {
+          const tags = val
+            .split(",")
+            .map((t) => t.trim())
+            .filter((t) => t.length > 0);
+          return tags.length <= 5;
+        },
+        { message: "Please provide at most 5 tags.", path: ["tags"] }
+      ),
+    thumbnail: z.string().min(1, { message: "Please upload a course thumbnail." }),
+    introVideo: z.string().min(1, { message: "Please upload an intro video." }),
+    discount: z.number().min(0).max(100).optional(),
   })
   .refine(
     (data) => {
@@ -60,17 +73,39 @@ export default function CreateCoursePage() {
   const [thumbnailFiles, setThumbnailFiles] = useState<FileWithPreview[]>([]);
   const [videoFiles, setVideoFiles] = useState<FileWithPreview[]>([]);
 
+  const [createCourse, { isLoading: isCreating }] = useCreateCourseMutation();
+
+  // Handle thumbnail file changes
+  const handleThumbnailChange = (files: FileWithPreview[]) => {
+    setThumbnailFiles(files);
+    // Update form value for validation
+    form.setValue("thumbnail", files.length > 0 ? files[0].file.name : "");
+    // Trigger validation
+    form.trigger("thumbnail");
+  };
+
+  // Handle video file changes
+  const handleVideoChange = (files: FileWithPreview[]) => {
+    setVideoFiles(files);
+    // Update form value
+    form.setValue("introVideo", files.length > 0 ? files[0].file.name : "");
+    // Trigger validation
+    form.trigger("introVideo");
+  };
+
   const form = useForm<CreateCourseFormData>({
     resolver: zodResolver(createCourseSchema),
     defaultValues: {
       name: "",
       description: "",
       price: 0,
-      courseDuration: "",
+      courseDuration: 0,
       type: CourseType.PAID,
       certificate: false,
-      featured: false,
       tags: "",
+      thumbnail: "",
+      introVideo: "",
+      discount: 0,
     },
   });
 
@@ -84,12 +119,6 @@ export default function CreateCoursePage() {
   }, [watchedType, form]);
 
   const onSubmit = async (data: CreateCourseFormData) => {
-    // Validate thumbnail is uploaded
-    if (thumbnailFiles.length === 0) {
-      toast.error("Please upload a course thumbnail.");
-      return;
-    }
-
     setIsLoading(true);
     try {
       // Convert tags string to array
@@ -98,45 +127,35 @@ export default function CreateCoursePage() {
         .map((tag) => tag.trim())
         .filter((tag) => tag.length > 0);
 
-      // Prepare FormData for file uploads
-      const formData = new FormData();
-      formData.append("name", data.name);
-      formData.append("description", data.description);
-      // Set price to 0 for FREE courses, otherwise use the form value
-      const finalPrice = data.type === CourseType.FREE ? 0 : data.price;
-      formData.append("price", finalPrice.toString());
-      formData.append("type", data.type);
-      formData.append("certificate", data.certificate.toString());
-      formData.append("featured", data.featured.toString());
-      formData.append("tags", JSON.stringify(tagsArray));
+      const reformedData = {
+        ...data,
+        tags: tagsArray,
+        price: data.type === CourseType.FREE ? 0 : data.price,
+      };
 
-      if (data.courseDuration) {
-        formData.append("courseDuration", data.courseDuration);
-      }
-
-      // Add files if they exist
+      const formdata = new FormData();
+      formdata.append("data", JSON.stringify(reformedData));
       if (thumbnailFiles[0]?.file instanceof File) {
-        formData.append("thumbnail", thumbnailFiles[0].file);
+        formdata.append("thumbnail", thumbnailFiles[0].file);
       }
       if (videoFiles[0]?.file instanceof File) {
-        formData.append("introVideo", videoFiles[0].file);
+        formdata.append("introVideo", videoFiles[0].file);
       }
 
-      console.log("Creating course with FormData");
+      const response = await createCourse(formdata).unwrap();
+      if (response.success) {
+        toast.success("Course created successfully!", {
+          description: `Your course "${data.name}" has been created.`,
+        });
+      }
+      console.log(tagsArray);
+      console.log("thumbnail", thumbnailFiles);
+      console.log("introVideo", videoFiles);
 
-      // TODO: Implement API call to create course
-      // const result = await createCourseMutation(formData).unwrap();
-
-      toast.success("Course created successfully!");
-      form.reset();
-      // Clear files
-      setThumbnailFiles([]);
-      setVideoFiles([]);
-      // router.push(`/instructor-dashboard/courses/${result.id}`);
-      router.push("/instructor-dashboard");
+      // router.push("/instructor-dashboard");
     } catch (error) {
       toast.error("Failed to create course. Please try again.");
-      console.error(error);
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
@@ -146,21 +165,14 @@ export default function CreateCoursePage() {
     <div className="min-h-screen bg-background p-6">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" onClick={() => router.back()}>
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Dashboard
-            </Button>
-            <div>
-              <h1 className="text-3xl font-bold">Create New Course</h1>
-              <p className="text-muted-foreground">Build your next amazing course</p>
-            </div>
-          </div>
+
+        <div className="flex items-center flex-col mx-auto">
+          <h1 className="text-3xl font-bold">Create New Course</h1>
+          <p className="text-muted-foreground">Build your next amazing course</p>
         </div>
 
         {/* Create Form */}
-        <Card>
+        <Card className="">
           <CardHeader>
             <CardTitle>Course Information</CardTitle>
           </CardHeader>
@@ -207,7 +219,7 @@ export default function CreateCoursePage() {
                         <FormLabel>Course Type *</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
-                            <SelectTrigger>
+                            <SelectTrigger className="w-full">
                               <SelectValue placeholder="Select course type" />
                             </SelectTrigger>
                           </FormControl>
@@ -226,7 +238,7 @@ export default function CreateCoursePage() {
                     name="price"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Price (USD) *</FormLabel>
+                        <FormLabel>Price (BDT) *</FormLabel>
                         <FormControl>
                           <Input
                             type="number"
@@ -236,11 +248,6 @@ export default function CreateCoursePage() {
                             onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
                           />
                         </FormControl>
-                        {watchedType === CourseType.FREE && (
-                          <p className="text-sm text-muted-foreground">
-                            Price is automatically set to $0 for free courses
-                          </p>
-                        )}
                         <FormMessage />
                       </FormItem>
                     )}
@@ -255,7 +262,12 @@ export default function CreateCoursePage() {
                     <FormItem>
                       <FormLabel>Course Duration</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., 8 weeks, 20 hours" {...field} />
+                        <Input
+                          type="number"
+                          placeholder="e.g., 8 weeks, 20 hours"
+                          {...field}
+                          onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -263,6 +275,7 @@ export default function CreateCoursePage() {
                 />
 
                 {/* Tags */}
+
                 <FormField
                   control={form.control}
                   name="tags"
@@ -271,7 +284,7 @@ export default function CreateCoursePage() {
                       <FormLabel>Tags *</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Enter tags separated by commas (e.g., web development, react, javascript)"
+                          placeholder="Enter up to 5 tags separated by commas (e.g., web development, react, javascript)"
                           {...field}
                         />
                       </FormControl>
@@ -283,29 +296,54 @@ export default function CreateCoursePage() {
                 {/* File Uploads */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Thumbnail Upload */}
-                  <div className="space-y-2">
-                    <FormLabel>Course Thumbnail *</FormLabel>
-                    <FileUploader
-                      maxSize={20 * 1024 * 1024}
-                      accept="image/*"
-                      onFilesChange={setThumbnailFiles}
-                      placeholder="Upload thumbnail image"
-                    />
-                    {thumbnailFiles.length === 0 && (
-                      <p className="text-sm text-muted-foreground">Thumbnail image is required for the course</p>
+                  <FormField
+                    control={form.control}
+                    name="thumbnail"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Course Thumbnail *</FormLabel>
+                        <FormControl>
+                          <div>
+                            <FileUploader
+                              maxSize={20 * 1024 * 1024}
+                              accept="image/*"
+                              onFilesChange={handleThumbnailChange}
+                              placeholder="Upload thumbnail image"
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                        {thumbnailFiles.length === 0 && (
+                          <p className="text-sm text-muted-foreground">Thumbnail image is required for the course</p>
+                        )}
+                      </FormItem>
                     )}
-                  </div>
+                  />
 
                   {/* Intro Video Upload */}
-                  <div className="space-y-2">
-                    <FormLabel>Intro Video</FormLabel>
-                    <FileUploader
-                      maxSize={20 * 1024 * 1024}
-                      accept="video/*"
-                      onFilesChange={setVideoFiles}
-                      placeholder="Upload intro video"
-                    />
-                  </div>
+                  <FormField
+                    control={form.control}
+                    name="introVideo"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Intro Video *</FormLabel>
+                        <FormControl>
+                          <div>
+                            <FileUploader
+                              maxSize={20 * 1024 * 1024}
+                              accept="video/*"
+                              onFilesChange={handleVideoChange}
+                              placeholder="Upload intro video"
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                        {videoFiles.length === 0 && (
+                          <p className="text-sm text-muted-foreground">Intro video is required for the course</p>
+                        )}
+                      </FormItem>
+                    )}
+                  />
                 </div>
 
                 {/* Checkboxes */}
@@ -323,22 +361,6 @@ export default function CreateCoursePage() {
                           <p className="text-sm text-muted-foreground">
                             Students will receive a certificate upon completion
                           </p>
-                        </div>
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="featured"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                        <FormControl>
-                          <Checkbox checked={field.value} onCheckedChange={field.onChange} />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel>Featured Course</FormLabel>
-                          <p className="text-sm text-muted-foreground">Mark this course as featured</p>
                         </div>
                       </FormItem>
                     )}
