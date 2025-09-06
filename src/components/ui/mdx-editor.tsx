@@ -177,7 +177,7 @@ const MDXEditorComponent = forwardRef<MDXEditorMethods, MDXEditorProps>(
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="edit" className="mt-0">
+          <TabsContent value="edit" className="mt-0 ">
             <MDXEditor
               ref={ref}
               markdown={value}
