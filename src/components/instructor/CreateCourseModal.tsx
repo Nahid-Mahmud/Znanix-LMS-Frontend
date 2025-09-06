@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -12,7 +10,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Loader2, Upload } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import { useCreateCourseMutation } from "@/redux/features/courses/courses.api";
+import FileUploader from "@/components/FileUploader";
+import { type FileWithPreview } from "@/hooks/use-file-upload";
 
 // Course types based on your schema
 enum CourseType {
@@ -42,8 +43,11 @@ interface CreateCourseModalProps {
 
 export default function CreateCourseModal({ isOpen, onClose }: CreateCourseModalProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [thumbnailFile, setThumbnailFile] = useState<File | null>(null);
-  const [videoFile, setVideoFile] = useState<File | null>(null);
+  const [createCourseFn, { isLoading: isCreating }] = useCreateCourseMutation();
+
+  // File upload state
+  const [thumbnailFiles, setThumbnailFiles] = useState<FileWithPreview[]>([]);
+  const [videoFiles, setVideoFiles] = useState<FileWithPreview[]>([]);
 
   const form = useForm<CreateCourseFormData>({
     resolver: zodResolver(createCourseSchema),
@@ -68,42 +72,43 @@ export default function CreateCourseModal({ isOpen, onClose }: CreateCourseModal
         .map((tag) => tag.trim())
         .filter((tag) => tag.length > 0);
 
-      const courseData = {
-        ...data,
-        tags: tagsArray,
-        thumbnail: thumbnailFile ? URL.createObjectURL(thumbnailFile) : "",
-        introVideo: videoFile ? URL.createObjectURL(videoFile) : "",
-      };
+      // Prepare FormData for file uploads
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("description", data.description);
+      formData.append("price", data.price.toString());
+      formData.append("type", data.type);
+      formData.append("certificate", data.certificate.toString());
+      formData.append("featured", data.featured.toString());
+      formData.append("tags", JSON.stringify(tagsArray));
 
-      console.log("Creating course:", courseData);
+      if (data.courseDuration) {
+        formData.append("courseDuration", data.courseDuration);
+      }
 
-      // TODO: Implement API call to create course
-      // await createCourseMutation(courseData).unwrap();
+      // Add files if they exist
+      if (thumbnailFiles[0]?.file instanceof File) {
+        formData.append("thumbnail", thumbnailFiles[0].file);
+      }
+      if (videoFiles[0]?.file instanceof File) {
+        formData.append("introVideo", videoFiles[0].file);
+      }
+
+      console.log("Creating course with FormData");
+
+      await createCourseFn(formData).unwrap();
 
       toast.success("Course created successfully!");
       form.reset();
-      setThumbnailFile(null);
-      setVideoFile(null);
+      // Clear files
+      setThumbnailFiles([]);
+      setVideoFiles([]);
       onClose();
     } catch (error) {
       toast.error("Failed to create course. Please try again.");
       console.error(error);
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const handleThumbnailUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setThumbnailFile(file);
-    }
-  };
-
-  const handleVideoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setVideoFile(file);
     }
   };
 
@@ -229,41 +234,23 @@ export default function CreateCourseModal({ isOpen, onClose }: CreateCourseModal
               {/* Thumbnail Upload */}
               <div className="space-y-2">
                 <FormLabel>Course Thumbnail</FormLabel>
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleThumbnailUpload}
-                    className="hidden"
-                    id="thumbnail-upload"
-                  />
-                  <label htmlFor="thumbnail-upload" className="cursor-pointer">
-                    <Upload className="w-8 h-8 mx-auto mb-2 text-gray-400" />
-                    <p className="text-sm text-gray-500">
-                      {thumbnailFile ? thumbnailFile.name : "Click to upload thumbnail"}
-                    </p>
-                  </label>
-                </div>
+                <FileUploader
+                  maxSize={20 * 1024 * 1024}
+                  accept="image/*"
+                  onFilesChange={setThumbnailFiles}
+                  placeholder="Upload thumbnail image"
+                />
               </div>
 
               {/* Intro Video Upload */}
               <div className="space-y-2">
                 <FormLabel>Intro Video</FormLabel>
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
-                  <input
-                    type="file"
-                    accept="video/*"
-                    onChange={handleVideoUpload}
-                    className="hidden"
-                    id="video-upload"
-                  />
-                  <label htmlFor="video-upload" className="cursor-pointer">
-                    <Upload className="w-8 h-8 mx-auto mb-2 text-gray-400" />
-                    <p className="text-sm text-gray-500">
-                      {videoFile ? videoFile.name : "Click to upload intro video"}
-                    </p>
-                  </label>
-                </div>
+                <FileUploader
+                  maxSize={20 * 1024 * 1024}
+                  accept="video/*"
+                  onFilesChange={setVideoFiles}
+                  placeholder="Upload intro video"
+                />
               </div>
             </div>
 
