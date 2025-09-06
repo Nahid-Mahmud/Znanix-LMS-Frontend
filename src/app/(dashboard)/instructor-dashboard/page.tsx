@@ -11,6 +11,7 @@ import Link from "next/link";
 export default function InstructorDashboard() {
   const { data: courseStatsData, isLoading: courseStatsLoading } = useGetMyCourseStatsQuery(undefined);
   const { data: myCoursesData, isLoading: myCoursesLoading } = useMyCoursesQuery(undefined);
+  console.log(myCoursesData);
 
   // Use actual API data or defaults
   const stats = {

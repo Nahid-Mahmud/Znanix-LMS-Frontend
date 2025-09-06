@@ -1,44 +1,41 @@
 "use client";
 
+import { cn } from "@/lib/utils";
+import processMarkdown from "@/utils/processMarkdown";
 import {
-  MDXEditor,
-  headingsPlugin,
-  listsPlugin,
-  quotePlugin,
-  thematicBreakPlugin,
-  markdownShortcutPlugin,
-  linkPlugin,
-  linkDialogPlugin,
-  imagePlugin,
-  tablePlugin,
+  BlockTypeSelect,
+  BoldItalicUnderlineToggles,
   codeBlockPlugin,
   codeMirrorPlugin,
-  diffSourcePlugin,
-  frontmatterPlugin,
-  directivesPlugin,
-  toolbarPlugin,
-  UndoRedo,
-  BoldItalicUnderlineToggles,
   CodeToggle,
   CreateLink,
+  diffSourcePlugin,
+  directivesPlugin,
+  frontmatterPlugin,
+  headingsPlugin,
+  imagePlugin,
   InsertImage,
   InsertTable,
   InsertThematicBreak,
+  linkDialogPlugin,
+  linkPlugin,
+  listsPlugin,
   ListsToggle,
-  BlockTypeSelect,
+  markdownShortcutPlugin,
+  MDXEditor,
+  quotePlugin,
   Separator,
+  tablePlugin,
+  thematicBreakPlugin,
+  toolbarPlugin,
+  UndoRedo,
   type MDXEditorMethods,
 } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
-import { forwardRef, useState, useMemo } from "react";
+import { Edit, Eye } from "lucide-react";
+import { forwardRef, useMemo, useState } from "react";
 import { Card } from "./card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs";
-import { Eye, Edit } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { remark } from "remark";
-import remarkHtml from "remark-html";
-import remarkGfm from "remark-gfm";
-import processMarkdown from "@/utils/processMarkdown";
 
 // Process markdown to HTML using remark
 
@@ -51,7 +48,7 @@ const MarkdownPreview = ({ markdown, placeholder }: { markdown: string; placehol
     if (markdown) {
       processMarkdown(markdown)
         .then(setProcessedHtml)
-        .catch((error: any) => {
+        .catch((error: unknown) => {
           console.error("Error processing markdown:", error);
           setProcessedHtml(markdown); // Fallback to original markdown
         });
@@ -85,6 +82,7 @@ interface MDXEditorProps {
 }
 
 const MDXEditorComponent = forwardRef<MDXEditorMethods, MDXEditorProps>(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ({ value, onChange, onBlur, placeholder, className, readOnly = false, name, showPreview = true }, ref) => {
     const [activeTab, setActiveTab] = useState<"edit" | "preview">("edit");
 

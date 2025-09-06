@@ -325,6 +325,7 @@ export default function CreateCoursePage() {
                   <FormField
                     control={form.control}
                     name="thumbnail"
+                    // eslint-disable-next-line @typescript-eslint/no-unused-vars
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Course Thumbnail *</FormLabel>

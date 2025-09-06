@@ -39,6 +39,7 @@
     "react-hook-form": "^7.62.0",
     "react-player": "^3.3.2",
     "react-redux": "^9.2.0",
+    "rehype-external-links": "^3.0.0",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.1",
     "remark-html": "^16.0.1",

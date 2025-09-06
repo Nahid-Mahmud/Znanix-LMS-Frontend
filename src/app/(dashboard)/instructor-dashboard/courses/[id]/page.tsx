@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, Award, BookOpen, Clock, DollarSign, Edit, Globe, Star, Users } from "lucide-react";
+import { Award, BookOpen, Clock, DollarSign, Edit, Globe, Star, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -66,6 +66,7 @@ const mockModules = [
 ];
 
 export default function CourseDetailPage() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
   const [course] = useState(mockCourse);
   const [modules] = useState(mockModules);

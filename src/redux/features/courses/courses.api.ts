@@ -52,6 +52,14 @@ export const coursesApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Course"],
     }),
+
+    getCoursesDetailBySlug: builder.query({
+      query: (slug) => ({
+        url: `/courses/${slug}`,
+        method: "GET",
+      }),
+      providesTags: ["Course"],
+    }),
   }),
 });
 
@@ -62,4 +70,5 @@ export const {
   useGetAllCoursesQuery,
   useDeleteCourseMutation,
   useGetMyCourseStatsQuery,
+  useGetCoursesDetailBySlugQuery,
 } = coursesApi;
