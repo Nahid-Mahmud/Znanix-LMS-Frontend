@@ -146,7 +146,7 @@ export default function EditVideoPage() {
           {/* Header Skeleton */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Skeleton className="h-10 w-20" />
+              {/* <Skeleton className="h-10 w-20" /> */}
               <div>
                 <Skeleton className="h-8 w-48 mb-2" />
                 <Skeleton className="h-4 w-32" />
@@ -183,10 +183,6 @@ export default function EditVideoPage() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" onClick={() => router.back()}>
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module
-            </Button>
             <div>
               <h1 className="text-3xl font-bold">Edit Video</h1>
               <p className="text-muted-foreground">Update video information</p>
