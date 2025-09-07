@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ConfirmationModal } from "@/components/ui/confirmation-modal";
+import ModuleSkeleton from "@/components/ModuleSkeleton";
 import {
   useDeleteCourseModuleMutation,
   useGetCourseModulesByCourseIdQuery,
@@ -95,8 +96,10 @@ export default function ModulesManagementPage() {
         {/* Modules List */}
         <div className="space-y-4">
           {modulesLoading ? (
-            <div className="text-center py-8">
-              <p>Loading modules...</p>
+            <div className="space-y-4">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <ModuleSkeleton key={index} />
+              ))}
             </div>
           ) : (
             <Accordion type="multiple" className="space-y-4">
@@ -107,7 +110,7 @@ export default function ModulesManagementPage() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4 flex-1">
                           <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                            <span className="font-semibold">{module.order + 1}</span>
+                            <span className="font-semibold">{module.order}</span>
                           </div>
                           <div className="flex-1">
                             <AccordionTrigger className="hover:no-underline p-0 [&>svg]:hidden">

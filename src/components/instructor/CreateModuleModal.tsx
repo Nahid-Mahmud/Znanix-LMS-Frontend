@@ -15,7 +15,7 @@ import { useCreateCourseModuleMutation } from "@/redux/features/modules/modules.
 const createModuleSchema = z.object({
   title: z.string().min(2, { message: "Module title must be at least 2 characters." }),
   duration: z.string().optional(),
-  order: z.number().min(0, { message: "Order must be at least 0." }),
+  order: z.number().min(1, { message: "Order must be at least 1." }),
 });
 
 type CreateModuleFormData = z.infer<typeof createModuleSchema>;
@@ -34,7 +34,7 @@ export default function CreateModuleModal({ isOpen, onClose, courseId }: CreateM
     defaultValues: {
       title: "",
       duration: "",
-      order: 0,
+      order: 1,
     },
   });
 
@@ -120,9 +120,10 @@ export default function CreateModuleModal({ isOpen, onClose, courseId }: CreateM
                   <FormControl>
                     <Input
                       type="number"
+                      min="1"
                       placeholder="Enter module order"
                       {...field}
-                      onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                      onChange={(e) => field.onChange(parseInt(e.target.value) || 1)}
                     />
                   </FormControl>
                   <FormMessage />

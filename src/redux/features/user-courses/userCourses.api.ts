@@ -13,7 +13,7 @@ export const userCoursesApi = baseApi.injectEndpoints({
     }),
 
     // Get user's enrolled courses
-    getUserCourses: builder.query({
+    getMyCourses: builder.query({
       query: (params) => ({
         url: "/user-courses/my-courses",
         method: "GET",
@@ -68,15 +68,25 @@ export const userCoursesApi = baseApi.injectEndpoints({
       }),
       providesTags: ["UserCourse"],
     }),
+    getCourseModulesByCourseId: builder.query({
+      query: (courseId) => ({
+        url: `/user-courses/full-course-learner/${courseId}`,
+        method: "GET",
+      }),
+      providesTags: ["UserCourse"],
+    }),
   }),
+
+  // "/full-course/:courseId",
 });
 
 export const {
   usePurchaseCourseMutation,
-  useGetUserCoursesQuery,
   useGetSingleUserCourseQuery,
   useUpdateCourseProgressMutation,
   useGetAllUserCoursesQuery,
   useCreateUserCoursesMutation,
   useMyCourseStatsQuery,
+  useGetMyCoursesQuery,
+  useGetCourseModulesByCourseIdQuery,
 } = userCoursesApi;
