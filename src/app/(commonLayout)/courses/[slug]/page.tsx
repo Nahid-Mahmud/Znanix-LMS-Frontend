@@ -14,6 +14,7 @@ import { useParams } from "next/navigation";
 import processMarkdown from "@/utils/processMarkdown";
 import dynamic from "next/dynamic";
 import { usePurchaseCourseMutation } from "@/redux/features/user-courses/userCourses.api";
+import Link from "next/link";
 
 // Dynamic import for ReactPlayer to avoid SSR issues
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
@@ -42,14 +43,6 @@ export default function CourseDetailsPage() {
     }
   }, [courseDetails?.data?.longDescription]);
 
-  const handlePurchase = async () => {
-    try {
-      const res = await purchaseCourseFn(courseDetails.data._id).unwrap();
-      console.log(res);
-    } catch (error) {
-      console.error("Failed to purchase course:", error);
-    }
-  };
 
   if (courseDetailLoading) {
     return (
@@ -310,8 +303,8 @@ export default function CourseDetailsPage() {
                   <span className="text-2xl font-bold">${courseData?.price}</span>
                 </div>
 
-                <Button onClick={handlePurchase} className="w-full mb-4 cursor-pointer" size="lg">
-                  Enroll Now
+                <Button asChild className="w-full mb-4 cursor-pointer" size="lg">
+                  <Link href={`/checkout?course=${courseData?.slug}`}>Enroll Now</Link>
                 </Button>
 
                 <div className="space-y-3 text-sm">
