@@ -47,12 +47,14 @@ const createCourseSchema = z
         { message: "Please provide at most 5 tags.", path: ["tags"] }
       ),
     thumbnail: z.string().min(1, { message: "Please upload a course thumbnail." }),
-    introVideo: z.string().min(1, { message: "Please upload an intro video." }),
+    introVideo: z.string().optional(),
     discount: z.number().min(0).max(100).optional(),
     longDescription: z
       .string("Long description is required")
       .min(20, "Long description must be at least 20 characters long")
       .max(10000, "Long description must be at most 5000 characters long"),
+    youtubeVideoUrl: z.string().optional(),
+    useYoutubeVideo: z.boolean().optional(),
   })
   .refine(
     (data) => {
@@ -65,6 +67,32 @@ const createCourseSchema = z
     {
       message: "Paid courses must have a price greater than 0.",
       path: ["price"],
+    }
+  )
+  .refine(
+    (data) => {
+      // If using YouTube video, YouTube URL is required
+      if (data.useYoutubeVideo && (!data.youtubeVideoUrl || data.youtubeVideoUrl.trim() === "")) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: "YouTube video URL is required when using YouTube video.",
+      path: ["youtubeVideoUrl"],
+    }
+  )
+  .refine(
+    (data) => {
+      // If not using YouTube video, intro video is required
+      if (!data.useYoutubeVideo && (!data.introVideo || data.introVideo.trim() === "")) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: "Please upload an intro video.",
+      path: ["introVideo"],
     }
   );
 
@@ -111,17 +139,32 @@ export default function CreateCoursePage() {
       introVideo: "",
       discount: 0,
       longDescription: "",
+      youtubeVideoUrl: "",
+      useYoutubeVideo: false,
     },
   });
 
   // Watch for course type changes to automatically set price
   const watchedType = form.watch("type");
+  const watchedUseYoutubeVideo = form.watch("useYoutubeVideo");
 
   useEffect(() => {
     if (watchedType === CourseType.FREE) {
       form.setValue("price", 0);
     }
   }, [watchedType, form]);
+
+  // Clear fields when switching between YouTube and video upload
+  useEffect(() => {
+    if (watchedUseYoutubeVideo) {
+      // Clear intro video when switching to YouTube
+      form.setValue("introVideo", "");
+      setVideoFiles([]);
+    } else {
+      // Clear YouTube URL when switching to video upload
+      form.setValue("youtubeVideoUrl", "");
+    }
+  }, [watchedUseYoutubeVideo, form]);
 
   const onSubmit = async (data: CreateCourseFormData) => {
     try {
@@ -135,14 +178,24 @@ export default function CreateCoursePage() {
         ...data,
         tags: tagsArray,
         price: data.type === CourseType.FREE ? 0 : data.price,
+        // Only include youtubeVideoUrl if using YouTube video
+        ...(data.useYoutubeVideo ? { youtubeVideoUrl: data.youtubeVideoUrl } : {}),
+        // Remove introVideo field if using YouTube video
+        ...(data.useYoutubeVideo ? { introVideo: undefined } : {}),
+        // Remove youtubeVideoUrl field if not using YouTube video
+        ...(!data.useYoutubeVideo ? { youtubeVideoUrl: undefined } : {}),
       };
 
       const formdata = new FormData();
       formdata.append("data", JSON.stringify(reformedData));
+
+      // Always append thumbnail
       if (thumbnailFiles[0]?.file instanceof File) {
         formdata.append("thumbnail", thumbnailFiles[0].file);
       }
-      if (videoFiles[0]?.file instanceof File) {
+
+      // Only append intro video if not using YouTube video
+      if (!data.useYoutubeVideo && videoFiles[0]?.file instanceof File) {
         formdata.append("introVideo", videoFiles[0].file);
       }
 
@@ -319,6 +372,45 @@ export default function CreateCoursePage() {
                   )}
                 />
 
+                {/* YouTube Video Option */}
+                <FormField
+                  control={form.control}
+                  name="useYoutubeVideo"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>Use YouTube Video</FormLabel>
+                        <p className="text-sm text-muted-foreground">
+                          Use a YouTube video instead of uploading an intro video
+                        </p>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+
+                {/* YouTube URL Input */}
+                {form.watch("useYoutubeVideo") && (
+                  <FormField
+                    control={form.control}
+                    name="youtubeVideoUrl"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>YouTube Video URL *</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Enter YouTube video URL (e.g., https://www.youtube.com/watch?v=...)"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+
                 {/* File Uploads */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Thumbnail Upload */}
@@ -347,30 +439,32 @@ export default function CreateCoursePage() {
                     )}
                   />
 
-                  {/* Intro Video Upload */}
-                  <FormField
-                    control={form.control}
-                    name="introVideo"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Intro Video *</FormLabel>
-                        <FormControl>
-                          <div>
-                            <FileUploader
-                              maxSize={20 * 1024 * 1024}
-                              accept="video/*"
-                              onFilesChange={handleVideoChange}
-                              placeholder="Upload intro video"
-                            />
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                        {videoFiles.length === 0 && (
-                          <p className="text-sm text-muted-foreground">Intro video is required for the course</p>
-                        )}
-                      </FormItem>
-                    )}
-                  />
+                  {/* Intro Video Upload - Only show if not using YouTube */}
+                  {!form.watch("useYoutubeVideo") && (
+                    <FormField
+                      control={form.control}
+                      name="introVideo"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Intro Video *</FormLabel>
+                          <FormControl>
+                            <div>
+                              <FileUploader
+                                maxSize={20 * 1024 * 1024}
+                                accept="video/*"
+                                onFilesChange={handleVideoChange}
+                                placeholder="Upload intro video"
+                              />
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                          {videoFiles.length === 0 && (
+                            <p className="text-sm text-muted-foreground">Intro video is required for the course</p>
+                          )}
+                        </FormItem>
+                      )}
+                    />
+                  )}
                 </div>
 
                 {/* Checkboxes */}

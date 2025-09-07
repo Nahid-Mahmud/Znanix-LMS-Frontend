@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -10,6 +10,7 @@ import { ArrowLeft, Save, Upload, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCreateModuleVideoMutation } from "@/redux/features/modulesVideos/modulesVideo.api";
@@ -23,13 +24,42 @@ const MDXEditor = dynamic(() => import("@/components/ui/mdx-editor").then((mod) 
   loading: () => <div className="border rounded-md p-4 min-h-[100px] bg-muted animate-pulse" />,
 });
 
-const createVideoSchema = z.object({
-  title: z.string().min(1, { message: "Title is required" }),
-  description: z.string().max(10000, { message: "Description must be at most 10000 characters" }).optional(),
-  duration: z.string().min(1, { message: "Duration is required" }),
-  videoNumber: z.number().min(1, { message: "Video number must be at least 1" }),
-  videoFile: z.string().min(1, { message: "Please upload a video file" }),
-});
+const createVideoSchema = z
+  .object({
+    title: z.string().min(1, { message: "Title is required" }),
+    description: z.string().max(10000, { message: "Description must be at most 10000 characters" }).optional(),
+    duration: z.string().min(1, { message: "Duration is required" }),
+    videoNumber: z.number().min(1, { message: "Video number must be at least 1" }),
+    videoFile: z.string().optional(),
+    youtubeVideoUrl: z.string().optional(),
+    useYoutubeVideo: z.boolean().optional(),
+  })
+  .refine(
+    (data) => {
+      // If using YouTube video, YouTube URL is required
+      if (data.useYoutubeVideo && (!data.youtubeVideoUrl || data.youtubeVideoUrl.trim() === "")) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: "YouTube video URL is required when using YouTube video.",
+      path: ["youtubeVideoUrl"],
+    }
+  )
+  .refine(
+    (data) => {
+      // If not using YouTube video, video file is required
+      if (!data.useYoutubeVideo && (!data.videoFile || data.videoFile.trim() === "")) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: "Please upload a video file.",
+      path: ["videoFile"],
+    }
+  );
 
 type CreateVideoFormData = z.infer<typeof createVideoSchema>;
 
@@ -48,8 +78,24 @@ export default function CreateVideoPage() {
       duration: "",
       videoNumber: 1,
       videoFile: "",
+      youtubeVideoUrl: "",
+      useYoutubeVideo: false,
     },
   });
+
+  const watchedUseYoutubeVideo = form.watch("useYoutubeVideo");
+
+  // Clear fields when switching between YouTube and video upload
+  useEffect(() => {
+    if (watchedUseYoutubeVideo) {
+      // Clear video file when switching to YouTube
+      form.setValue("videoFile", "");
+      setVideoFiles([]);
+    } else {
+      // Clear YouTube URL when switching to video upload
+      form.setValue("youtubeVideoUrl", "");
+    }
+  }, [watchedUseYoutubeVideo, form]);
 
   // Handle video file changes
   const handleVideoChange = (files: FileWithPreview[]) => {
@@ -69,8 +115,14 @@ export default function CreateVideoPage() {
 
   const onSubmit = async (data: CreateVideoFormData) => {
     try {
-      if (!videoFiles[0]?.file) {
+      // Validate based on video type
+      if (!data.useYoutubeVideo && !videoFiles[0]?.file) {
         toast.error("Please upload a video file");
+        return;
+      }
+
+      if (data.useYoutubeVideo && (!data.youtubeVideoUrl || data.youtubeVideoUrl.trim() === "")) {
+        toast.error("Please enter a YouTube video URL");
         return;
       }
 
@@ -83,11 +135,19 @@ export default function CreateVideoPage() {
         title: data.title,
         duration: data.duration,
         description: data.description || "",
+        // Only include youtubeVideoUrl if using YouTube video
+        ...(data.useYoutubeVideo ? { youtubeVideoUrl: data.youtubeVideoUrl } : {}),
+        // Only include useYoutubeVideo flag when it's true
+        ...(data.useYoutubeVideo ? { useYoutubeVideo: data.useYoutubeVideo } : {}),
       };
 
-      // Append the data and video file
+      // Append the data
       formData.append("data", JSON.stringify(videoData));
-      formData.append("file", videoFiles[0].file as File);
+
+      // Only append video file if not using YouTube video
+      if (!data.useYoutubeVideo && videoFiles[0]?.file) {
+        formData.append("file", videoFiles[0].file as File);
+      }
 
       const response = await createModuleVideoFn(formData).unwrap();
 
@@ -113,10 +173,6 @@ export default function CreateVideoPage() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <Button variant="ghost" onClick={() => router.back()}>
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module
-            </Button>
             <div>
               <h1 className="text-3xl font-bold">Add Video</h1>
               <p className="text-muted-foreground">Upload a new video to this module</p>
@@ -132,32 +188,73 @@ export default function CreateVideoPage() {
           <CardContent>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                {/* Video Upload */}
+                {/* YouTube Video Option */}
                 <FormField
                   control={form.control}
-                  name="videoFile"
+                  name="useYoutubeVideo"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Video File *</FormLabel>
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                       <FormControl>
-                        <div>
-                          <FileUploader
-                            maxSize={100 * 1024 * 1024} // 100MB max
-                            accept="video/*"
-                            onFilesChange={handleVideoChange}
-                            placeholder="Upload video file"
-                          />
-                        </div>
+                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
                       </FormControl>
-                      <FormMessage />
-                      {videoFiles.length === 0 && (
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>Use YouTube Video</FormLabel>
                         <p className="text-sm text-muted-foreground">
-                          Supported formats: MP4, MOV, AVI, WMV (Max size: 100MB)
+                          Use a YouTube video instead of uploading a video file
                         </p>
-                      )}
+                      </div>
                     </FormItem>
                   )}
                 />
+
+                {/* YouTube URL Input */}
+                {form.watch("useYoutubeVideo") && (
+                  <FormField
+                    control={form.control}
+                    name="youtubeVideoUrl"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>YouTube Video URL *</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Enter YouTube video URL (e.g., https://www.youtube.com/watch?v=...)"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+
+                {/* Video Upload - Only show if not using YouTube */}
+                {!form.watch("useYoutubeVideo") && (
+                  <FormField
+                    control={form.control}
+                    name="videoFile"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Video File *</FormLabel>
+                        <FormControl>
+                          <div>
+                            <FileUploader
+                              maxSize={100 * 1024 * 1024} // 100MB max
+                              accept="video/*"
+                              onFilesChange={handleVideoChange}
+                              placeholder="Upload video file"
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                        {videoFiles.length === 0 && (
+                          <p className="text-sm text-muted-foreground">
+                            Supported formats: MP4, MOV, AVI, WMV (Max size: 100MB)
+                          </p>
+                        )}
+                      </FormItem>
+                    )}
+                  />
+                )}
 
                 {/* Video Title */}
                 <FormField
