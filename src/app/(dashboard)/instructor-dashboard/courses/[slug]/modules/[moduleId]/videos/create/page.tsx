@@ -159,7 +159,7 @@ export default function CreateVideoPage() {
       }
     } catch (error: unknown) {
       if (typeof error === "object" && error !== null && "status" in error && (error as any).status === 409) {
-        toast.error("A video with this number already exists in the module. Please choose a different number.");
+        toast.error("Video Number and video Title must be unique within the module.");
         return;
       }
       toast.error("Failed to create video. Please try again.");

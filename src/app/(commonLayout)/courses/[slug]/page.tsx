@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
+import { AvatarWithFallback } from "@/components/ui/avatar-with-fallback";
 import { Clock, Users, Award, Play, Download, Smartphone, TrendingUp } from "lucide-react";
 import { useGetCoursesDetailBySlugQuery } from "@/redux/features/courses/courses.api";
 import { useParams } from "next/navigation";
@@ -192,12 +193,14 @@ export default function CourseDetailsPage() {
               </div>
 
               <div className="flex items-center gap-4 mb-6">
-                <Image
-                  src={courseData?.instructor?.profilePicture || "/placeholder.svg"}
+                <AvatarWithFallback
+                  src={courseData?.instructor?.profilePicture}
                   alt={`${courseData?.instructor?.firstName} ${courseData?.instructor?.lastName}`}
+                  firstName={courseData?.instructor?.firstName}
+                  lastName={courseData?.instructor?.lastName}
                   width={48}
                   height={48}
-                  className="w-12 h-12 rounded-full"
+                  className="w-12 h-12"
                 />
                 <div>
                   <p className="font-medium">
@@ -256,12 +259,14 @@ export default function CourseDetailsPage() {
                 <Card>
                   <CardContent className="pt-6">
                     <div className="flex items-center gap-4 mb-6">
-                      <Image
-                        src={courseData.instructor?.profilePicture || "/placeholder.svg"}
+                      <AvatarWithFallback
+                        src={courseData.instructor?.profilePicture}
                         alt={`${courseData.instructor?.firstName} ${courseData.instructor?.lastName}`}
+                        firstName={courseData.instructor?.firstName}
+                        lastName={courseData.instructor?.lastName}
                         width={80}
                         height={80}
-                        className="w-20 h-20 rounded-full"
+                        className="w-20 h-20"
                       />
                       <div className="flex flex-col">
                         <h3 className="text-xl font-semibold mb-1">

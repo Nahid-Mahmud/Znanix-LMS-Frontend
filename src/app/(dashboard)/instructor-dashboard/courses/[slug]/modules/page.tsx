@@ -4,23 +4,76 @@ import CreateModuleModal from "@/components/instructor/CreateModuleModal";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { useGetCourseModulesByCourseIdQuery } from "@/redux/features/modules/modules.api";
+import { ConfirmationModal } from "@/components/ui/confirmation-modal";
+import {
+  useDeleteCourseModuleMutation,
+  useGetCourseModulesByCourseIdQuery,
+} from "@/redux/features/modules/modules.api";
 import { ArrowLeft, Edit, FileText, Play, Plus, Trash2, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
+import { useDeleteModuleVideoMutation } from "@/redux/features/modulesVideos/modulesVideo.api";
+import { toast } from "sonner";
 
 export default function ModulesManagementPage() {
   const params = useParams();
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [showDeleteVideoModal, setShowDeleteVideoModal] = useState(false);
+  const [showDeleteModuleModal, setShowDeleteModuleModal] = useState(false);
+  const [videoToDelete, setVideoToDelete] = useState<{ id: string; title: string } | null>(null);
+  const [moduleToDelete, setModuleToDelete] = useState<{ id: string; title: string } | null>(null);
   // console.log(params.slug);
 
   const { data: modulesData, isLoading: modulesLoading } = useGetCourseModulesByCourseIdQuery(params.slug);
-  console.log(modulesData);
+  const [deleteModuleVideoFn, { isLoading: deleteVideoLoading }] = useDeleteModuleVideoMutation();
+  // console.log(modulesData);
+
+  const [deleteCourseModuleFn, { isLoading: deleteModuleLoading }] = useDeleteCourseModuleMutation();
 
   // Use actual modules data from backend, fallback to empty array
   const modules = modulesData?.data || [];
+
+  const handleDeleteModuleVideo = async () => {
+    if (!params.slug || !videoToDelete) return;
+    try {
+      await deleteModuleVideoFn(videoToDelete.id).unwrap();
+      setShowDeleteVideoModal(false);
+      setVideoToDelete(null);
+      toast.success("Video deleted successfully");
+      // Optionally, show a success message or refresh the list
+    } catch (error) {
+      // Handle error, e.g., show an error message
+      console.error("Failed to delete video:", error);
+      toast.error("Failed to delete video");
+    }
+  };
+
+  const handleDeleteVideoClick = (videoId: string, videoTitle: string) => {
+    setVideoToDelete({ id: videoId, title: videoTitle });
+    setShowDeleteVideoModal(true);
+  };
+
+  const handleDeleteModule = async () => {
+    if (!params.slug || !moduleToDelete) return;
+    try {
+      await deleteCourseModuleFn(moduleToDelete.id).unwrap();
+      setShowDeleteModuleModal(false);
+      setModuleToDelete(null);
+      toast.success("Module deleted successfully");
+      // Optionally, show a success message or refresh the list
+    } catch (error) {
+      // Handle error, e.g., show an error message
+      console.error("Failed to delete module:", error);
+      toast.error("Failed to delete module");
+    }
+  };
+
+  const handleDeleteModuleClick = (moduleId: string, moduleTitle: string) => {
+    setModuleToDelete({ id: moduleId, title: moduleTitle });
+    setShowDeleteModuleModal(true);
+  };
 
   return (
     <div className="min-h-screen bg-background p-6">
@@ -74,7 +127,12 @@ export default function ModulesManagementPage() {
                               Edit
                             </Link>
                           </Button>
-                          <Button variant="outline" size="sm">
+                          <Button
+                            variant="destructive"
+                            size="sm"
+                            className="cursor-pointer"
+                            onClick={() => handleDeleteModuleClick(module._id, module.title)}
+                          >
                             <Trash2 className="w-4 h-4 mr-1" />
                             Delete
                           </Button>
@@ -104,7 +162,8 @@ export default function ModulesManagementPage() {
                                 >
                                   <div className="flex items-center gap-3">
                                     <div className="w-8 h-8 rounded bg-muted flex items-center justify-center">
-                                      <Play className="w-4 h-4" />
+                                      {/* <Play className="w-4 h-4" /> */}
+                                      {video.videoNumber}
                                     </div>
                                     <div>
                                       <h5 className="font-medium">{video.title || `Video ${index + 1}`}</h5>
@@ -121,8 +180,14 @@ export default function ModulesManagementPage() {
                                         <Edit className="w-4 h-4" />
                                       </Link>
                                     </Button>
-                                    <Button variant="ghost" size="sm">
-                                      <Trash2 className="w-4 h-4" />
+                                    <Button
+                                      variant="ghost"
+                                      size="sm"
+                                      onClick={() =>
+                                        handleDeleteVideoClick(video._id, video.title || `Video ${index + 1}`)
+                                      }
+                                    >
+                                      <Trash2 className="w-4 h-4 text-red-500" />
                                     </Button>
                                   </div>
                                 </div>
@@ -173,6 +238,36 @@ export default function ModulesManagementPage() {
           isOpen={isCreateModalOpen}
           onClose={() => setIsCreateModalOpen(false)}
           courseId={params.slug as string}
+        />
+
+        {/* Delete Video Confirmation Modal */}
+        <ConfirmationModal
+          isOpen={showDeleteVideoModal}
+          onClose={() => {
+            setShowDeleteVideoModal(false);
+            setVideoToDelete(null);
+          }}
+          onConfirm={handleDeleteModuleVideo}
+          title="Delete Video"
+          description={`Are you sure you want to delete "${videoToDelete?.title}"? This action cannot be undone and will permanently remove the video from this module.`}
+          confirmText="Delete Video"
+          isLoading={deleteVideoLoading}
+          variant="destructive"
+        />
+
+        {/* Delete Module Confirmation Modal */}
+        <ConfirmationModal
+          isOpen={showDeleteModuleModal}
+          onClose={() => {
+            setShowDeleteModuleModal(false);
+            setModuleToDelete(null);
+          }}
+          onConfirm={handleDeleteModule}
+          title="Delete Module"
+          description={`Are you sure you want to delete "${moduleToDelete?.title}"? This action cannot be undone and will permanently remove the entire module and all its videos.`}
+          confirmText="Delete Module"
+          isLoading={deleteModuleLoading}
+          variant="destructive"
         />
       </div>
     </div>

@@ -1,24 +1,24 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { toast } from "sonner";
-import { ArrowLeft, Save, Loader2, Play } from "lucide-react";
+import FileUploader from "@/components/FileUploader";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { type FileWithPreview } from "@/hooks/use-file-upload";
 import {
   useGetModuleVideoByIdQuery,
   useUpdateModuleVideoMutation,
 } from "@/redux/features/modulesVideos/modulesVideo.api";
-import FileUploader from "@/components/FileUploader";
-import { type FileWithPreview } from "@/hooks/use-file-upload";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2, Play, Save } from "lucide-react";
 import dynamic from "next/dynamic";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
 // Dynamically import the MDX editor to avoid SSR issues
 const MDXEditor = dynamic(() => import("@/components/ui/mdx-editor").then((mod) => ({ default: mod.MDXEditor })), {

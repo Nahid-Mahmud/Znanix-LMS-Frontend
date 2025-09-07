@@ -4,14 +4,19 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetCoursesDetailBySlugQuery } from "@/redux/features/courses/courses.api";
-import { Award, BookOpen, Clock, DollarSign, Edit, Globe, Timer, Users, Video } from "lucide-react";
+import { ConfirmationModal } from "@/components/ui/confirmation-modal";
+import { useDeleteCourseMutation, useGetCoursesDetailBySlugQuery } from "@/redux/features/courses/courses.api";
+import { Award, BookOpen, Clock, DollarSign, Edit, Globe, RefreshCw, Timer, Trash2, Users, Video } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export default function CourseDetailPage() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [deleteCourseFn, { isLoading: deleteLoading }] = useDeleteCourseMutation();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
   const router = useRouter();
   const params = useParams();
   const slug = params.slug;
@@ -146,7 +151,23 @@ export default function CourseDetailPage() {
     _id,
   } = courseData?.data;
 
-  console.log(thumbnail);
+  const handleDeleteCourse = async () => {
+    try {
+      await deleteCourseFn(_id);
+      setShowDeleteModal(false);
+      router.push("/instructor-dashboard/");
+      toast.success("Course deleted successfully");
+    } catch (error) {
+      toast.error("Failed to delete course");
+      console.log(error);
+    }
+  };
+
+  const handleDeleteClick = () => {
+    setShowDeleteModal(true);
+  };
+
+  // console.log(thumbnail);
 
   return (
     <div className="min-h-screen bg-background p-6">
@@ -312,6 +333,10 @@ export default function CourseDetailPage() {
                     Preview Course
                   </Link>
                 </Button>
+                <Button onClick={handleDeleteClick} variant="destructive" className="w-full">
+                  <Trash2 className="w-4 h-4 mr-2" />
+                  Delete Course
+                </Button>
               </CardContent>
             </Card>
 
@@ -359,6 +384,18 @@ export default function CourseDetailPage() {
             </Card>
           </div>
         </div>
+
+        {/* Delete Confirmation Modal */}
+        <ConfirmationModal
+          isOpen={showDeleteModal}
+          onClose={() => setShowDeleteModal(false)}
+          onConfirm={handleDeleteCourse}
+          title="Delete Course"
+          description={`Are you sure you want to delete "${name}"? This action cannot be undone and will permanently remove all course content, modules, and student data.`}
+          confirmText="Delete Course"
+          isLoading={deleteLoading}
+          variant="destructive"
+        />
       </div>
     </div>
   );
