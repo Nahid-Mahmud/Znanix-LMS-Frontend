@@ -92,7 +92,10 @@ export default function SignUpPage() {
     try {
       const res = await registerFn(data).unwrap();
       if (res.success) {
-        toast.success("Account Registration Successful. Verify your email");
+        toast.success("Account Registration Successful. Verify your email", {
+          duration: 8000,
+        });
+        form.reset();
       }
     } catch (error) {
       toast.error("Failed to create account. Please try again.");

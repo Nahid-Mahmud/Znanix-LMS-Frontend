@@ -143,6 +143,7 @@ export default function CourseDetailPage() {
     totalModules,
     averageVideoDuration,
     totalModuleVideos,
+    _id,
   } = courseData?.data;
 
   console.log(thumbnail);
@@ -294,7 +295,7 @@ export default function CourseDetailPage() {
               </CardHeader>
               <CardContent className="space-y-3">
                 <Button className="w-full" asChild>
-                  <Link href={`/instructor-dashboard/courses/${slug}/modules`}>
+                  <Link href={`/instructor-dashboard/courses/${_id}/modules`}>
                     <BookOpen className="w-4 h-4 mr-2" />
                     Manage Modules
                   </Link>

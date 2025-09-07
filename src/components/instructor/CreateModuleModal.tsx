@@ -10,10 +10,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Loader2 } from "lucide-react";
+import { useCreateCourseModuleMutation } from "@/redux/features/modules/modules.api";
 
 const createModuleSchema = z.object({
   title: z.string().min(2, { message: "Module title must be at least 2 characters." }),
   duration: z.string().optional(),
+  order: z.number().min(0, { message: "Order must be at least 0." }),
 });
 
 type CreateModuleFormData = z.infer<typeof createModuleSchema>;
@@ -25,18 +27,18 @@ interface CreateModuleModalProps {
 }
 
 export default function CreateModuleModal({ isOpen, onClose, courseId }: CreateModuleModalProps) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [createModuleFn, { isLoading: isCreating }] = useCreateCourseModuleMutation();
 
   const form = useForm<CreateModuleFormData>({
     resolver: zodResolver(createModuleSchema),
     defaultValues: {
       title: "",
       duration: "",
+      order: 0,
     },
   });
 
   const onSubmit = async (data: CreateModuleFormData) => {
-    setIsLoading(true);
     try {
       const moduleData = {
         ...data,
@@ -47,16 +49,24 @@ export default function CreateModuleModal({ isOpen, onClose, courseId }: CreateM
       console.log("Creating module:", moduleData);
 
       // TODO: Implement API call to create module
-      // await createModuleMutation(moduleData).unwrap();
+      const res = await createModuleFn(moduleData).unwrap();
 
-      toast.success("Module created successfully!");
-      form.reset();
+      if (res.success) {
+        toast.success("Module created successfully!");
+        form.reset();
+        onClose();
+      }
+
       onClose();
-    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (error.status === 409) {
+        toast.error("Module with this order already exists. Please choose a different order.");
+        return;
+      }
       toast.error("Failed to create module. Please try again.");
       console.error(error);
     } finally {
-      setIsLoading(false);
     }
   };
 
@@ -100,13 +110,33 @@ export default function CreateModuleModal({ isOpen, onClose, courseId }: CreateM
               )}
             />
 
+            {/* Module Order */}
+            <FormField
+              control={form.control}
+              name="order"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Order *</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="Enter module order"
+                      {...field}
+                      onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             {/* Submit Buttons */}
             <div className="flex justify-end space-x-2 pt-4">
               <Button type="button" variant="outline" onClick={onClose}>
                 Cancel
               </Button>
-              <Button type="submit" disabled={isLoading}>
-                {isLoading ? (
+              <Button type="submit" disabled={isCreating}>
+                {isCreating ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                     Creating...
