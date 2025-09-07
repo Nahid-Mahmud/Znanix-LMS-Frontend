@@ -1,19 +1,8 @@
-"use client"
+"use client";
 
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
-} from "lucide-react"
+import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from "lucide-react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,24 +11,36 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/dropdown-menu";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
+import { useLogoutMutation } from "@/redux/features/auth/auth.api";
+import { toast } from "sonner";
+import { useAppDispatch } from "@/redux/hooks";
+import { baseApi } from "@/redux/baseApi";
+import { useRouter } from "next/navigation";
 
 export function NavUser({
   user,
 }: {
   user: {
-    name: string
-    email: string
-    avatar: string
-  }
+    name: string;
+    email: string;
+    avatar: string;
+  };
 }) {
-  const { isMobile } = useSidebar()
+  const { isMobile } = useSidebar();
+  const [logout] = useLogoutMutation();
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    await logout(undefined);
+    dispatch(baseApi.util.resetApiState());
+    toast.success("Logged out successfully");
+    // navigate("/login");
+    router.push("/auth/signin");
+  };
 
   return (
     <SidebarMenu>
@@ -102,7 +103,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>
               <LogOut />
               Log out
             </DropdownMenuItem>
@@ -110,5 +111,5 @@ export function NavUser({
         </DropdownMenu>
       </SidebarMenuItem>
     </SidebarMenu>
-  )
+  );
 }

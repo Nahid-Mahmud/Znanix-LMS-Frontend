@@ -13,6 +13,7 @@ import { useGetCoursesDetailBySlugQuery } from "@/redux/features/courses/courses
 import { useParams } from "next/navigation";
 import processMarkdown from "@/utils/processMarkdown";
 import dynamic from "next/dynamic";
+import { usePurchaseCourseMutation } from "@/redux/features/user-courses/userCourses.api";
 
 // Dynamic import for ReactPlayer to avoid SSR issues
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
@@ -22,6 +23,7 @@ export default function CourseDetailsPage() {
   const params = useParams();
   const slug = params.slug;
   console.log(slug);
+  const [purchaseCourseFn, { isLoading: isPurchasing }] = usePurchaseCourseMutation();
 
   // get slug from url
 
@@ -29,7 +31,7 @@ export default function CourseDetailsPage() {
     skip: !slug,
   });
 
-  console.log(courseDetails);
+  console.log(courseDetails?.data?._id);
 
   const [activeTab, setActiveTab] = useState("course-details");
   const [processedDescription, setProcessedDescription] = useState("");
@@ -39,6 +41,15 @@ export default function CourseDetailsPage() {
       processMarkdown(courseDetails.data.longDescription).then(setProcessedDescription);
     }
   }, [courseDetails?.data?.longDescription]);
+
+  const handlePurchase = async () => {
+    try {
+      const res = await purchaseCourseFn(courseDetails.data._id).unwrap();
+      console.log(res);
+    } catch (error) {
+      console.error("Failed to purchase course:", error);
+    }
+  };
 
   if (courseDetailLoading) {
     return (
@@ -299,7 +310,7 @@ export default function CourseDetailsPage() {
                   <span className="text-2xl font-bold">${courseData?.price}</span>
                 </div>
 
-                <Button className="w-full mb-4" size="lg">
+                <Button onClick={handlePurchase} className="w-full mb-4 cursor-pointer" size="lg">
                   Enroll Now
                 </Button>
 

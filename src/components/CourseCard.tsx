@@ -4,6 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Award, Clock, Star, Users } from "lucide-react";
 import type { StaticImageData } from "next/image";
 import Image from "next/image";
+import Link from "next/link";
 
 export interface CourseCardProps {
   course: {
@@ -120,7 +121,9 @@ export default function CourseCard({ course }: CourseCardProps) {
               </>
             )}
           </div>
-          <Button size="sm">View Details</Button>
+          <Button asChild size="sm">
+            <Link href={`/courses/${course.slug}`}>View Details</Link>
+          </Button>
         </div>
       </CardFooter>
     </Card>

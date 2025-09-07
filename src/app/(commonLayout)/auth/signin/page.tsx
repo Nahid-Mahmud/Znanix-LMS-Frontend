@@ -9,6 +9,7 @@ import { useLoginMutation } from "@/redux/features/auth/auth.api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -28,6 +29,7 @@ type SignInFormData = z.infer<typeof signInSchema>;
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loginFn, { isLoading }] = useLoginMutation();
+  const router = useRouter();
 
   const form = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
@@ -41,11 +43,34 @@ export default function SignInPage() {
     try {
       const res = await loginFn(data).unwrap();
       if (res.success) {
+        const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+        document.cookie = `user=true; path=/; expires=${expires.toUTCString()}`;
         toast.success("Login successful!");
+        router.push("/"); // Redirect to home page
       }
-    } catch (error) {
-      toast.error("Login failed. Please check your credentials.");
-      console.log(error);
+    } catch (error: unknown) {
+      // Check if error is an object with a 'data' property
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "data" in error &&
+        typeof (error as any).data === "object" &&
+        (error as any).data !== null &&
+        "message" in (error as any).data
+      ) {
+        console.log((error as any).data.message);
+        if ((error as any).data.message === "User is not verified") {
+          router.push("/auth/verify-email");
+
+          toast.error("Please verify your email before logging in.");
+          return;
+        }
+        toast.error("Login failed. Please check your credentials.");
+        console.log(error);
+      } else {
+        toast.error("Login failed. Please check your credentials.");
+        console.log(error);
+      }
     }
   };
 
