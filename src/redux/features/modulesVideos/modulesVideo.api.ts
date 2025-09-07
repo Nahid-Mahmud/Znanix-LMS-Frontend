@@ -8,7 +8,7 @@ export const moduleVideosApi = baseApi.injectEndpoints({
         method: "POST",
         data: data,
       }),
-      invalidatesTags: ["ModuleVideo"],
+      invalidatesTags: ["Course", "CourseModule", "ModuleVideo"],
     }),
 
     getAllModuleVideos: builder.query({
@@ -17,7 +17,7 @@ export const moduleVideosApi = baseApi.injectEndpoints({
         method: "GET",
         params,
       }),
-      providesTags: ["ModuleVideo"],
+      providesTags: ["Course", "CourseModule", "ModuleVideo"],
     }),
 
     getVideosByModuleId: builder.query({
@@ -25,7 +25,7 @@ export const moduleVideosApi = baseApi.injectEndpoints({
         url: `/module-videos/module/${moduleId}`,
         method: "GET",
       }),
-      providesTags: ["ModuleVideo"],
+      providesTags: ["Course", "CourseModule", "ModuleVideo"],
     }),
 
     getModuleVideoById: builder.query({
@@ -33,7 +33,7 @@ export const moduleVideosApi = baseApi.injectEndpoints({
         url: `/module-videos/${videoId}`,
         method: "GET",
       }),
-      providesTags: ["ModuleVideo"],
+      providesTags: ["Course", "CourseModule", "ModuleVideo"],
     }),
 
     updateModuleVideo: builder.mutation({
@@ -42,7 +42,7 @@ export const moduleVideosApi = baseApi.injectEndpoints({
         method: "PATCH",
         data: data,
       }),
-      invalidatesTags: ["ModuleVideo"],
+      invalidatesTags: ["Course", "CourseModule", "ModuleVideo"],
     }),
 
     deleteModuleVideo: builder.mutation({
@@ -50,7 +50,7 @@ export const moduleVideosApi = baseApi.injectEndpoints({
         url: `/module-videos/${videoId}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["ModuleVideo"],
+      invalidatesTags: ["Course", "CourseModule", "ModuleVideo"],
     }),
   }),
 });

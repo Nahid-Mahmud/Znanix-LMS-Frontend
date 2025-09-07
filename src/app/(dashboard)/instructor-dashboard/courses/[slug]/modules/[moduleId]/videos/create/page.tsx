@@ -12,13 +12,23 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useCreateModuleVideoMutation } from "@/redux/features/modulesVideos/modulesVideo.api";
+import FileUploader from "@/components/FileUploader";
+import { type FileWithPreview } from "@/hooks/use-file-upload";
+import dynamic from "next/dynamic";
+
+// Dynamically import the MDX editor to avoid SSR issues
+const MDXEditor = dynamic(() => import("@/components/ui/mdx-editor").then((mod) => ({ default: mod.MDXEditor })), {
+  ssr: false,
+  loading: () => <div className="border rounded-md p-4 min-h-[100px] bg-muted animate-pulse" />,
+});
 
 const createVideoSchema = z.object({
-  title: z.string().min(2, { message: "Video title must be at least 2 characters." }),
-  description: z.string().optional(),
-  duration: z.string().min(1, { message: "Duration is required." }),
-  videoNumber: z.number().min(1, { message: "Video number must be at least 1." }),
-  url: z.string().optional(),
+  title: z.string().min(1, { message: "Title is required" }),
+  description: z.string().max(10000, { message: "Description must be at most 10000 characters" }).optional(),
+  duration: z.string().min(1, { message: "Duration is required" }),
+  videoNumber: z.number().min(1, { message: "Video number must be at least 1" }),
+  videoFile: z.string().min(1, { message: "Please upload a video file" }),
 });
 
 type CreateVideoFormData = z.infer<typeof createVideoSchema>;
@@ -26,8 +36,9 @@ type CreateVideoFormData = z.infer<typeof createVideoSchema>;
 export default function CreateVideoPage() {
   const params = useParams();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [videoFile, setVideoFile] = useState<File | null>(null);
+  const [videoFiles, setVideoFiles] = useState<FileWithPreview[]>([]);
+
+  const [createModuleVideoFn, { isLoading }] = useCreateModuleVideoMutation();
 
   const form = useForm<CreateVideoFormData>({
     resolver: zodResolver(createVideoSchema),
@@ -36,43 +47,63 @@ export default function CreateVideoPage() {
       description: "",
       duration: "",
       videoNumber: 1,
-      url: "",
+      videoFile: "",
     },
   });
 
-  const onSubmit = async (data: CreateVideoFormData) => {
-    setIsLoading(true);
-    try {
-      const videoData = {
-        ...data,
-        moduleId: params.moduleId,
-        url: videoFile ? URL.createObjectURL(videoFile) : data.url,
-      };
+  // Handle video file changes
+  const handleVideoChange = (files: FileWithPreview[]) => {
+    setVideoFiles(files);
+    // Update form value for validation
+    form.setValue("videoFile", files.length > 0 ? files[0].file.name : "");
 
-      console.log("Creating video:", videoData);
-
-      // TODO: Implement API call to create video
-      // await createVideoMutation(videoData).unwrap();
-
-      toast.success("Video created successfully!");
-      router.push(`/instructor-dashboard/courses/${params.id}/modules`);
-    } catch (error) {
-      toast.error("Failed to create video. Please try again.");
-      console.error(error);
-    } finally {
-      setIsLoading(false);
+    // Auto-fill title with filename if title is empty
+    if (files.length > 0 && !form.getValues("title")) {
+      const filename = files[0].file.name.replace(/\.[^/.]+$/, ""); // Remove file extension
+      form.setValue("title", filename);
     }
+
+    // Trigger validation
+    form.trigger("videoFile");
   };
 
-  const handleVideoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setVideoFile(file);
-      // Auto-fill title with filename if title is empty
-      if (!form.getValues("title")) {
-        const filename = file.name.replace(/\.[^/.]+$/, ""); // Remove file extension
-        form.setValue("title", filename);
+  const onSubmit = async (data: CreateVideoFormData) => {
+    try {
+      if (!videoFiles[0]?.file) {
+        toast.error("Please upload a video file");
+        return;
       }
+
+      const formData = new FormData();
+
+      // Prepare the video data according to backend schema
+      const videoData = {
+        moduleId: params.moduleId as string,
+        videoNumber: data.videoNumber,
+        title: data.title,
+        duration: data.duration,
+        description: data.description || "",
+      };
+
+      // Append the data and video file
+      formData.append("data", JSON.stringify(videoData));
+      formData.append("file", videoFiles[0].file as File);
+
+      const response = await createModuleVideoFn(formData).unwrap();
+
+      if (response.success) {
+        toast.success("Video created successfully!", {
+          description: `Video "${data.title}" has been added to the module.`,
+        });
+        router.back();
+      }
+    } catch (error: unknown) {
+      if (typeof error === "object" && error !== null && "status" in error && (error as any).status === 409) {
+        toast.error("A video with this number already exists in the module. Please choose a different number.");
+        return;
+      }
+      toast.error("Failed to create video. Please try again.");
+      console.error(error);
     }
   };
 
@@ -84,7 +115,7 @@ export default function CreateVideoPage() {
           <div className="flex items-center gap-4">
             <Button variant="ghost" onClick={() => router.back()}>
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Modules
+              Back to Module
             </Button>
             <div>
               <h1 className="text-3xl font-bold">Add Video</h1>
@@ -102,26 +133,31 @@ export default function CreateVideoPage() {
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 {/* Video Upload */}
-                <div className="space-y-2">
-                  <FormLabel>Video File *</FormLabel>
-                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                    <input
-                      type="file"
-                      accept="video/*"
-                      onChange={handleVideoUpload}
-                      className="hidden"
-                      id="video-upload"
-                    />
-                    <label htmlFor="video-upload" className="cursor-pointer">
-                      <Upload className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                      <p className="text-lg font-medium mb-2">{videoFile ? videoFile.name : "Upload Video"}</p>
-                      <p className="text-sm text-gray-500">
-                        {videoFile ? "Click to change video" : "Click to browse or drag and drop your video file"}
-                      </p>
-                      <p className="text-xs text-gray-400 mt-2">Supported formats: MP4, MOV, AVI, WMV</p>
-                    </label>
-                  </div>
-                </div>
+                <FormField
+                  control={form.control}
+                  name="videoFile"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Video File *</FormLabel>
+                      <FormControl>
+                        <div>
+                          <FileUploader
+                            maxSize={100 * 1024 * 1024} // 100MB max
+                            accept="video/*"
+                            onFilesChange={handleVideoChange}
+                            placeholder="Upload video file"
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                      {videoFiles.length === 0 && (
+                        <p className="text-sm text-muted-foreground">
+                          Supported formats: MP4, MOV, AVI, WMV (Max size: 100MB)
+                        </p>
+                      )}
+                    </FormItem>
+                  )}
+                />
 
                 {/* Video Title */}
                 <FormField
@@ -174,24 +210,6 @@ export default function CreateVideoPage() {
                   />
                 </div>
 
-                {/* Video URL (Alternative to upload) */}
-                <FormField
-                  control={form.control}
-                  name="url"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Video URL (Optional)</FormLabel>
-                      <FormControl>
-                        <Input placeholder="https://youtube.com/watch?v=... or other video URL" {...field} />
-                      </FormControl>
-                      <p className="text-sm text-muted-foreground">
-                        You can either upload a video file or provide a URL to an external video
-                      </p>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
                 {/* Description */}
                 <FormField
                   control={form.control}
@@ -200,10 +218,12 @@ export default function CreateVideoPage() {
                     <FormItem>
                       <FormLabel>Description (Optional)</FormLabel>
                       <FormControl>
-                        <Textarea
+                        <MDXEditor
+                          value={field.value || ""}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
                           placeholder="Describe what students will learn in this video..."
-                          className="min-h-[100px]"
-                          {...field}
+                          className="min-h-[200px]"
                         />
                       </FormControl>
                       <FormMessage />
