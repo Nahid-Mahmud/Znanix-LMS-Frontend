@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import {
   Dialog,
@@ -66,42 +66,44 @@ export default function VerifyAccountPage() {
   const message = !status && !email ? messages.no_query : messages[status as keyof typeof messages] || messages.false;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-50">
-      {email && (
-        <div className="mb-4">
-          <Button onClick={handleResend} variant="outline">
-            Resend Verification Email
-          </Button>
-        </div>
-      )}
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-md [&>button]:hidden">
-          <DialogHeader>
-            <DialogTitle
-              className={
-                message.type === "success"
-                  ? "text-green-600"
-                  : message.type === "error"
-                  ? "text-red-600"
-                  : "text-blue-600"
-              }
-            >
-              {message.title}
-            </DialogTitle>
-            <DialogDescription>{message.description}</DialogDescription>
-          </DialogHeader>
-          <DialogFooter className="flex gap-2">
-            {(status === "success" || status === "duplicate_request") && (
-              <Button onClick={() => router.push("/auth/signin")} variant="default">
-                Login
-              </Button>
-            )}
-            <Button onClick={() => router.push("/")} variant="outline">
-              Go Home
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-50">
+        {email && (
+          <div className="mb-4">
+            <Button onClick={handleResend} variant="outline">
+              Resend Verification Email
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </div>
+          </div>
+        )}
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogContent className="sm:max-w-md [&>button]:hidden">
+            <DialogHeader>
+              <DialogTitle
+                className={
+                  message.type === "success"
+                    ? "text-green-600"
+                    : message.type === "error"
+                    ? "text-red-600"
+                    : "text-blue-600"
+                }
+              >
+                {message.title}
+              </DialogTitle>
+              <DialogDescription>{message.description}</DialogDescription>
+            </DialogHeader>
+            <DialogFooter className="flex gap-2">
+              {(status === "success" || status === "duplicate_request") && (
+                <Button onClick={() => router.push("/auth/signin")} variant="default">
+                  Login
+                </Button>
+              )}
+              <Button onClick={() => router.push("/")} variant="outline">
+                Go Home
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </div>
+    </Suspense>
   );
 }

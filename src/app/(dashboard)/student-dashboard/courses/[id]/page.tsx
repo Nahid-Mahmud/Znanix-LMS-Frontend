@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -179,15 +180,15 @@ export default function StudentCoursePage() {
     }))
   );
 
-  const currentVideoIndex = allVideos.findIndex((v: any) => v.id === currentVideo?.id);
-  const nextVideo = allVideos[currentVideoIndex + 1];
-  const prevVideo = allVideos[currentVideoIndex - 1];
+  // const currentVideoIndex = allVideos.findIndex((v: any) => v.id === currentVideo?.id);
+  // const nextVideo = allVideos[currentVideoIndex + 1];
+  // const prevVideo = allVideos[currentVideoIndex - 1];
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleVideoComplete = () => {
-    setCompleted(true);
-    // Mark video as completed in real implementation
-  };
+  // // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // const handleVideoComplete = () => {
+  //   setCompleted(true);
+  //   // Mark video as completed in real implementation
+  // };
 
   const completedVideos = allVideos.filter((v: any) => v.completed).length;
   const progressPercentage = Math.round((completedVideos / allVideos.length) * 100);

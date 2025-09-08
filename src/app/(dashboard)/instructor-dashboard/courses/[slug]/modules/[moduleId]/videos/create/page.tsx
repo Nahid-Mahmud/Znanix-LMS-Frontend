@@ -1,22 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { toast } from "sonner";
-import { ArrowLeft, Save, Upload, Loader2 } from "lucide-react";
+import FileUploader from "@/components/FileUploader";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useCreateModuleVideoMutation } from "@/redux/features/modulesVideos/modulesVideo.api";
-import FileUploader from "@/components/FileUploader";
+import { Input } from "@/components/ui/input";
 import { type FileWithPreview } from "@/hooks/use-file-upload";
+import { useCreateModuleVideoMutation } from "@/redux/features/modulesVideos/modulesVideo.api";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2, Save } from "lucide-react";
 import dynamic from "next/dynamic";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
 // Dynamically import the MDX editor to avoid SSR issues
 const MDXEditor = dynamic(() => import("@/components/ui/mdx-editor").then((mod) => ({ default: mod.MDXEditor })), {

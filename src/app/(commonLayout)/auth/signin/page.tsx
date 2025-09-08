@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -77,11 +78,16 @@ export default function SignInPage() {
         typeof error === "object" &&
         error !== null &&
         "data" in error &&
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         typeof (error as any).data === "object" &&
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         (error as any).data !== null &&
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         "message" in (error as any).data
       ) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         console.log((error as any).data.message);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         if ((error as any).data.message === "User is not verified") {
           router.push("/auth/verify-email");
 

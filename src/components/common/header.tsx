@@ -1,13 +1,12 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import { logo } from "@/assets";
-import { ModeToggle } from "../ui/ModeToggle";
+import { Menu, X } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 import NavConditionalButton from "../NavConditionalButton";
+import { ModeToggle } from "../ui/ModeToggle";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

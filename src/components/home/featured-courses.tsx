@@ -109,7 +109,8 @@ export function FeaturedCourses() {
   const { data, isLoading, error } = useGetFeaturedCoursesQuery(undefined);
   // Transform API data to match CourseCard props
   const apiCourses = Array.isArray(data?.data)
-    ? data.data.map((course: any) => ({
+    ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      data.data.map((course: any) => ({
         id: course._id,
         name: course.name,
         description: course.description,
@@ -145,7 +146,6 @@ export function FeaturedCourses() {
             Discover our most popular courses taught by industry experts
           </p>
         </div>
-        
 
         <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-8">
           {isLoading ? (
@@ -158,6 +158,7 @@ export function FeaturedCourses() {
           ) : error ? (
             <div className="col-span-full text-center text-red-500">Failed to load courses.</div>
           ) : (
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             coursesToShow.map((course: any) => <CourseCard key={course.id} course={course} />)
           )}
         </div>

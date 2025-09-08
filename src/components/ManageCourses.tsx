@@ -1,12 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import {
-  useGetAllCoursesQuery,
-  useUpdateCourseMutation,
-  useDeleteCourseMutation,
-} from "@/redux/features/courses/courses.api";
-import { useState, useEffect, useCallback } from "react";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { ConfirmationModal } from "@/components/ui/confirmation-modal";
+import { Input } from "@/components/ui/input";
 import {
   Pagination,
   PaginationContent,
@@ -16,28 +13,32 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import {
+  useDeleteCourseMutation,
+  useGetAllCoursesQuery,
+  useUpdateCourseMutation,
+} from "@/redux/features/courses/courses.api";
+import { format } from "date-fns";
+import {
+  Calendar,
   CheckCircle,
-  XCircle,
+  DollarSign,
+  Eye,
+  FileText,
+  Search,
+  Send,
   Star,
   StarOff,
   Trash2,
-  Eye,
-  DollarSign,
   Users,
-  Calendar,
-  FileText,
-  Send,
   X,
-  Search,
 } from "lucide-react";
-import { format } from "date-fns";
+import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 interface Course {
   _id: string;
@@ -115,6 +116,7 @@ export default function ManageCourses() {
 
   // Build query params with filters
   const buildQueryParams = () => {
+
     const baseParams: any = { ...params };
 
     // Add search if present (using searchTerm to match your QueryBuilder)
@@ -397,7 +399,13 @@ export default function ManageCourses() {
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center space-x-3">
-                        <img src={course.thumbnail} alt={course.name} className="w-12 h-12 rounded-md object-cover" />
+                        <Image
+                          height={48}
+                          width={48}
+                          src={course.thumbnail}
+                          alt={course.name}
+                          className="w-12 h-12 rounded-md object-cover"
+                        />
                         <div>
                           <div className="font-medium">{course.name}</div>
                           <div className="text-sm text-muted-foreground truncate max-w-48">{course.description}</div>
@@ -406,7 +414,9 @@ export default function ManageCourses() {
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center space-x-2">
-                        <img
+                        <Image
+                          height={32}
+                          width={32}
                           src={course.instructor.profilePicture}
                           alt={`${course.instructor.firstName} ${course.instructor.lastName}`}
                           className="w-8 h-8 rounded-full object-cover"

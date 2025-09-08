@@ -1,7 +1,7 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   useGetCourseStatsQuery,
@@ -13,34 +13,32 @@ import {
   useGetUserStatsQuery,
 } from "@/redux/features/stats/stats.api";
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-  LineChart,
-  Line,
+  Award,
+  BookOpen,
+  DollarSign,
+  GraduationCap,
+  Star,
+  TrendingUp,
+  UserCheck,
+  Users
+} from "lucide-react";
+import {
   Area,
   AreaChart,
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  Legend,
+  Line,
+  LineChart,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
 } from "recharts";
-import {
-  Users,
-  BookOpen,
-  GraduationCap,
-  DollarSign,
-  TrendingUp,
-  TrendingDown,
-  Eye,
-  UserCheck,
-  Star,
-  Award,
-} from "lucide-react";
 
 export default function AdminDashboard() {
   const { data: dashboardStats, isLoading: dashboardLoading } = useGetDashboardStatsQuery(undefined);

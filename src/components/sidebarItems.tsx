@@ -1,5 +1,4 @@
 import { BarChart3, BookOpen, GraduationCap, Home } from "lucide-react";
-import { title } from "process";
 
 const studentSidebarItems = {
   navMain: [
@@ -197,4 +196,4 @@ const moderatorsSidebarItems = {
   ],
 };
 
-export { instructorSidebarItems, studentSidebarItems, adminSidebarItems, moderatorsSidebarItems };
+export { adminSidebarItems, instructorSidebarItems, moderatorsSidebarItems, studentSidebarItems };

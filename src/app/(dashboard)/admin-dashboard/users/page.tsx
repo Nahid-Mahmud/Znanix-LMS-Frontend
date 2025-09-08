@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -27,9 +28,7 @@ import { useGetAllUsersQuery, useUpdateUserMutation } from "@/redux/features/use
 import { format } from "date-fns";
 import {
   Calendar,
-  Check,
   CheckCircle,
-  Edit,
   Eye,
   Mail,
   MoreHorizontal,
@@ -225,20 +224,20 @@ export default function AllUsers() {
     }
   };
 
-  const handleUpdateUserRole = async (userId: string, newRole: string) => {
-    try {
-      await updateUser({
-        id: userId,
-        data: {
-          role: newRole,
-        },
-      }).unwrap();
-      toast.success(`User role updated to ${newRole} successfully`);
-    } catch (error) {
-      console.error("Failed to update user role:", error);
-      toast.error("Failed to update user role");
-    }
-  };
+  // const handleUpdateUserRole = async (userId: string, newRole: string) => {
+  //   try {
+  //     await updateUser({
+  //       id: userId,
+  //       data: {
+  //         role: newRole,
+  //       },
+  //     }).unwrap();
+  //     toast.success(`User role updated to ${newRole} successfully`);
+  //   } catch (error) {
+  //     console.error("Failed to update user role:", error);
+  //     toast.error("Failed to update user role");
+  //   }
+  // };
 
   const handleDeleteUser = async (userId: string, userName: string, isDeleted: boolean) => {
     if (isDeleted) {

@@ -1,20 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import CreateModuleModal from "@/components/instructor/CreateModuleModal";
+import ModuleSkeleton from "@/components/ModuleSkeleton";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ConfirmationModal } from "@/components/ui/confirmation-modal";
-import ModuleSkeleton from "@/components/ModuleSkeleton";
 import {
   useDeleteCourseModuleMutation,
   useGetCourseModulesByCourseIdQuery,
 } from "@/redux/features/modules/modules.api";
-import { ArrowLeft, Edit, FileText, Play, Plus, Trash2, ChevronDown } from "lucide-react";
-import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
 import { useDeleteModuleVideoMutation } from "@/redux/features/modulesVideos/modulesVideo.api";
+import { Edit, FileText, Plus, Trash2 } from "lucide-react";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
 
 export default function ModulesManagementPage() {

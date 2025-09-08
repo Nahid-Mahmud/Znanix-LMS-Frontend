@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Badge } from "@/components/ui/badge";
@@ -11,9 +12,9 @@ import { Award, BookOpen, CheckCircle, Clock, Play, Star, Trophy } from "lucide-
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
-export default function StudentDashboard() {
+function StudentDashboardPage() {
   const { data: stats, isLoading: statsLoading } = useMyCourseStatsQuery(undefined);
 
   const [tabs, setTabs] = useState<string>("courses");
@@ -218,82 +219,103 @@ export default function StudentDashboard() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {transformedCourses.map((course: any) => (
-                  <Card key={course.id} className="overflow-hidden hover:shadow-lg transition-shadow p-0">
-                    <div className="relative">
-                      <Image
-                        src={course.thumbnail}
-                        alt={course.title}
-                        width={400}
-                        height={200}
-                        className="w-full h-48 object-cover"
-                      />
-                      <div className="absolute top-4 right-4">
-                        <Badge variant={course.progress === 100 ? "default" : "secondary"}>
-                          {course.progress === 100 ? "Completed" : `${course.progress}%`}
-                        </Badge>
-                      </div>
-                      <div className="absolute bottom-4 right-4">
-                        <Button size="sm" asChild>
-                          <Link href={`/student-dashboard/courses/${course.courseId}`}>
-                            <Play className="w-4 h-4 mr-1" />
-                            {course.progress > 0 ? "Continue" : "Start"}
-                          </Link>
-                        </Button>
-                      </div>
-                    </div>
-
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-lg line-clamp-2">{course.title}</CardTitle>
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                {transformedCourses.map(
+                  (course: {
+                    id: string;
+                    title: string;
+                    instructor: string;
+                    instructorImage: string;
+                    thumbnail: string;
+                    progress: number;
+                    totalModules: number;
+                    completedModules: number;
+                    totalVideos: number;
+                    completedVideos: number;
+                    duration: string;
+                    rating: number;
+                    lastWatched: string;
+                    nextVideo: string;
+                    certificate: string;
+                    purchased: string;
+                    courseId: string;
+                  }) => (
+                    <Card key={course.id} className="overflow-hidden hover:shadow-lg transition-shadow p-0">
+                      <div className="relative">
                         <Image
-                          src={course.instructorImage}
-                          alt={course.instructor}
-                          width={20}
-                          height={20}
-                          className="w-5 h-5 rounded-full"
+                          src={course.thumbnail}
+                          alt={course.title}
+                          width={400}
+                          height={200}
+                          className="w-full h-48 object-cover"
                         />
-                        <span>{course.instructor}</span>
-                      </div>
-                    </CardHeader>
-
-                    <CardContent className="space-y-4">
-                      <div className="space-y-2">
-                        <div className="flex justify-between text-sm">
-                          <span>Progress</span>
-                          <span>{course.progress}%</span>
+                        <div className="absolute top-4 right-4">
+                          <Badge variant={course.progress === 100 ? "default" : "secondary"}>
+                            {course.progress === 100 ? "Completed" : `${course.progress}%`}
+                          </Badge>
                         </div>
-                        <ProgressBar value={course.progress} className="h-2" />
+                        <div className="absolute bottom-4 right-4">
+                          <Button size="sm" asChild>
+                            <Link href={`/student-dashboard/courses/${course.courseId}`}>
+                              <Play className="w-4 h-4 mr-1" />
+                              {course.progress > 0 ? "Continue" : "Start"}
+                            </Link>
+                          </Button>
+                        </div>
                       </div>
 
-                      <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div>
-                          <div className="text-muted-foreground">Modules</div>
-                          <div className="font-medium">
-                            {course.completedModules}/{course.totalModules}
+                      <CardHeader className="pb-3">
+                        <CardTitle className="text-lg line-clamp-2">{course.title}</CardTitle>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <Image
+                            src={course.instructorImage}
+                            alt={course.instructor}
+                            width={20}
+                            height={20}
+                            className="w-5 h-5 rounded-full"
+                          />
+                          <span>{course.instructor}</span>
+                        </div>
+                      </CardHeader>
+
+                      <CardContent className="space-y-4">
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-sm">
+                            <span>Progress</span>
+                            <span>{course.progress}%</span>
+                          </div>
+                          <ProgressBar value={course.progress} className="h-2" />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-4 text-sm">
+                          <div>
+                            <div className="text-muted-foreground">Modules</div>
+                            <div className="font-medium">
+                              {course.completedModules}/{course.totalModules}
+                            </div>
+                          </div>
+                          <div>
+                            <div className="text-muted-foreground">Videos</div>
+                            <div className="font-medium">
+                              {course.completedVideos}/{course.totalVideos}
+                            </div>
                           </div>
                         </div>
-                        <div>
-                          <div className="text-muted-foreground">Videos</div>
-                          <div className="font-medium">
-                            {course.completedVideos}/{course.totalVideos}
+
+                        <div className="flex items-center justify-between text-sm">
+                          <div className="flex items-center gap-1">
+                            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                            <span>{course.rating}</span>
+                          </div>
+                          <div className="flex items-center gap-1 text-muted-foreground">
+                            <Clock className="w-4 h-4" />
+                            <span>{course.duration}</span>
                           </div>
                         </div>
-                      </div>
-
-                      <div className="flex items-center justify-between text-sm">
-                        <div className="flex items-center gap-1">
-                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                          <span>{course.rating}</span>
-                        </div>
-                        <div className="flex items-center gap-1 text-muted-foreground">
-                          <Clock className="w-4 h-4" />
-                          <span>{course.duration}</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                      </CardContent>
+                    </Card>
+                  )
+                )}
               </div>
             )}
           </TabsContent>
@@ -324,7 +346,9 @@ export default function StudentDashboard() {
               ) : (
                 <div className="grid gap-4">
                   {transformedCourses
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     .filter((course: any) => course.progress > 0 && course.progress < 100)
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     .map((course: any) => (
                       <Card key={course.id} className="p-4">
                         <div className="flex gap-4">
@@ -354,6 +378,7 @@ export default function StudentDashboard() {
                         </div>
                       </Card>
                     ))}
+
                   {transformedCourses.filter((course: any) => course.progress > 0 && course.progress < 100).length ===
                     0 &&
                     !myCoursesLoading && (
@@ -503,5 +528,13 @@ export default function StudentDashboard() {
         </Tabs>
       </div>
     </div>
+  );
+}
+
+export default function StudentDashboard() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <StudentDashboardPage />
+    </Suspense>
   );
 }

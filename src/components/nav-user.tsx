@@ -1,6 +1,6 @@
 "use client";
 
-import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from "lucide-react";
+import { BadgeCheck, ChevronsUpDown, CreditCard, LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -13,13 +13,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
-import { useLogoutMutation } from "@/redux/features/auth/auth.api";
-import { toast } from "sonner";
-import { useAppDispatch } from "@/redux/hooks";
 import { baseApi } from "@/redux/baseApi";
-import { useRouter } from "next/navigation";
+import { useLogoutMutation } from "@/redux/features/auth/auth.api";
+import { useAppDispatch } from "@/redux/hooks";
 import { UserRole } from "@/types/user.types";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export function NavUser({
   user,
