@@ -1,0 +1,3 @@
+{
+  "/(commonLayout)/auth/forgot-password/page": "app/(commonLayout)/auth/forgot-password/page.js"
+}
