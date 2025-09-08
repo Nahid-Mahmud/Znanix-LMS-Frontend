@@ -15,7 +15,7 @@ export async function middleware(request: NextRequest) {
 
   // If no access token, block all protected pages
   if (!accessToken) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(new URL("/auth/signin", request.url));
   }
 
   const user = jwtDecode(accessToken) as { role: string };
