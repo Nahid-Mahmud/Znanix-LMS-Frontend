@@ -11,7 +11,7 @@ const studentRoutes = ["/student-dashboard"];
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get("accessToken")?.value;
+  const accessToken = cookieStore.get("accessToken")?.value || request.cookies.get("accessToken")?.value;
 
   // If no access token, block all protected pages
   if (!accessToken) {
