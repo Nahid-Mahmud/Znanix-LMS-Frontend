@@ -13,6 +13,8 @@ export async function middleware(request: NextRequest) {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value || request.cookies.get("accessToken")?.value;
 
+  console.log(accessToken);
+
   // If no access token, block all protected pages
   if (!accessToken) {
     return NextResponse.redirect(new URL("/auth/signin", request.url));
