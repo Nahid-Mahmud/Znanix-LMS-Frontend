@@ -20,6 +20,7 @@ import { UserRole } from "@/types/user.types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { logoutUser } from "@/service/logoutUser";
 
 export function NavUser({
   user,
@@ -75,12 +76,11 @@ export function NavUser({
       });
     });
 
-    await Promise.all([deleteCookies(["accessToken"]), deleteCookies(["refreshToken"])]);
+    await logoutUser(router);
 
     // await logout(undefined);
     dispatch(baseApi.util.resetApiState());
     toast.success("Logged out successfully");
-    router.push("/auth/signin");
   };
 
   return (
