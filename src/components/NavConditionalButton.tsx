@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 import { useUserInfoQuery } from "@/redux/features/user/user.api";
+import { UserRole } from "@/types/user.types";
 
 export default function NavConditionalButton() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean | null>(null);
@@ -21,6 +22,23 @@ export default function NavConditionalButton() {
 
   const userRole = userInfo?.data?.role;
 
+  const dashboardLink = () => {
+    switch (userRole) {
+      case UserRole.STUDENT:
+        return "/student-dashboard";
+      case UserRole.INSTRUCTOR:
+        return "/instructor-dashboard";
+      case UserRole.ADMIN:
+        return "/admin-dashboard";
+      case UserRole.SUPER_ADMIN:
+        return "/admin-dashboard";
+      case UserRole.MODERATOR:
+        return "/moderator-dashboard";
+      default:
+        return "/";
+    }
+  };
+
   // Show skeleton loading while checking login status or fetching user info
   if (isUserLoggedIn === null || (isUserLoggedIn && isLoading)) {
     return (
@@ -33,7 +51,7 @@ export default function NavConditionalButton() {
   return isUserLoggedIn && userInfo?.data && userRole ? (
     <div className="hidden md:flex items-center space-x-4">
       <Button variant="ghost" size="sm" asChild>
-        <Link href="#">Dashboard</Link>
+        <Link href={dashboardLink()}>Dashboard</Link>
       </Button>
     </div>
   ) : (

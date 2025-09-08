@@ -1,18 +1,22 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { Play, BookOpen, Clock, Star, CheckCircle, Trophy, TrendingUp, Award } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Progress as ProgressBar } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGetMyCoursesQuery, useMyCourseStatsQuery } from "@/redux/features/user-courses/userCourses.api";
+import { Award, BookOpen, CheckCircle, Clock, Play, Star, Trophy } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function StudentDashboard() {
   const { data: stats, isLoading: statsLoading } = useMyCourseStatsQuery(undefined);
+
+  const [tabs, setTabs] = useState<string>("courses");
 
   const { data: myCourses, isLoading: myCoursesLoading } = useGetMyCoursesQuery(undefined);
   console.log(myCourses);
@@ -66,6 +70,18 @@ export default function StudentDashboard() {
       stats?.data?.completedCourses ||
       transformedCourses.filter((course: any) => course.progress === 100 && course.certificate).length,
   };
+
+  const searchParams = useSearchParams();
+  console.log(searchParams.get("tab"));
+
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    if (tab) {
+      setTabs(tab);
+    } else {
+      setTabs("courses");
+    }
+  }, [searchParams]);
 
   return (
     <div className="min-h-screen bg-background p-6">
@@ -152,7 +168,7 @@ export default function StudentDashboard() {
         </div>
 
         {/* Main Content */}
-        <Tabs defaultValue="courses" className="space-y-6">
+        <Tabs value={tabs} onValueChange={setTabs} defaultValue="courses" className="space-y-6">
           <TabsList>
             <TabsTrigger value="courses">My Courses</TabsTrigger>
             <TabsTrigger value="continue">Continue Learning</TabsTrigger>

@@ -6,6 +6,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
+import { UserRole } from "@/types/user.types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import Link from "next/link";
@@ -46,7 +47,29 @@ export default function SignInPage() {
         const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
         document.cookie = `user=true; path=/; expires=${expires.toUTCString()}`;
         toast.success("Login successful!");
-        router.push("/"); // Redirect to home page
+        // router.push("/"); // Redirect to home page
+
+        // switch case to redirect based on role
+        switch (res.data.role) {
+          case UserRole.STUDENT:
+            router.push("/student-dashboard");
+            break;
+          case UserRole.INSTRUCTOR:
+            router.push("/instructor-dashboard");
+            break;
+          case UserRole.ADMIN:
+            router.push("/admin-dashboard");
+            break;
+          case UserRole.SUPER_ADMIN:
+            router.push("/admin-dashboard");
+            break;
+          case UserRole.MODERATOR:
+            router.push("/moderator-dashboard");
+            break;
+          default:
+            router.push("/");
+            break;
+        }
       }
     } catch (error: unknown) {
       // Check if error is an object with a 'data' property
