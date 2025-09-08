@@ -20,6 +20,7 @@ import { UserRole } from "@/types/user.types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { deleteCookies } from "@/service/DeleteCookies";
 
 export function NavUser({
   user,
@@ -55,11 +56,22 @@ export function NavUser({
 
   const handleLogout = async () => {
     try {
-      document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      // Remove cookie for multiple paths and domains
+      const paths = ["/", window.location.pathname];
+      const domains = ["", window.location.hostname];
+      paths.forEach((path) => {
+        domains.forEach((domain) => {
+          document.cookie = `user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${path};${
+            domain ? ` domain=${domain};` : ""
+          }`;
+        });
+      });
+      await deleteCookies(["accessToken"]);
+      await deleteCookies(["refreshToken"]);
+
       await logout(undefined);
       dispatch(baseApi.util.resetApiState());
       toast.success("Logged out successfully");
-      // navigate("/login");
       router.push("/auth/signin");
     } catch (error) {
       toast.error("Failed to log out");

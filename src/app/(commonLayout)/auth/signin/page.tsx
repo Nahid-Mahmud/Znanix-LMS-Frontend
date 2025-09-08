@@ -7,6 +7,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
+import setAccessToken from "@/service/SetAccessToken";
 import { UserRole } from "@/types/user.types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
@@ -48,6 +49,10 @@ export default function SignInPage() {
         const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
         document.cookie = `user=true; path=/; expires=${expires.toUTCString()}`;
         toast.success("Login successful!");
+
+        await setAccessToken(res.data?.accessToken, "accessToken");
+        await setAccessToken(res.data.refreshToken, "refreshToken");
+
         // router.push("/"); // Redirect to home page
 
         // reload the window to fetch the user data

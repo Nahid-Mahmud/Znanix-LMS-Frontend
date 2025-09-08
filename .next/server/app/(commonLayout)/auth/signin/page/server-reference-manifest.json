@@ -1,4 +1,20 @@
 {
-  "node": {},
+  "node": {
+    "7f96bb6b84c1556c909f0a1429a5cac9683a0b3c07": {
+      "workers": {
+        "app/(commonLayout)/auth/signin/page": {
+          "moduleId": "900914",
+          "async": false,
+          "exportedName": "default",
+          "filename": "src/service/SetAccessToken.ts"
+        }
+      },
+      "layer": {
+        "app/(commonLayout)/auth/signin/page": "action-browser"
+      },
+      "exportedName": "default",
+      "filename": "src/service/SetAccessToken.ts"
+    }
+  },
   "edge": {}
 }
