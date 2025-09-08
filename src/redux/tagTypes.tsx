@@ -1,1 +1,1 @@
-export const tagTypes = ["User", "Course", "CourseModule", "ModuleVideo", "UserCourse"];
+export const tagTypes = ["User", "Course", "CourseModule", "ModuleVideo", "UserCourse", "Stats"];

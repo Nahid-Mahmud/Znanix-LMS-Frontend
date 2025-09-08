@@ -20,7 +20,7 @@ import { NavUser } from "@/components/nav-user";
 
 import { Sidebar, SidebarContent, SidebarFooter, SidebarRail } from "@/components/ui/sidebar";
 import { useUserInfoQuery } from "@/redux/features/user/user.api";
-import { instructorSidebarItems, studentSidebarItems } from "./sidebarItems";
+import { adminSidebarItems, instructorSidebarItems, moderatorsSidebarItems, studentSidebarItems } from "./sidebarItems";
 import { UserRole } from "@/types/user.types";
 
 // ...existing code...
@@ -42,7 +42,23 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   };
 
   // dynamically set sidebar items based on user role
-  const data = user?.role === UserRole.INSTRUCTOR ? instructorSidebarItems : studentSidebarItems;
+  // const data = user?.role === UserRole.INSTRUCTOR ? instructorSidebarItems : studentSidebarItems;
+
+  const getSidebarItemsByRole = (role: string) => {
+    switch (role) {
+      case UserRole.ADMIN:
+        return adminSidebarItems;
+      case UserRole.SUPER_ADMIN:
+        return adminSidebarItems;
+      case UserRole.INSTRUCTOR:
+        return instructorSidebarItems;
+      case UserRole.MODERATOR:
+        return moderatorsSidebarItems;
+      case UserRole.STUDENT:
+      default:
+        return studentSidebarItems;
+    }
+  };
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -50,7 +66,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader> */}
       <SidebarContent>
-        <NavMain items={data?.navMain} />
+        <NavMain items={getSidebarItemsByRole(user.role)?.navMain} />
         {/* <NavProjects projects={data?.projects} /> */}
       </SidebarContent>
       <SidebarFooter>
