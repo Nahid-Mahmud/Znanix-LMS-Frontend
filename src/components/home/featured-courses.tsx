@@ -1,109 +1,10 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { placeholderSvg } from "@/assets";
 import CourseCard from "@/components/CourseCard";
-import {
-  webDevelopmentCodingScreenWithHtmlCssJavasc,
-  dataSciencePythonProgrammingChartsGraphsAnal,
-  digitalMarketingSocialMediaAdvertisingAnalyti,
-  placeholderSvg,
-} from "@/assets";
-import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { useGetFeaturedCoursesQuery } from "@/redux/features/courses/courses.api";
-
-const featuredCourses = [
-  {
-    id: "1",
-    name: "Complete Web Development Bootcamp",
-    description: "Master HTML, CSS, JavaScript, React, and Node.js in this comprehensive course",
-    thumbnail: webDevelopmentCodingScreenWithHtmlCssJavasc,
-    price: 99,
-    originalPrice: 0,
-    introVideo: "",
-    tags: ["Web Development", "JavaScript", "React"],
-    slug: "complete-web-development-bootcamp",
-    type: "PAID",
-    instructor: {
-      name: "Sarah Johnson",
-      avatar: placeholderSvg,
-    },
-    courseDuration: "40 hours",
-    certificate: false,
-    discount: 0,
-    featured: true,
-    rating: 4.8,
-    students: 15420,
-    category: "Web Development",
-  },
-  {
-    id: "2",
-    name: "Data Science with Python",
-    description: "Learn data analysis, machine learning, and visualization with Python",
-    thumbnail: dataSciencePythonProgrammingChartsGraphsAnal,
-    price: 79,
-    originalPrice: 0,
-    introVideo: "",
-    tags: ["Data Science", "Python", "Machine Learning"],
-    slug: "data-science-with-python",
-    type: "PAID",
-    instructor: {
-      name: "Dr. Michael Chen",
-      avatar: placeholderSvg,
-    },
-    courseDuration: "35 hours",
-    certificate: false,
-    discount: 0,
-    featured: true,
-    rating: 4.9,
-    students: 8930,
-    category: "Data Science",
-  },
-  {
-    id: "3",
-    name: "Digital Marketing Mastery",
-    description: "Complete guide to SEO, social media, and online advertising strategies",
-    thumbnail: digitalMarketingSocialMediaAdvertisingAnalyti,
-    price: 0,
-    originalPrice: 0,
-    introVideo: "",
-    tags: ["Marketing", "SEO", "Social Media"],
-    slug: "digital-marketing-mastery",
-    type: "FREE",
-    instructor: {
-      name: "Emma Rodriguez",
-      avatar: placeholderSvg,
-    },
-    courseDuration: "25 hours",
-    certificate: false,
-    discount: 0,
-    featured: true,
-    rating: 4.7,
-    students: 12500,
-    category: "Marketing",
-  },
-  {
-    id: "4",
-    name: "UI/UX Design Fundamentals",
-    description: "Learn the essentials of UI/UX design, prototyping, and user research with hands-on projects.",
-    thumbnail: placeholderSvg,
-    price: 59,
-    originalPrice: 99,
-    introVideo: "",
-    tags: ["Design", "UI/UX", "Prototyping"],
-    slug: "ui-ux-design-fundamentals",
-    type: "PAID",
-    instructor: {
-      name: "Jessica Park",
-      avatar: placeholderSvg,
-    },
-    courseDuration: "28 hours",
-    certificate: true,
-    discount: 40,
-    featured: true,
-    rating: 4.8,
-    students: 5100,
-    category: "Design",
-  },
-];
+import Link from "next/link";
+import CourseCardSkeleton from "../CourseCardSkeleton";
 
 export function FeaturedCourses() {
   const { data, isLoading, error } = useGetFeaturedCoursesQuery(undefined);
@@ -135,7 +36,7 @@ export function FeaturedCourses() {
       }))
     : [];
 
-  const coursesToShow = !isLoading && !error && apiCourses.length > 0 ? apiCourses : featuredCourses;
+  const coursesToShow = !isLoading && !error && apiCourses.length > 0 ? apiCourses : [];
 
   return (
     <section id="courses" className="py-20 bg-muted/30">
@@ -151,8 +52,8 @@ export function FeaturedCourses() {
           {isLoading ? (
             <>
               {/* Optionally show skeletons while loading */}
-              {featuredCourses.map((course) => (
-                <CourseCard key={course.id} course={course} />
+              {[1, 2, 3, 4].map((key) => (
+                <CourseCardSkeleton key={key} />
               ))}
             </>
           ) : error ? (

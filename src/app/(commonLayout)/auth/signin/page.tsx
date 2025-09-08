@@ -89,9 +89,11 @@ export default function SignInPage() {
         console.log((error as any).data.message);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         if ((error as any).data.message === "User is not verified") {
-          router.push("/auth/verify-email");
+          // router.push("/auth/verify-email");
 
-          toast.error("Please verify your email before logging in.");
+          toast.error("Please verify your email before logging in.", {
+            duration: 8000,
+          });
           return;
         }
         toast.error("Login failed. Please check your credentials.");
