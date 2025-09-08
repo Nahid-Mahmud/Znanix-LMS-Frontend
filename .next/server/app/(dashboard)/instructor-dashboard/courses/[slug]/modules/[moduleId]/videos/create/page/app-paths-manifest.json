@@ -1,3 +1,0 @@
-{
-  "/(dashboard)/instructor-dashboard/courses/[slug]/modules/[moduleId]/videos/create/page": "app/(dashboard)/instructor-dashboard/courses/[slug]/modules/[moduleId]/videos/create/page.js"
-}
