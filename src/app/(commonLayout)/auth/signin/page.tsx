@@ -7,6 +7,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useLoginMutation } from "@/redux/features/auth/auth.api";
+import setAccessToken from "@/service/SetAccessToken";
 import { UserRole } from "@/types/user.types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
@@ -47,28 +48,41 @@ export default function SignInPage() {
       if (res.success) {
         const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
         document.cookie = `user=true; path=/; expires=${expires.toUTCString()}`;
-        toast.success("Login successful!");
+
+        setAccessToken(res.data?.accessToken, "accessToken");
+        setAccessToken(res.data.refreshToken, "refreshToken");
+
         // router.push("/"); // Redirect to home page
 
+        // reload the window to fetch the user data
+        // await window.location.reload();
+
         // switch case to redirect based on role
+
+        // give a 500ms delay to show the toast
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        toast.success("Login successful!");
+
+        router.refresh();
+
         switch (res.data.role) {
           case UserRole.STUDENT:
-            router.push("/student-dashboard");
+            await router.push("/student-dashboard");
             break;
           case UserRole.INSTRUCTOR:
-            router.push("/instructor-dashboard");
+            await router.push("/instructor-dashboard");
             break;
           case UserRole.ADMIN:
-            router.push("/admin-dashboard");
+            await router.push("/admin-dashboard");
             break;
           case UserRole.SUPER_ADMIN:
-            router.push("/admin-dashboard");
+            await router.push("/admin-dashboard");
             break;
           case UserRole.MODERATOR:
-            router.push("/moderator-dashboard");
+            await router.push("/moderator-dashboard");
             break;
           default:
-            router.push("/");
+            await router.push("/");
             break;
         }
       }
@@ -91,16 +105,18 @@ export default function SignInPage() {
         if ((error as any).data.message === "User is not verified") {
           // router.push("/auth/verify-email");
 
-          toast.error("Please verify your email before logging in.", {
-            duration: 8000,
-          });
+          // toast.error("Please verify your email before logging in.", {
+          //   duration: 8000,
+          // });
           return;
         }
-        toast.error("Login failed. Please check your credentials.");
+        // toast.error("Login failed. Please check your credentials.");
+        router.refresh();
         console.log(error);
       } else {
-        toast.error("Login failed. Please check your credentials.");
+        // toast.error("Login failed. Please check your credentials.");
         console.log(error);
+        router.refresh();
       }
     }
   };

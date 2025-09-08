@@ -14,12 +14,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
 import { baseApi } from "@/redux/baseApi";
-import { useLogoutMutation } from "@/redux/features/auth/auth.api";
 import { useAppDispatch } from "@/redux/hooks";
+import { deleteCookies } from "@/service/DeleteCookies";
 import { UserRole } from "@/types/user.types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { logoutUser } from "@/service/logoutUser";
 
 export function NavUser({
   user,
@@ -32,7 +33,7 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
-  const [logout] = useLogoutMutation();
+  // const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -54,17 +55,32 @@ export function NavUser({
   };
 
   const handleLogout = async () => {
-    try {
-      document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      await logout(undefined);
-      dispatch(baseApi.util.resetApiState());
-      toast.success("Logged out successfully");
-      // navigate("/login");
-      router.push("/auth/signin");
-    } catch (error) {
-      toast.error("Failed to log out");
-      console.error("Logout error:", error);
-    }
+    // Remove all cookies regardless of domain and path
+
+    const cookies = document.cookie.split(";");
+    const paths = ["/", window.location.pathname];
+    const domains = ["", window.location.hostname];
+    cookies.forEach((cookie) => {
+      const eqPos = cookie.indexOf("=");
+      const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
+      paths.forEach((path) => {
+        domains.forEach((domain) => {
+          try {
+            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${path};${
+              domain ? ` domain=${domain};` : ""
+            }`;
+          } catch (err) {
+            console.error(`Failed to clear cookie ${name} for path ${path} and domain ${domain}:`, err);
+          }
+        });
+      });
+    });
+
+    await logoutUser(router);
+
+    // await logout(undefined);
+    dispatch(baseApi.util.resetApiState());
+    toast.success("Logged out successfully");
   };
 
   return (
