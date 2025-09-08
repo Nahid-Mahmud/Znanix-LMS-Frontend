@@ -48,7 +48,6 @@ export default function SignInPage() {
       if (res.success) {
         const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
         document.cookie = `user=true; path=/; expires=${expires.toUTCString()}`;
-        toast.success("Login successful!");
 
         await setAccessToken(res.data?.accessToken, "accessToken");
         await setAccessToken(res.data.refreshToken, "refreshToken");
@@ -59,6 +58,13 @@ export default function SignInPage() {
         // await window.location.reload();
 
         // switch case to redirect based on role
+
+        // give a 500ms delay to show the toast
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        toast.success("Login successful!");
+
+        window.location.reload()
+
         switch (res.data.role) {
           case UserRole.STUDENT:
             await router.push("/student-dashboard");
