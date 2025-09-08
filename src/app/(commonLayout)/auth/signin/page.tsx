@@ -56,27 +56,27 @@ export default function SignInPage() {
         // router.push("/"); // Redirect to home page
 
         // reload the window to fetch the user data
-        await window.location.reload();
+        // await window.location.reload();
 
         // switch case to redirect based on role
         switch (res.data.role) {
           case UserRole.STUDENT:
-            router.push("/student-dashboard");
+            await router.push("/student-dashboard");
             break;
           case UserRole.INSTRUCTOR:
-            router.push("/instructor-dashboard");
+            await router.push("/instructor-dashboard");
             break;
           case UserRole.ADMIN:
-            router.push("/admin-dashboard");
+            await router.push("/admin-dashboard");
             break;
           case UserRole.SUPER_ADMIN:
-            router.push("/admin-dashboard");
+            await router.push("/admin-dashboard");
             break;
           case UserRole.MODERATOR:
-            router.push("/moderator-dashboard");
+            await router.push("/moderator-dashboard");
             break;
           default:
-            router.push("/");
+            await router.push("/");
             break;
         }
       }
