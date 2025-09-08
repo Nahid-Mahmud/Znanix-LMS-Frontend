@@ -14,11 +14,27 @@ export async function middleware(request: NextRequest) {
   const accessToken = cookieStore.get("accessToken")?.value || request.cookies.get("accessToken")?.value;
 
   console.log(accessToken);
-  console.log(cookieStore.getAll, "getAallcookies");
+  console.log(cookieStore.getAll(), "getAllCookies");
 
-  // If no access token, block all protected pages
+  // If no access token, block all protected pages except /auth
   if (!accessToken) {
+    // Allow access to /auth paths if not logged in
+    if (pathname.startsWith("/auth")) {
+      return NextResponse.next();
+    }
     return NextResponse.redirect(new URL("/auth/signin", request.url));
+  }
+
+  // If logged in, prevent access to /auth paths
+  if (pathname.startsWith("/auth")) {
+    // Redirect to dashboard based on role
+    const user = jwtDecode(accessToken) as { role: string };
+    let dashboard = "/";
+    if (user.role === UserRole.ADMIN || user.role === UserRole.SUPER_ADMIN) dashboard = "/admin-dashboard";
+    else if (user.role === UserRole.INSTRUCTOR) dashboard = "/instructor-dashboard";
+    else if (user.role === UserRole.MODERATOR) dashboard = "/moderator-dashboard";
+    else if (user.role === UserRole.STUDENT) dashboard = "/student-dashboard";
+    return NextResponse.redirect(new URL(dashboard, request.url));
   }
 
   const user = jwtDecode(accessToken) as { role: string };
@@ -49,6 +65,8 @@ export const config = {
     "/instructor-dashboard/:path*",
     "/moderator-dashboard/:path*",
     "/student-dashboard/:path*",
+    "/auth/:path*",
+    "/unauthorized",
     /*
      * Match all request paths except for the ones starting with:
      * - api (API routes)

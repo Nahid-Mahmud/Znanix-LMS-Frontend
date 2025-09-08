@@ -25,12 +25,20 @@
         {
           "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/student-dashboard(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$",
           "originalSource": "/student-dashboard/:path*"
+        },
+        {
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/auth(?:\\/((?:[^\\/#\\?]+?)(?:\\/(?:[^\\/#\\?]+?))*))?(\\\\.json)?[\\/#\\?]?$",
+          "originalSource": "/auth/:path*"
+        },
+        {
+          "regexp": "^(?:\\/(_next\\/data\\/[^/]{1,}))?\\/unauthorized(\\\\.json)?[\\/#\\?]?$",
+          "originalSource": "/unauthorized"
         }
       ],
       "wasm": [],
       "assets": [],
       "env": {
-        "__NEXT_BUILD_ID": "rdtt_4T_XqJqsIh_GNHIh",
+        "__NEXT_BUILD_ID": "MEZPXoG4MYHooc99y6Qou",
         "NEXT_SERVER_ACTIONS_ENCRYPTION_KEY": "ZJsP2cnh8fNX7ASXeWljcMryLZQ8NBBoQlAAZpiHULQ=",
         "__NEXT_PREVIEW_MODE_ID": "377610a5dae5e6a804a85d65ed0e468b",
         "__NEXT_PREVIEW_MODE_ENCRYPTION_KEY": "c0a7b00521aab9df798f51ab7478c88ea032d77dad54947c0234162c950eacbd",
