@@ -13,13 +13,12 @@ export async function middleware(request: NextRequest) {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
 
+  // If no access token, block all protected pages
   if (!accessToken) {
-    // If no access token, redirect to login
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
   const user = jwtDecode(accessToken) as { role: string };
-  //   console.log(user);
 
   if (adminRoutes.includes(pathname) && user.role !== UserRole.ADMIN && user.role !== UserRole.SUPER_ADMIN) {
     return NextResponse.redirect(new URL("/unauthorized", request.url));
@@ -58,6 +57,5 @@ export const config = {
      * - auth (auth pages)
      * - unauthorized (unauthorized page)
      */
-    "/((?!api|static|_next|favicon.ico|login|signup|auth|unauthorized).*)",
   ],
 };
