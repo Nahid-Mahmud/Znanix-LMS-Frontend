@@ -4,6 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Award, Clock, Star, Users } from "lucide-react";
 import type { StaticImageData } from "next/image";
 import Image from "next/image";
+import Link from "next/link";
 
 export interface CourseCardProps {
   course: {
@@ -48,8 +49,10 @@ export default function CourseCard({ course }: CourseCardProps) {
           {course.featured && (
             <Badge className="absolute top-3 left-3 bg-orange-500 hover:bg-orange-600 text-white">Bestseller</Badge>
           )}
-          {course.type === "FREE" && (
+          {course.type === "FREE" ? (
             <Badge className="absolute top-3 right-3 bg-green-500 hover:bg-green-600 text-white">Free</Badge>
+          ) : (
+            <Badge className="absolute top-3 right-3 bg-red-500 hover:bg-red-600 text-white">Paid</Badge>
           )}
         </div>
       </CardHeader>
@@ -120,7 +123,9 @@ export default function CourseCard({ course }: CourseCardProps) {
               </>
             )}
           </div>
-          <Button size="sm">View Details</Button>
+          <Button asChild size="sm">
+            <Link href={`/courses/${course.slug}`}>View Details</Link>
+          </Button>
         </div>
       </CardFooter>
     </Card>

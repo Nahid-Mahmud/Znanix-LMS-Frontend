@@ -4,7 +4,6 @@ import { FeaturedCourses } from "@/components/home/featured-courses";
 import { HeroSection } from "@/components/home/hero-section";
 import { InstructorsSection } from "@/components/home/instructors-section";
 import { NewsletterSection } from "@/components/home/newsletter-section";
-import { PricingSection } from "@/components/home/pricing-section";
 import { StatsSection } from "@/components/home/stats-section";
 import { TestimonialsSection } from "@/components/home/testimonials-section";
 import { WhyChooseUs } from "@/components/home/why-choose-us";
@@ -20,7 +19,7 @@ export default function Home() {
         <StatsSection />
         <TestimonialsSection />
         <InstructorsSection />
-        <PricingSection />
+        {/* <PricingSection /> */}
         <FAQSection />
         <NewsletterSection />
       </main>

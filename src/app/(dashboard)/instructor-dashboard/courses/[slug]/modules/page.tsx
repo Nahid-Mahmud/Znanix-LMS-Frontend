@@ -1,19 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import CreateModuleModal from "@/components/instructor/CreateModuleModal";
+import ModuleSkeleton from "@/components/ModuleSkeleton";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ConfirmationModal } from "@/components/ui/confirmation-modal";
 import {
   useDeleteCourseModuleMutation,
   useGetCourseModulesByCourseIdQuery,
 } from "@/redux/features/modules/modules.api";
-import { ArrowLeft, Edit, FileText, Play, Plus, Trash2, ChevronDown } from "lucide-react";
-import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
 import { useDeleteModuleVideoMutation } from "@/redux/features/modulesVideos/modulesVideo.api";
+import { Edit, FileText, Plus, Trash2 } from "lucide-react";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
 
 export default function ModulesManagementPage() {
@@ -95,8 +97,10 @@ export default function ModulesManagementPage() {
         {/* Modules List */}
         <div className="space-y-4">
           {modulesLoading ? (
-            <div className="text-center py-8">
-              <p>Loading modules...</p>
+            <div className="space-y-4">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <ModuleSkeleton key={index} />
+              ))}
             </div>
           ) : (
             <Accordion type="multiple" className="space-y-4">
@@ -107,7 +111,7 @@ export default function ModulesManagementPage() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4 flex-1">
                           <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                            <span className="font-semibold">{module.order + 1}</span>
+                            <span className="font-semibold">{module.order}</span>
                           </div>
                           <div className="flex-1">
                             <AccordionTrigger className="hover:no-underline p-0 [&>svg]:hidden">

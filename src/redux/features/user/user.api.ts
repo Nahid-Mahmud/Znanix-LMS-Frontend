@@ -36,15 +36,6 @@ export const userApi = baseApi.injectEndpoints({
       invalidatesTags: ["User"],
     }),
 
-    changePin: builder.mutation({
-      query: (data) => ({
-        url: "/user/change-pin",
-        method: "PATCH",
-        data: data,
-      }),
-      invalidatesTags: ["User"],
-    }),
-
     setPin: builder.mutation({
       query: (data) => ({
         url: "/user/set-pin",
@@ -56,11 +47,5 @@ export const userApi = baseApi.injectEndpoints({
   }),
 });
 
-export const {
-  useRegisterMutation,
-  useUserInfoQuery,
-  useGetAllUsersQuery,
-  useUpdateUserMutation,
-  useChangePinMutation,
-  useSetPinMutation,
-} = userApi;
+export const { useRegisterMutation, useUserInfoQuery, useGetAllUsersQuery, useUpdateUserMutation, useSetPinMutation } =
+  userApi;

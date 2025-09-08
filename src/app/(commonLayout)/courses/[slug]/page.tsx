@@ -1,18 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Skeleton } from "@/components/ui/skeleton";
 import { AvatarWithFallback } from "@/components/ui/avatar-with-fallback";
-import { Clock, Users, Award, Play, Download, Smartphone, TrendingUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGetCoursesDetailBySlugQuery } from "@/redux/features/courses/courses.api";
-import { useParams } from "next/navigation";
 import processMarkdown from "@/utils/processMarkdown";
+import { Award, Clock, Play, Smartphone, TrendingUp, Users } from "lucide-react";
 import dynamic from "next/dynamic";
+import Image from "next/image";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 // Dynamic import for ReactPlayer to avoid SSR issues
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
@@ -22,6 +23,7 @@ export default function CourseDetailsPage() {
   const params = useParams();
   const slug = params.slug;
   console.log(slug);
+  // const [purchaseCourseFn, { isLoading: isPurchasing }] = usePurchaseCourseMutation();
 
   // get slug from url
 
@@ -29,7 +31,7 @@ export default function CourseDetailsPage() {
     skip: !slug,
   });
 
-  console.log(courseDetails);
+  console.log(courseDetails?.data?._id);
 
   const [activeTab, setActiveTab] = useState("course-details");
   const [processedDescription, setProcessedDescription] = useState("");
@@ -299,8 +301,8 @@ export default function CourseDetailsPage() {
                   <span className="text-2xl font-bold">${courseData?.price}</span>
                 </div>
 
-                <Button className="w-full mb-4" size="lg">
-                  Enroll Now
+                <Button asChild className="w-full mb-4 cursor-pointer" size="lg">
+                  <Link href={`/checkout?course=${courseData?.slug}`}>Enroll Now</Link>
                 </Button>
 
                 <div className="space-y-3 text-sm">

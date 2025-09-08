@@ -1,11 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import { Edit, Eye, Trash2, Plus, BookOpen } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,8 +10,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { BookOpen, Edit, Eye, Plus, Trash2 } from "lucide-react";
+import Link from "next/link";
 import InstructorCourseCard from "./InstructorCourseCard";
-import { useMyCoursesQuery } from "@/redux/features/courses/courses.api";
 
 interface Course {
   _id: string;

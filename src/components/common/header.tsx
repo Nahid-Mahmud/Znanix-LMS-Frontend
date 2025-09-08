@@ -1,11 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
-import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import { logo } from "@/assets";
+import { Menu, X } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import NavConditionalButton from "../NavConditionalButton";
 import { ModeToggle } from "../ui/ModeToggle";
 
 export function Header() {
@@ -51,14 +51,7 @@ export function Header() {
               <ModeToggle />
             </div>
 
-            <div className="hidden md:flex items-center space-x-4">
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/auth/signin">Sign In</Link>
-              </Button>
-              <Button size="sm" asChild>
-                <Link href="/auth/signup">Get Started</Link>
-              </Button>
-            </div>
+            <NavConditionalButton />
           </div>
 
           <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -81,14 +74,7 @@ export function Header() {
               <Link href="/about" className="text-sm font-medium text-muted-foreground hover:text-foreground">
                 About
               </Link>
-              <div className="flex flex-col space-y-2 pt-4">
-                <Button variant="ghost" size="sm" asChild>
-                  <Link href="/auth/signin">Sign In</Link>
-                </Button>
-                <Button size="sm" asChild>
-                  <Link href="/auth/signup">Get Started</Link>
-                </Button>
-              </div>
+              <NavConditionalButton />
             </nav>
           </div>
         )}

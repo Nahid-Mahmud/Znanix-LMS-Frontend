@@ -3,10 +3,10 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import { ConfirmationModal } from "@/components/ui/confirmation-modal";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useDeleteCourseMutation, useGetCoursesDetailBySlugQuery } from "@/redux/features/courses/courses.api";
-import { Award, BookOpen, Clock, DollarSign, Edit, Globe, RefreshCw, Timer, Trash2, Users, Video } from "lucide-react";
+import { Award, BookOpen, Clock, DollarSign, Edit, Globe, Timer, Trash2, Users, Video } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";

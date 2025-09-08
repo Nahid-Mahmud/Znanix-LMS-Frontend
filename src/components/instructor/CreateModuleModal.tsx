@@ -1,21 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { toast } from "sonner";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Loader2 } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { useCreateCourseModuleMutation } from "@/redux/features/modules/modules.api";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
 const createModuleSchema = z.object({
   title: z.string().min(2, { message: "Module title must be at least 2 characters." }),
   duration: z.string().optional(),
-  order: z.number().min(0, { message: "Order must be at least 0." }),
+  order: z.number().min(1, { message: "Order must be at least 1." }),
 });
 
 type CreateModuleFormData = z.infer<typeof createModuleSchema>;
@@ -34,7 +33,7 @@ export default function CreateModuleModal({ isOpen, onClose, courseId }: CreateM
     defaultValues: {
       title: "",
       duration: "",
-      order: 0,
+      order: 1,
     },
   });
 
@@ -120,9 +119,10 @@ export default function CreateModuleModal({ isOpen, onClose, courseId }: CreateM
                   <FormControl>
                     <Input
                       type="number"
+                      min="1"
                       placeholder="Enter module order"
                       {...field}
-                      onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                      onChange={(e) => field.onChange(parseInt(e.target.value) || 1)}
                     />
                   </FormControl>
                   <FormMessage />
