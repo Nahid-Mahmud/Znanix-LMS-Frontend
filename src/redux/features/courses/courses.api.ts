@@ -60,6 +60,15 @@ export const coursesApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Course"],
     }),
+
+    // featured courses
+    getFeaturedCourses: builder.query({
+      query: () => ({
+        url: "/courses/featured",
+        method: "GET",
+      }),
+      providesTags: ["Course"],
+    }),
   }),
 });
 
@@ -71,4 +80,5 @@ export const {
   useDeleteCourseMutation,
   useGetMyCourseStatsQuery,
   useGetCoursesDetailBySlugQuery,
+  useGetFeaturedCoursesQuery,
 } = coursesApi;

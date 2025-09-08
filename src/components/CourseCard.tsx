@@ -49,8 +49,10 @@ export default function CourseCard({ course }: CourseCardProps) {
           {course.featured && (
             <Badge className="absolute top-3 left-3 bg-orange-500 hover:bg-orange-600 text-white">Bestseller</Badge>
           )}
-          {course.type === "FREE" && (
+          {course.type === "FREE" ? (
             <Badge className="absolute top-3 right-3 bg-green-500 hover:bg-green-600 text-white">Free</Badge>
+          ) : (
+            <Badge className="absolute top-3 right-3 bg-red-500 hover:bg-red-600 text-white">Paid</Badge>
           )}
         </div>
       </CardHeader>
