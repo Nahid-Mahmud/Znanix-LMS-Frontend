@@ -14,6 +14,7 @@ export async function middleware(request: NextRequest) {
   const accessToken = cookieStore.get("accessToken")?.value || request.cookies.get("accessToken")?.value;
 
   console.log(accessToken);
+  console.log(cookieStore.getAll, "getAallcookies");
 
   // If no access token, block all protected pages
   if (!accessToken) {
