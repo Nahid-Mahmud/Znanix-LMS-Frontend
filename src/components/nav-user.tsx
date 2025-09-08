@@ -56,22 +56,27 @@ export function NavUser({
   const handleLogout = async () => {
     try {
       // Remove all cookies regardless of domain and path
-      const cookies = document.cookie.split(";");
-      const paths = ["/", window.location.pathname];
-      const domains = ["", window.location.hostname];
-      cookies.forEach((cookie) => {
-        const eqPos = cookie.indexOf("=");
-        const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
-        paths.forEach((path) => {
-          domains.forEach((domain) => {
-            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${path};${
-              domain ? ` domain=${domain};` : ""
-            }`;
+      if (document.cookie && document.cookie.length > 0) {
+        const cookies = document.cookie.split(";");
+        const paths = ["/", window.location.pathname];
+        const domains = ["", window.location.hostname];
+        cookies.forEach((cookie) => {
+          const eqPos = cookie.indexOf("=");
+          const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
+          paths.forEach((path) => {
+            domains.forEach((domain) => {
+              try {
+                document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${path};${
+                  domain ? ` domain=${domain};` : ""
+                }`;
+              } catch (err) {
+                console.error(`Failed to clear cookie ${name} for path ${path} and domain ${domain}:`, err);
+              }
+            });
           });
         });
-      });
-      await deleteCookies(["accessToken"]);
-      await deleteCookies(["refreshToken"]);
+      }
+      await Promise.all([deleteCookies(["accessToken"]), deleteCookies(["refreshToken"])]);
 
       // await logout(undefined);
       dispatch(baseApi.util.resetApiState());
