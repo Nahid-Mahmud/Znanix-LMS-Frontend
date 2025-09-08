@@ -49,8 +49,8 @@ export default function SignInPage() {
         const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
         document.cookie = `user=true; path=/; expires=${expires.toUTCString()}`;
 
-        await setAccessToken(res.data?.accessToken, "accessToken");
-        await setAccessToken(res.data.refreshToken, "refreshToken");
+        setAccessToken(res.data?.accessToken, "accessToken");
+        setAccessToken(res.data.refreshToken, "refreshToken");
 
         // router.push("/"); // Redirect to home page
 
@@ -110,11 +110,13 @@ export default function SignInPage() {
           // });
           return;
         }
-        toast.error("Login failed. Please check your credentials.");
+        // toast.error("Login failed. Please check your credentials.");
+        router.refresh();
         console.log(error);
       } else {
         // toast.error("Login failed. Please check your credentials.");
         console.log(error);
+        router.refresh();
       }
     }
   };

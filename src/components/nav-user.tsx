@@ -14,13 +14,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
 import { baseApi } from "@/redux/baseApi";
-import { useLogoutMutation } from "@/redux/features/auth/auth.api";
 import { useAppDispatch } from "@/redux/hooks";
+import { deleteCookies } from "@/service/DeleteCookies";
 import { UserRole } from "@/types/user.types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { deleteCookies } from "@/service/DeleteCookies";
 
 export function NavUser({
   user,
@@ -56,14 +55,19 @@ export function NavUser({
 
   const handleLogout = async () => {
     try {
-      // Remove cookie for multiple paths and domains
+      // Remove all cookies regardless of domain and path
+      const cookies = document.cookie.split(";");
       const paths = ["/", window.location.pathname];
       const domains = ["", window.location.hostname];
-      paths.forEach((path) => {
-        domains.forEach((domain) => {
-          document.cookie = `user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${path};${
-            domain ? ` domain=${domain};` : ""
-          }`;
+      cookies.forEach((cookie) => {
+        const eqPos = cookie.indexOf("=");
+        const name = eqPos > -1 ? cookie.substr(0, eqPos).trim() : cookie.trim();
+        paths.forEach((path) => {
+          domains.forEach((domain) => {
+            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${path};${
+              domain ? ` domain=${domain};` : ""
+            }`;
+          });
         });
       });
       await deleteCookies(["accessToken"]);
