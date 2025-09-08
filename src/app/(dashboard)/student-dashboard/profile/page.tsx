@@ -30,6 +30,7 @@ import {
 } from "lucide-react";
 import { useUpdateUserMutation, useUserInfoQuery } from "@/redux/features/user/user.api";
 import { ProfileSkeleton } from "@/components/ProfileSkeleton";
+import { useChangePasswordMutation } from "@/redux/features/auth/auth.api";
 
 interface UserData {
   _id: string;
@@ -64,50 +65,37 @@ const passwordValidation = z
   });
 
 // Profile update schema
-const profileUpdateSchema = z
+const profileUpdateSchema = z.object({
+  firstName: z.string().min(2, {
+    message: "First name must be at least 2 characters.",
+  }),
+  lastName: z.string().min(2, {
+    message: "Last name must be at least 2 characters.",
+  }),
+  profilePicture: z.string().optional(),
+});
+
+// Password change schema
+const passwordChangeSchema = z
   .object({
-    firstName: z.string().min(2, {
-      message: "First name must be at least 2 characters.",
-    }),
-    lastName: z.string().min(2, {
-      message: "Last name must be at least 2 characters.",
-    }),
-    profilePicture: z.string().optional(),
-    password: z.string().optional(),
-    confirmPassword: z.string().optional(),
+    currentPassword: z.string().min(1, "Current password is required"),
+    newPassword: passwordValidation,
+    confirmPassword: z.string(),
   })
-  .refine(
-    (data) => {
-      if (data.password || data.confirmPassword) {
-        return data.password === data.confirmPassword;
-      }
-      return true;
-    },
-    {
-      message: "Passwords do not match",
-      path: ["confirmPassword"],
-    }
-  )
-  .refine(
-    (data) => {
-      if (data.password) {
-        return passwordValidation.safeParse(data.password).success;
-      }
-      return true;
-    },
-    {
-      message: "Password does not meet requirements",
-      path: ["password"],
-    }
-  );
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 type ProfileUpdateFormData = z.infer<typeof profileUpdateSchema>;
+type PasswordChangeFormData = z.infer<typeof passwordChangeSchema>;
 
 function UserProfile({ user }: UserProfileProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [updateUserFn, { isLoading }] = useUpdateUserMutation();
+  const [changePasswordFn, { isLoading: isChangingPassword }] = useChangePasswordMutation();
 
   const form = useForm<ProfileUpdateFormData>({
     resolver: zodResolver(profileUpdateSchema),
@@ -115,7 +103,15 @@ function UserProfile({ user }: UserProfileProps) {
       firstName: user.firstName,
       lastName: user.lastName,
       profilePicture: user.profilePicture,
-      password: "",
+    },
+  });
+
+  // Separate form for password change
+  const passwordForm = useForm<PasswordChangeFormData>({
+    resolver: zodResolver(passwordChangeSchema),
+    defaultValues: {
+      currentPassword: "",
+      newPassword: "",
       confirmPassword: "",
     },
   });
@@ -151,22 +147,33 @@ function UserProfile({ user }: UserProfileProps) {
         updateData.profilePicture = data.profilePicture;
       }
 
-      if (data.password) {
-        updateData.password = data.password;
-      }
-
       const res = await updateUserFn({ data: updateData, id: user._id }).unwrap();
 
       if (res.success) {
         toast.success("Profile updated successfully!");
         setIsEditing(false);
-        // Reset password fields
-        form.setValue("password", "");
-        form.setValue("confirmPassword", "");
       }
     } catch (error) {
       toast.error("Failed to update profile. Please try again.");
       console.error("Profile update error:", error);
+    }
+  };
+
+  // Separate password change submission
+  const onPasswordSubmit = async (data: PasswordChangeFormData) => {
+    try {
+      const passwordRes = await changePasswordFn({
+        oldPassword: data.currentPassword,
+        newPassword: data.newPassword,
+      }).unwrap();
+
+      if (passwordRes.success) {
+        toast.success("Password changed successfully!");
+        passwordForm.reset();
+      }
+    } catch (passwordError) {
+      toast.error("Failed to change password. Please try again.");
+      console.error("Password change error:", passwordError);
     }
   };
 
@@ -175,8 +182,6 @@ function UserProfile({ user }: UserProfileProps) {
       firstName: user.firstName,
       lastName: user.lastName,
       profilePicture: user.profilePicture,
-      password: "",
-      confirmPassword: "",
     });
     setIsEditing(false);
   };
@@ -310,8 +315,8 @@ function UserProfile({ user }: UserProfileProps) {
                   />
                 </div>
 
-                <div className="space-y-4">
-                  <div>
+                <div className="space-y-5">
+                  <div className={isEditing ? "flex flex-col " : "flex flex-col gap-2.5"}>
                     <Label>Email</Label>
                     <div className="mt-1 p-2 bg-muted rounded-md flex items-center gap-2">
                       <Mail className="w-4 h-4 text-muted-foreground" />
@@ -329,72 +334,6 @@ function UserProfile({ user }: UserProfileProps) {
                 </div>
               </div>
 
-              {/* Password Section - Only show when editing */}
-              {isEditing && (
-                <div className="border-t pt-6">
-                  <h3 className="text-lg font-semibold mb-4">Change Password</h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <FormField
-                      control={form.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>New Password</FormLabel>
-                          <FormControl>
-                            <div className="relative">
-                              <Input
-                                type={showPassword ? "text" : "password"}
-                                placeholder="Enter new password"
-                                {...field}
-                              />
-                              <Button
-                                type="button"
-                                variant="ghost"
-                                size="sm"
-                                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent hover:text-black dark:hover:text-white/80"
-                                onClick={() => setShowPassword(!showPassword)}
-                              >
-                                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                              </Button>
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="confirmPassword"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Confirm Password</FormLabel>
-                          <FormControl>
-                            <div className="relative">
-                              <Input
-                                type={showConfirmPassword ? "text" : "password"}
-                                placeholder="Confirm new password"
-                                {...field}
-                              />
-                              <Button
-                                type="button"
-                                variant="ghost"
-                                size="sm"
-                                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent hover:text-black dark:hover:text-white/80"
-                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                              >
-                                {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                              </Button>
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              )}
-
               {/* User Info */}
               <div className="border-t pt-6">
                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
@@ -404,6 +343,121 @@ function UserProfile({ user }: UserProfileProps) {
                   </div>
                 </div>
               </div>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+
+      {/* Separate Password Change Card */}
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Shield className="w-5 h-5" />
+            Change Password
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Form {...passwordForm}>
+            <form onSubmit={passwordForm.handleSubmit(onPasswordSubmit)} className="space-y-4">
+              <FormField
+                control={passwordForm.control}
+                name="currentPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Current Password</FormLabel>
+                    <FormControl>
+                      <Input type="password" placeholder="Enter your current password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <FormField
+                  control={passwordForm.control}
+                  name="newPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>New Password</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Input
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Enter new password"
+                            {...field}
+                          />
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent hover:text-black dark:hover:text-white/80"
+                            onClick={() => setShowPassword(!showPassword)}
+                          >
+                            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                          </Button>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={passwordForm.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Confirm Password</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Input
+                            type={showConfirmPassword ? "text" : "password"}
+                            placeholder="Confirm new password"
+                            {...field}
+                          />
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent hover:text-black dark:hover:text-white/80"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                          >
+                            {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                          </Button>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <div className="bg-muted/50 rounded-lg p-4">
+                <div className="flex items-start gap-2">
+                  <Shield className="w-4 h-4 mt-0.5" />
+                  <div className="text-sm">
+                    <p className="font-medium">Password Requirements:</p>
+                    <ul className="mt-1 space-y-1 text-muted-foreground">
+                      <li>• At least 8 characters long</li>
+                      <li>• Contains uppercase and lowercase letters</li>
+                      <li>• Contains at least one number</li>
+                      <li>• Contains at least one special character</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <Button type="submit" disabled={isChangingPassword} className="w-full">
+                {isChangingPassword ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Changing Password...
+                  </>
+                ) : (
+                  "Change Password"
+                )}
+              </Button>
             </form>
           </Form>
         </CardContent>
