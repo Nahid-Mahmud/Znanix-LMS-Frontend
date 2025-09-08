@@ -63,7 +63,7 @@ export default function SignInPage() {
         await new Promise((resolve) => setTimeout(resolve, 500));
         toast.success("Login successful!");
 
-        window.location.reload()
+        router.refresh();
 
         switch (res.data.role) {
           case UserRole.STUDENT:
@@ -105,15 +105,15 @@ export default function SignInPage() {
         if ((error as any).data.message === "User is not verified") {
           // router.push("/auth/verify-email");
 
-          toast.error("Please verify your email before logging in.", {
-            duration: 8000,
-          });
+          // toast.error("Please verify your email before logging in.", {
+          //   duration: 8000,
+          // });
           return;
         }
         toast.error("Login failed. Please check your credentials.");
         console.log(error);
       } else {
-        toast.error("Login failed. Please check your credentials.");
+        // toast.error("Login failed. Please check your credentials.");
         console.log(error);
       }
     }

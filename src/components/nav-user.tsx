@@ -33,7 +33,7 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
-  const [logout] = useLogoutMutation();
+  // const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -69,7 +69,7 @@ export function NavUser({
       await deleteCookies(["accessToken"]);
       await deleteCookies(["refreshToken"]);
 
-      await logout(undefined);
+      // await logout(undefined);
       dispatch(baseApi.util.resetApiState());
       toast.success("Logged out successfully");
       router.push("/auth/signin");
