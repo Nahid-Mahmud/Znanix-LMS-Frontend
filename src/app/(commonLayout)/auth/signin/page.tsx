@@ -50,6 +50,9 @@ export default function SignInPage() {
         toast.success("Login successful!");
         // router.push("/"); // Redirect to home page
 
+        // reload the window to fetch the user data
+        await window.location.reload();
+
         // switch case to redirect based on role
         switch (res.data.role) {
           case UserRole.STUDENT:
