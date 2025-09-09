@@ -1,3 +1,586 @@
-module.exports=[100221,a=>{"use strict";function b(a){var b="error";function c(a){return RegExp("^(("+a.join(")|(")+"))\\b","i")}var d=RegExp("^[\\+\\-\\*/&\\\\\\^<>=]"),e=RegExp("^((<>)|(<=)|(>=))"),f=RegExp("^[\\.,]"),g=RegExp("^[\\(\\)]"),h=RegExp("^[A-Za-z][_A-Za-z0-9]*"),i=c(["and","or","not","xor","is","mod","eqv","imp"]),j=["WScript","err","debug","RegExp"],k=["clear","execute","raise","replace","test","write","writeline","close","open","state","eof","update","addnew","end","createobject","quit"].concat(["description","firstindex","global","helpcontext","helpfile","ignorecase","length","number","pattern","source","value","count"]);j=j.concat(["vbBlack","vbRed","vbGreen","vbYellow","vbBlue","vbMagenta","vbCyan","vbWhite","vbBinaryCompare","vbTextCompare","vbSunday","vbMonday","vbTuesday","vbWednesday","vbThursday","vbFriday","vbSaturday","vbUseSystemDayOfWeek","vbFirstJan1","vbFirstFourDays","vbFirstFullWeek","vbGeneralDate","vbLongDate","vbShortDate","vbLongTime","vbShortTime","vbObjectError","vbOKOnly","vbOKCancel","vbAbortRetryIgnore","vbYesNoCancel","vbYesNo","vbRetryCancel","vbCritical","vbQuestion","vbExclamation","vbInformation","vbDefaultButton1","vbDefaultButton2","vbDefaultButton3","vbDefaultButton4","vbApplicationModal","vbSystemModal","vbOK","vbCancel","vbAbort","vbRetry","vbIgnore","vbYes","vbNo","vbCr","VbCrLf","vbFormFeed","vbLf","vbNewLine","vbNullChar","vbNullString","vbTab","vbVerticalTab","vbUseDefault","vbTrue","vbFalse","vbEmpty","vbNull","vbInteger","vbLong","vbSingle","vbDouble","vbCurrency","vbDate","vbString","vbObject","vbError","vbBoolean","vbVariant","vbDataObject","vbDecimal","vbByte","vbArray"]),a.isASP&&(j=j.concat(["server","response","request","session","application"]),k=k.concat(["addheader","appendtolog","binarywrite","end","flush","redirect","binaryread","remove","removeall","lock","unlock","abandon","getlasterror","htmlencode","mappath","transfer","urlencode"],["buffer","cachecontrol","charset","contenttype","expires","expiresabsolute","isclientconnected","pics","status","clientcertificate","cookies","form","querystring","servervariables","totalbytes","contents","staticobjects","codepage","lcid","sessionid","timeout","scripttimeout"]));var l=c(["dim","redim","then","until","randomize","byval","byref","new","property","exit","in","const","private","public","get","set","let","stop","on error resume next","on error goto 0","option explicit","call","me"]),m=c(["true","false","nothing","empty","null"]),n=c(["abs","array","asc","atn","cbool","cbyte","ccur","cdate","cdbl","chr","cint","clng","cos","csng","cstr","date","dateadd","datediff","datepart","dateserial","datevalue","day","escape","eval","execute","exp","filter","formatcurrency","formatdatetime","formatnumber","formatpercent","getlocale","getobject","getref","hex","hour","inputbox","instr","instrrev","int","fix","isarray","isdate","isempty","isnull","isnumeric","isobject","join","lbound","lcase","left","len","loadpicture","log","ltrim","rtrim","trim","maths","mid","minute","month","monthname","msgbox","now","oct","replace","rgb","right","rnd","round","scriptengine","scriptenginebuildversion","scriptenginemajorversion","scriptengineminorversion","second","setlocale","sgn","sin","space","split","sqr","strcomp","string","strreverse","tan","time","timer","timeserial","timevalue","typename","ubound","ucase","unescape","vartype","weekday","weekdayname","year"]),o=c(j),p=c(k),q=c(["class","sub","select","while","if","function","property","with","for"]),r=c(["else","elseif","case"]),s=c(["next","loop","wend"]),t=c(["end"]),u=c(["do"]),v=c(["on error resume next","exit"]),w=c(["rem"]);function x(a,b){b.currentIndent++}function y(a,b){b.currentIndent--}function z(a,c){if(a.eatSpace())return null;if("'"===a.peek()||a.match(w))return a.skipToEnd(),"comment";if(a.match(/^((&H)|(&O))?[0-9\.]/i,!1)&&!a.match(/^((&H)|(&O))?[0-9\.]+[a-z_]/i,!1)){var j,k,A,B=!1;if(a.match(/^\d*\.\d+/i)||a.match(/^\d+\.\d*/)?B=!0:a.match(/^\.\d+/)&&(B=!0),B)return a.eat(/J/i),"number";var C=!1;if(a.match(/^&H[0-9a-f]+/i)||a.match(/^&O[0-7]+/i)?C=!0:a.match(/^[1-9]\d*F?/)?(a.eat(/J/i),C=!0):a.match(/^0(?![\dx])/i)&&(C=!0),C)return a.eat(/L/i),"number"}return a.match('"')?(k=1==(j=a.current()).length,A="string",c.tokenize=function(a,b){for(;!a.eol();){if(a.eatWhile(/[^'"]/),a.match(j))return b.tokenize=z,A;a.eat(/['"]/)}return k&&(b.tokenize=z),A},c.tokenize(a,c)):a.match(e)||a.match(d)||a.match(i)?"operator":a.match(f)?null:a.match(g)?"bracket":a.match(v)?(c.doInCurrentLine=!0,"keyword"):a.match(u)?(x(a,c),c.doInCurrentLine=!0,"keyword"):a.match(q)?(c.doInCurrentLine?c.doInCurrentLine=!1:x(a,c),"keyword"):a.match(r)?"keyword":a.match(t)?(y(a,c),y(a,c),"keyword"):a.match(s)?(c.doInCurrentLine?c.doInCurrentLine=!1:y(a,c),"keyword"):a.match(l)?"keyword":a.match(m)?"atom":a.match(p)?"variableName.special":a.match(n)||a.match(o)?"builtin":a.match(h)?"variable":(a.next(),b)}return{name:"vbscript",startState:function(){return{tokenize:z,lastToken:null,currentIndent:0,nextLineIndent:0,doInCurrentLine:!1,ignoreKeyword:!1}},token:function(a,c){a.sol()&&(c.currentIndent+=c.nextLineIndent,c.nextLineIndent=0,c.doInCurrentLine=0);var d=function(a,c){var d=c.tokenize(a,c),e=a.current();if("."===e){if(d=c.tokenize(a,c),e=a.current(),!d||"variable"!==d.substr(0,8)&&"builtin"!==d&&"keyword"!==d)return b;("builtin"===d||"keyword"===d)&&(d="variable"),k.indexOf(e.substr(1))>-1&&(d="keyword")}return d}(a,c);return c.lastToken={style:d,content:a.current()},null===d&&(d=null),d},indent:function(a,b,c){var d=b.replace(/^\s+|\s+$/g,"");return d.match(s)||d.match(t)||d.match(r)?c.unit*(a.currentIndent-1):a.currentIndent<0?0:a.currentIndent*c.unit}}}a.s(["vbScript",()=>c,"vbScriptASP",()=>d]);let c=b({}),d=b({isASP:!0})}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/vbscript.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "vbScript",
+    ()=>vbScript,
+    "vbScriptASP",
+    ()=>vbScriptASP
+]);
+function mkVBScript(parserConf) {
+    var ERRORCLASS = 'error';
+    function wordRegexp(words) {
+        return new RegExp("^((" + words.join(")|(") + "))\\b", "i");
+    }
+    var singleOperators = new RegExp("^[\\+\\-\\*/&\\\\\\^<>=]");
+    var doubleOperators = new RegExp("^((<>)|(<=)|(>=))");
+    var singleDelimiters = new RegExp('^[\\.,]');
+    var brackets = new RegExp('^[\\(\\)]');
+    var identifiers = new RegExp("^[A-Za-z][_A-Za-z0-9]*");
+    var openingKeywords = [
+        'class',
+        'sub',
+        'select',
+        'while',
+        'if',
+        'function',
+        'property',
+        'with',
+        'for'
+    ];
+    var middleKeywords = [
+        'else',
+        'elseif',
+        'case'
+    ];
+    var endKeywords = [
+        'next',
+        'loop',
+        'wend'
+    ];
+    var wordOperators = wordRegexp([
+        'and',
+        'or',
+        'not',
+        'xor',
+        'is',
+        'mod',
+        'eqv',
+        'imp'
+    ]);
+    var commonkeywords = [
+        'dim',
+        'redim',
+        'then',
+        'until',
+        'randomize',
+        'byval',
+        'byref',
+        'new',
+        'property',
+        'exit',
+        'in',
+        'const',
+        'private',
+        'public',
+        'get',
+        'set',
+        'let',
+        'stop',
+        'on error resume next',
+        'on error goto 0',
+        'option explicit',
+        'call',
+        'me'
+    ];
+    //This list was from: http://msdn.microsoft.com/en-us/library/f8tbc79x(v=vs.84).aspx
+    var atomWords = [
+        'true',
+        'false',
+        'nothing',
+        'empty',
+        'null'
+    ];
+    //This list was from: http://msdn.microsoft.com/en-us/library/3ca8tfek(v=vs.84).aspx
+    var builtinFuncsWords = [
+        'abs',
+        'array',
+        'asc',
+        'atn',
+        'cbool',
+        'cbyte',
+        'ccur',
+        'cdate',
+        'cdbl',
+        'chr',
+        'cint',
+        'clng',
+        'cos',
+        'csng',
+        'cstr',
+        'date',
+        'dateadd',
+        'datediff',
+        'datepart',
+        'dateserial',
+        'datevalue',
+        'day',
+        'escape',
+        'eval',
+        'execute',
+        'exp',
+        'filter',
+        'formatcurrency',
+        'formatdatetime',
+        'formatnumber',
+        'formatpercent',
+        'getlocale',
+        'getobject',
+        'getref',
+        'hex',
+        'hour',
+        'inputbox',
+        'instr',
+        'instrrev',
+        'int',
+        'fix',
+        'isarray',
+        'isdate',
+        'isempty',
+        'isnull',
+        'isnumeric',
+        'isobject',
+        'join',
+        'lbound',
+        'lcase',
+        'left',
+        'len',
+        'loadpicture',
+        'log',
+        'ltrim',
+        'rtrim',
+        'trim',
+        'maths',
+        'mid',
+        'minute',
+        'month',
+        'monthname',
+        'msgbox',
+        'now',
+        'oct',
+        'replace',
+        'rgb',
+        'right',
+        'rnd',
+        'round',
+        'scriptengine',
+        'scriptenginebuildversion',
+        'scriptenginemajorversion',
+        'scriptengineminorversion',
+        'second',
+        'setlocale',
+        'sgn',
+        'sin',
+        'space',
+        'split',
+        'sqr',
+        'strcomp',
+        'string',
+        'strreverse',
+        'tan',
+        'time',
+        'timer',
+        'timeserial',
+        'timevalue',
+        'typename',
+        'ubound',
+        'ucase',
+        'unescape',
+        'vartype',
+        'weekday',
+        'weekdayname',
+        'year'
+    ];
+    //This list was from: http://msdn.microsoft.com/en-us/library/ydz4cfk3(v=vs.84).aspx
+    var builtinConsts = [
+        'vbBlack',
+        'vbRed',
+        'vbGreen',
+        'vbYellow',
+        'vbBlue',
+        'vbMagenta',
+        'vbCyan',
+        'vbWhite',
+        'vbBinaryCompare',
+        'vbTextCompare',
+        'vbSunday',
+        'vbMonday',
+        'vbTuesday',
+        'vbWednesday',
+        'vbThursday',
+        'vbFriday',
+        'vbSaturday',
+        'vbUseSystemDayOfWeek',
+        'vbFirstJan1',
+        'vbFirstFourDays',
+        'vbFirstFullWeek',
+        'vbGeneralDate',
+        'vbLongDate',
+        'vbShortDate',
+        'vbLongTime',
+        'vbShortTime',
+        'vbObjectError',
+        'vbOKOnly',
+        'vbOKCancel',
+        'vbAbortRetryIgnore',
+        'vbYesNoCancel',
+        'vbYesNo',
+        'vbRetryCancel',
+        'vbCritical',
+        'vbQuestion',
+        'vbExclamation',
+        'vbInformation',
+        'vbDefaultButton1',
+        'vbDefaultButton2',
+        'vbDefaultButton3',
+        'vbDefaultButton4',
+        'vbApplicationModal',
+        'vbSystemModal',
+        'vbOK',
+        'vbCancel',
+        'vbAbort',
+        'vbRetry',
+        'vbIgnore',
+        'vbYes',
+        'vbNo',
+        'vbCr',
+        'VbCrLf',
+        'vbFormFeed',
+        'vbLf',
+        'vbNewLine',
+        'vbNullChar',
+        'vbNullString',
+        'vbTab',
+        'vbVerticalTab',
+        'vbUseDefault',
+        'vbTrue',
+        'vbFalse',
+        'vbEmpty',
+        'vbNull',
+        'vbInteger',
+        'vbLong',
+        'vbSingle',
+        'vbDouble',
+        'vbCurrency',
+        'vbDate',
+        'vbString',
+        'vbObject',
+        'vbError',
+        'vbBoolean',
+        'vbVariant',
+        'vbDataObject',
+        'vbDecimal',
+        'vbByte',
+        'vbArray'
+    ];
+    //This list was from: http://msdn.microsoft.com/en-us/library/hkc375ea(v=vs.84).aspx
+    var builtinObjsWords = [
+        'WScript',
+        'err',
+        'debug',
+        'RegExp'
+    ];
+    var knownProperties = [
+        'description',
+        'firstindex',
+        'global',
+        'helpcontext',
+        'helpfile',
+        'ignorecase',
+        'length',
+        'number',
+        'pattern',
+        'source',
+        'value',
+        'count'
+    ];
+    var knownMethods = [
+        'clear',
+        'execute',
+        'raise',
+        'replace',
+        'test',
+        'write',
+        'writeline',
+        'close',
+        'open',
+        'state',
+        'eof',
+        'update',
+        'addnew',
+        'end',
+        'createobject',
+        'quit'
+    ];
+    var aspBuiltinObjsWords = [
+        'server',
+        'response',
+        'request',
+        'session',
+        'application'
+    ];
+    var aspKnownProperties = [
+        'buffer',
+        'cachecontrol',
+        'charset',
+        'contenttype',
+        'expires',
+        'expiresabsolute',
+        'isclientconnected',
+        'pics',
+        'status',
+        'clientcertificate',
+        'cookies',
+        'form',
+        'querystring',
+        'servervariables',
+        'totalbytes',
+        'contents',
+        'staticobjects',
+        'codepage',
+        'lcid',
+        'sessionid',
+        'timeout',
+        'scripttimeout'
+    ]; //server
+    var aspKnownMethods = [
+        'addheader',
+        'appendtolog',
+        'binarywrite',
+        'end',
+        'flush',
+        'redirect',
+        'binaryread',
+        'remove',
+        'removeall',
+        'lock',
+        'unlock',
+        'abandon',
+        'getlasterror',
+        'htmlencode',
+        'mappath',
+        'transfer',
+        'urlencode'
+    ]; //server
+    var knownWords = knownMethods.concat(knownProperties);
+    builtinObjsWords = builtinObjsWords.concat(builtinConsts);
+    if (parserConf.isASP) {
+        builtinObjsWords = builtinObjsWords.concat(aspBuiltinObjsWords);
+        knownWords = knownWords.concat(aspKnownMethods, aspKnownProperties);
+    }
+    ;
+    var keywords = wordRegexp(commonkeywords);
+    var atoms = wordRegexp(atomWords);
+    var builtinFuncs = wordRegexp(builtinFuncsWords);
+    var builtinObjs = wordRegexp(builtinObjsWords);
+    var known = wordRegexp(knownWords);
+    var stringPrefixes = '"';
+    var opening = wordRegexp(openingKeywords);
+    var middle = wordRegexp(middleKeywords);
+    var closing = wordRegexp(endKeywords);
+    var doubleClosing = wordRegexp([
+        'end'
+    ]);
+    var doOpening = wordRegexp([
+        'do'
+    ]);
+    var noIndentWords = wordRegexp([
+        'on error resume next',
+        'exit'
+    ]);
+    var comment = wordRegexp([
+        'rem'
+    ]);
+    function indent(_stream, state) {
+        state.currentIndent++;
+    }
+    function dedent(_stream, state) {
+        state.currentIndent--;
+    }
+    // tokenizers
+    function tokenBase(stream, state) {
+        if (stream.eatSpace()) {
+            return null;
+        //return null;
+        }
+        var ch = stream.peek();
+        // Handle Comments
+        if (ch === "'") {
+            stream.skipToEnd();
+            return 'comment';
+        }
+        if (stream.match(comment)) {
+            stream.skipToEnd();
+            return 'comment';
+        }
+        // Handle Number Literals
+        if (stream.match(/^((&H)|(&O))?[0-9\.]/i, false) && !stream.match(/^((&H)|(&O))?[0-9\.]+[a-z_]/i, false)) {
+            var floatLiteral = false;
+            // Floats
+            if (stream.match(/^\d*\.\d+/i)) {
+                floatLiteral = true;
+            } else if (stream.match(/^\d+\.\d*/)) {
+                floatLiteral = true;
+            } else if (stream.match(/^\.\d+/)) {
+                floatLiteral = true;
+            }
+            if (floatLiteral) {
+                // Float literals may be "imaginary"
+                stream.eat(/J/i);
+                return 'number';
+            }
+            // Integers
+            var intLiteral = false;
+            // Hex
+            if (stream.match(/^&H[0-9a-f]+/i)) {
+                intLiteral = true;
+            } else if (stream.match(/^&O[0-7]+/i)) {
+                intLiteral = true;
+            } else if (stream.match(/^[1-9]\d*F?/)) {
+                // Decimal literals may be "imaginary"
+                stream.eat(/J/i);
+                // TODO - Can you have imaginary longs?
+                intLiteral = true;
+            } else if (stream.match(/^0(?![\dx])/i)) {
+                intLiteral = true;
+            }
+            if (intLiteral) {
+                // Integer literals may be "long"
+                stream.eat(/L/i);
+                return 'number';
+            }
+        }
+        // Handle Strings
+        if (stream.match(stringPrefixes)) {
+            state.tokenize = tokenStringFactory(stream.current());
+            return state.tokenize(stream, state);
+        }
+        // Handle operators and Delimiters
+        if (stream.match(doubleOperators) || stream.match(singleOperators) || stream.match(wordOperators)) {
+            return 'operator';
+        }
+        if (stream.match(singleDelimiters)) {
+            return null;
+        }
+        if (stream.match(brackets)) {
+            return "bracket";
+        }
+        if (stream.match(noIndentWords)) {
+            state.doInCurrentLine = true;
+            return 'keyword';
+        }
+        if (stream.match(doOpening)) {
+            indent(stream, state);
+            state.doInCurrentLine = true;
+            return 'keyword';
+        }
+        if (stream.match(opening)) {
+            if (!state.doInCurrentLine) indent(stream, state);
+            else state.doInCurrentLine = false;
+            return 'keyword';
+        }
+        if (stream.match(middle)) {
+            return 'keyword';
+        }
+        if (stream.match(doubleClosing)) {
+            dedent(stream, state);
+            dedent(stream, state);
+            return 'keyword';
+        }
+        if (stream.match(closing)) {
+            if (!state.doInCurrentLine) dedent(stream, state);
+            else state.doInCurrentLine = false;
+            return 'keyword';
+        }
+        if (stream.match(keywords)) {
+            return 'keyword';
+        }
+        if (stream.match(atoms)) {
+            return 'atom';
+        }
+        if (stream.match(known)) {
+            return 'variableName.special';
+        }
+        if (stream.match(builtinFuncs)) {
+            return 'builtin';
+        }
+        if (stream.match(builtinObjs)) {
+            return 'builtin';
+        }
+        if (stream.match(identifiers)) {
+            return 'variable';
+        }
+        // Handle non-detected items
+        stream.next();
+        return ERRORCLASS;
+    }
+    function tokenStringFactory(delimiter) {
+        var singleline = delimiter.length == 1;
+        var OUTCLASS = 'string';
+        return function(stream, state) {
+            while(!stream.eol()){
+                stream.eatWhile(/[^'"]/);
+                if (stream.match(delimiter)) {
+                    state.tokenize = tokenBase;
+                    return OUTCLASS;
+                } else {
+                    stream.eat(/['"]/);
+                }
+            }
+            if (singleline) {
+                state.tokenize = tokenBase;
+            }
+            return OUTCLASS;
+        };
+    }
+    function tokenLexer(stream, state) {
+        var style = state.tokenize(stream, state);
+        var current = stream.current();
+        // Handle '.' connected identifiers
+        if (current === '.') {
+            style = state.tokenize(stream, state);
+            current = stream.current();
+            if (style && (style.substr(0, 8) === 'variable' || style === 'builtin' || style === 'keyword')) {
+                if (style === 'builtin' || style === 'keyword') style = 'variable';
+                if (knownWords.indexOf(current.substr(1)) > -1) style = 'keyword';
+                return style;
+            } else {
+                return ERRORCLASS;
+            }
+        }
+        return style;
+    }
+    return {
+        name: "vbscript",
+        startState: function() {
+            return {
+                tokenize: tokenBase,
+                lastToken: null,
+                currentIndent: 0,
+                nextLineIndent: 0,
+                doInCurrentLine: false,
+                ignoreKeyword: false
+            };
+        },
+        token: function(stream, state) {
+            if (stream.sol()) {
+                state.currentIndent += state.nextLineIndent;
+                state.nextLineIndent = 0;
+                state.doInCurrentLine = 0;
+            }
+            var style = tokenLexer(stream, state);
+            state.lastToken = {
+                style: style,
+                content: stream.current()
+            };
+            if (style === null) style = null;
+            return style;
+        },
+        indent: function(state, textAfter, cx) {
+            var trueText = textAfter.replace(/^\s+|\s+$/g, '');
+            if (trueText.match(closing) || trueText.match(doubleClosing) || trueText.match(middle)) return cx.unit * (state.currentIndent - 1);
+            if (state.currentIndent < 0) return 0;
+            return state.currentIndent * cx.unit;
+        }
+    };
+}
+;
+const vbScript = mkVBScript({});
+const vbScriptASP = mkVBScript({
+    isASP: true
+});
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_vbscript_2f63a25a.js.map

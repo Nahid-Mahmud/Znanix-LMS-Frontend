@@ -1,3 +1,365 @@
-module.exports=[673845,a=>{"use strict";function b(a){var b;return{name:"mscgen",startState:h,copyState:i,token:(b=a,function(a,c){if(a.match(g(b.brackets),!0,!0))return"bracket";if(!c.inComment){if(a.match(/\/\*[^\*\/]*/,!0,!0))return c.inComment=!0,"comment";if(a.match(g(b.singlecomment),!0,!0))return a.skipToEnd(),"comment"}if(c.inComment)return a.match(/[^\*\/]*\*\//,!0,!0)?c.inComment=!1:a.skipToEnd(),"comment";if(!c.inString&&a.match(/\"(\\\"|[^\"])*/,!0,!0))return c.inString=!0,"string";if(c.inString)return a.match(/[^\"]*\"/,!0,!0)?c.inString=!1:a.skipToEnd(),"string";if(b.keywords&&a.match(f(b.keywords),!0,!0)||a.match(f(b.options),!0,!0)||a.match(f(b.arcsWords),!0,!0)||a.match(g(b.arcsOthers),!0,!0))return"keyword";if(b.operators&&a.match(g(b.operators),!0,!0))return"operator";if(b.constants&&a.match(g(b.constants),!0,!0))return"variable";if(!b.inAttributeList&&b.attributes&&a.match("[",!0,!0))return b.inAttributeList=!0,"bracket";if(b.inAttributeList){if(null!==b.attributes&&a.match(f(b.attributes),!0,!0))return"attribute";if(a.match("]",!0,!0))return b.inAttributeList=!1,"bracket"}return a.next(),null}),languageData:{commentTokens:{line:"#",block:{open:"/*",close:"*/"}}}}}a.s(["mscgen",()=>c,"msgenny",()=>d,"xu",()=>e]);let c=b({keywords:["msc"],options:["hscale","width","arcgradient","wordwraparcs"],constants:["true","false","on","off"],attributes:["label","idurl","id","url","linecolor","linecolour","textcolor","textcolour","textbgcolor","textbgcolour","arclinecolor","arclinecolour","arctextcolor","arctextcolour","arctextbgcolor","arctextbgcolour","arcskip"],brackets:["\\{","\\}"],arcsWords:["note","abox","rbox","box"],arcsOthers:["\\|\\|\\|","\\.\\.\\.","---","--","<->","==","<<=>>","<=>","\\.\\.","<<>>","::","<:>","->","=>>","=>",">>",":>","<-","<<=","<=","<<","<:","x-","-x"],singlecomment:["//","#"],operators:["="]}),d=b({keywords:null,options:["hscale","width","arcgradient","wordwraparcs","wordwrapentities","watermark"],constants:["true","false","on","off","auto"],attributes:null,brackets:["\\{","\\}"],arcsWords:["note","abox","rbox","box","alt","else","opt","break","par","seq","strict","neg","critical","ignore","consider","assert","loop","ref","exc"],arcsOthers:["\\|\\|\\|","\\.\\.\\.","---","--","<->","==","<<=>>","<=>","\\.\\.","<<>>","::","<:>","->","=>>","=>",">>",":>","<-","<<=","<=","<<","<:","x-","-x"],singlecomment:["//","#"],operators:["="]}),e=b({keywords:["msc","xu"],options:["hscale","width","arcgradient","wordwraparcs","wordwrapentities","watermark"],constants:["true","false","on","off","auto"],attributes:["label","idurl","id","url","linecolor","linecolour","textcolor","textcolour","textbgcolor","textbgcolour","arclinecolor","arclinecolour","arctextcolor","arctextcolour","arctextbgcolor","arctextbgcolour","arcskip","title","deactivate","activate","activation"],brackets:["\\{","\\}"],arcsWords:["note","abox","rbox","box","alt","else","opt","break","par","seq","strict","neg","critical","ignore","consider","assert","loop","ref","exc"],arcsOthers:["\\|\\|\\|","\\.\\.\\.","---","--","<->","==","<<=>>","<=>","\\.\\.","<<>>","::","<:>","->","=>>","=>",">>",":>","<-","<<=","<=","<<","<:","x-","-x"],singlecomment:["//","#"],operators:["="]});function f(a){return RegExp("^\\b("+a.join("|")+")\\b","i")}function g(a){return RegExp("^(?:"+a.join("|")+")","i")}function h(){return{inComment:!1,inString:!1,inAttributeList:!1,inScript:!1}}function i(a){return{inComment:a.inComment,inString:a.inString,inAttributeList:a.inAttributeList,inScript:a.inScript}}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/mscgen.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "mscgen",
+    ()=>mscgen,
+    "msgenny",
+    ()=>msgenny,
+    "xu",
+    ()=>xu
+]);
+function mkParser(lang) {
+    return {
+        name: "mscgen",
+        startState: startStateFn,
+        copyState: copyStateFn,
+        token: produceTokenFunction(lang),
+        languageData: {
+            commentTokens: {
+                line: "#",
+                block: {
+                    open: "/*",
+                    close: "*/"
+                }
+            }
+        }
+    };
+}
+const mscgen = mkParser({
+    "keywords": [
+        "msc"
+    ],
+    "options": [
+        "hscale",
+        "width",
+        "arcgradient",
+        "wordwraparcs"
+    ],
+    "constants": [
+        "true",
+        "false",
+        "on",
+        "off"
+    ],
+    "attributes": [
+        "label",
+        "idurl",
+        "id",
+        "url",
+        "linecolor",
+        "linecolour",
+        "textcolor",
+        "textcolour",
+        "textbgcolor",
+        "textbgcolour",
+        "arclinecolor",
+        "arclinecolour",
+        "arctextcolor",
+        "arctextcolour",
+        "arctextbgcolor",
+        "arctextbgcolour",
+        "arcskip"
+    ],
+    "brackets": [
+        "\\{",
+        "\\}"
+    ],
+    "arcsWords": [
+        "note",
+        "abox",
+        "rbox",
+        "box"
+    ],
+    "arcsOthers": [
+        "\\|\\|\\|",
+        "\\.\\.\\.",
+        "---",
+        "--",
+        "<->",
+        "==",
+        "<<=>>",
+        "<=>",
+        "\\.\\.",
+        "<<>>",
+        "::",
+        "<:>",
+        "->",
+        "=>>",
+        "=>",
+        ">>",
+        ":>",
+        "<-",
+        "<<=",
+        "<=",
+        "<<",
+        "<:",
+        "x-",
+        "-x"
+    ],
+    "singlecomment": [
+        "//",
+        "#"
+    ],
+    "operators": [
+        "="
+    ]
+});
+const msgenny = mkParser({
+    "keywords": null,
+    "options": [
+        "hscale",
+        "width",
+        "arcgradient",
+        "wordwraparcs",
+        "wordwrapentities",
+        "watermark"
+    ],
+    "constants": [
+        "true",
+        "false",
+        "on",
+        "off",
+        "auto"
+    ],
+    "attributes": null,
+    "brackets": [
+        "\\{",
+        "\\}"
+    ],
+    "arcsWords": [
+        "note",
+        "abox",
+        "rbox",
+        "box",
+        "alt",
+        "else",
+        "opt",
+        "break",
+        "par",
+        "seq",
+        "strict",
+        "neg",
+        "critical",
+        "ignore",
+        "consider",
+        "assert",
+        "loop",
+        "ref",
+        "exc"
+    ],
+    "arcsOthers": [
+        "\\|\\|\\|",
+        "\\.\\.\\.",
+        "---",
+        "--",
+        "<->",
+        "==",
+        "<<=>>",
+        "<=>",
+        "\\.\\.",
+        "<<>>",
+        "::",
+        "<:>",
+        "->",
+        "=>>",
+        "=>",
+        ">>",
+        ":>",
+        "<-",
+        "<<=",
+        "<=",
+        "<<",
+        "<:",
+        "x-",
+        "-x"
+    ],
+    "singlecomment": [
+        "//",
+        "#"
+    ],
+    "operators": [
+        "="
+    ]
+});
+const xu = mkParser({
+    "keywords": [
+        "msc",
+        "xu"
+    ],
+    "options": [
+        "hscale",
+        "width",
+        "arcgradient",
+        "wordwraparcs",
+        "wordwrapentities",
+        "watermark"
+    ],
+    "constants": [
+        "true",
+        "false",
+        "on",
+        "off",
+        "auto"
+    ],
+    "attributes": [
+        "label",
+        "idurl",
+        "id",
+        "url",
+        "linecolor",
+        "linecolour",
+        "textcolor",
+        "textcolour",
+        "textbgcolor",
+        "textbgcolour",
+        "arclinecolor",
+        "arclinecolour",
+        "arctextcolor",
+        "arctextcolour",
+        "arctextbgcolor",
+        "arctextbgcolour",
+        "arcskip",
+        "title",
+        "deactivate",
+        "activate",
+        "activation"
+    ],
+    "brackets": [
+        "\\{",
+        "\\}"
+    ],
+    "arcsWords": [
+        "note",
+        "abox",
+        "rbox",
+        "box",
+        "alt",
+        "else",
+        "opt",
+        "break",
+        "par",
+        "seq",
+        "strict",
+        "neg",
+        "critical",
+        "ignore",
+        "consider",
+        "assert",
+        "loop",
+        "ref",
+        "exc"
+    ],
+    "arcsOthers": [
+        "\\|\\|\\|",
+        "\\.\\.\\.",
+        "---",
+        "--",
+        "<->",
+        "==",
+        "<<=>>",
+        "<=>",
+        "\\.\\.",
+        "<<>>",
+        "::",
+        "<:>",
+        "->",
+        "=>>",
+        "=>",
+        ">>",
+        ":>",
+        "<-",
+        "<<=",
+        "<=",
+        "<<",
+        "<:",
+        "x-",
+        "-x"
+    ],
+    "singlecomment": [
+        "//",
+        "#"
+    ],
+    "operators": [
+        "="
+    ]
+});
+function wordRegexpBoundary(pWords) {
+    return new RegExp("^\\b(" + pWords.join("|") + ")\\b", "i");
+}
+function wordRegexp(pWords) {
+    return new RegExp("^(?:" + pWords.join("|") + ")", "i");
+}
+function startStateFn() {
+    return {
+        inComment: false,
+        inString: false,
+        inAttributeList: false,
+        inScript: false
+    };
+}
+function copyStateFn(pState) {
+    return {
+        inComment: pState.inComment,
+        inString: pState.inString,
+        inAttributeList: pState.inAttributeList,
+        inScript: pState.inScript
+    };
+}
+function produceTokenFunction(pConfig) {
+    return function(pStream, pState) {
+        if (pStream.match(wordRegexp(pConfig.brackets), true, true)) {
+            return "bracket";
+        }
+        /* comments */ if (!pState.inComment) {
+            if (pStream.match(/\/\*[^\*\/]*/, true, true)) {
+                pState.inComment = true;
+                return "comment";
+            }
+            if (pStream.match(wordRegexp(pConfig.singlecomment), true, true)) {
+                pStream.skipToEnd();
+                return "comment";
+            }
+        }
+        if (pState.inComment) {
+            if (pStream.match(/[^\*\/]*\*\//, true, true)) pState.inComment = false;
+            else pStream.skipToEnd();
+            return "comment";
+        }
+        /* strings */ if (!pState.inString && pStream.match(/\"(\\\"|[^\"])*/, true, true)) {
+            pState.inString = true;
+            return "string";
+        }
+        if (pState.inString) {
+            if (pStream.match(/[^\"]*\"/, true, true)) pState.inString = false;
+            else pStream.skipToEnd();
+            return "string";
+        }
+        /* keywords & operators */ if (!!pConfig.keywords && pStream.match(wordRegexpBoundary(pConfig.keywords), true, true)) return "keyword";
+        if (pStream.match(wordRegexpBoundary(pConfig.options), true, true)) return "keyword";
+        if (pStream.match(wordRegexpBoundary(pConfig.arcsWords), true, true)) return "keyword";
+        if (pStream.match(wordRegexp(pConfig.arcsOthers), true, true)) return "keyword";
+        if (!!pConfig.operators && pStream.match(wordRegexp(pConfig.operators), true, true)) return "operator";
+        if (!!pConfig.constants && pStream.match(wordRegexp(pConfig.constants), true, true)) return "variable";
+        /* attribute lists */ if (!pConfig.inAttributeList && !!pConfig.attributes && pStream.match('[', true, true)) {
+            pConfig.inAttributeList = true;
+            return "bracket";
+        }
+        if (pConfig.inAttributeList) {
+            if (pConfig.attributes !== null && pStream.match(wordRegexpBoundary(pConfig.attributes), true, true)) {
+                return "attribute";
+            }
+            if (pStream.match(']', true, true)) {
+                pConfig.inAttributeList = false;
+                return "bracket";
+            }
+        }
+        pStream.next();
+        return null;
+    };
+}
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_mscgen_9fa31807.js.map

@@ -1,3 +1,69 @@
-module.exports=[74234,a=>{"use strict";a.s(["solr",()=>f]);var b=/[^\s\|\!\+\-\*\?\~\^\&\:\(\)\[\]\{\}\"\\]/,c=/[\|\!\+\-\*\?\~\^\&]/,d=/^(OR|AND|NOT|TO)$/;function e(a,f){var g,h=a.next();return'"'==h?f.tokenize=function(a,b){for(var c,d=!1;null!=(c=a.next())&&(c!=h||d);)d=!d&&"\\"==c;return d||(b.tokenize=e),"string"}:c.test(h)?f.tokenize=function(a,b){return"|"==h?a.eat(/\|/):"&"==h&&a.eat(/\&/),b.tokenize=e,"operator"}:b.test(h)&&(g=h,f.tokenize=function(a,c){for(var f,h=g;(g=a.peek())&&null!=g.match(b);)h+=a.next();return(c.tokenize=e,d.test(h))?"operator":parseFloat(f=h).toString()===f?"number":":"==a.peek()?"propertyName":"string"}),f.tokenize!=e?f.tokenize(a,f):null}let f={name:"solr",startState:function(){return{tokenize:e}},token:function(a,b){return a.eatSpace()?null:b.tokenize(a,b)}}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/solr.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "solr",
+    ()=>solr
+]);
+var isStringChar = /[^\s\|\!\+\-\*\?\~\^\&\:\(\)\[\]\{\}\"\\]/;
+var isOperatorChar = /[\|\!\+\-\*\?\~\^\&]/;
+var isOperatorString = /^(OR|AND|NOT|TO)$/;
+function isNumber(word) {
+    return parseFloat(word).toString() === word;
+}
+function tokenString(quote) {
+    return function(stream, state) {
+        var escaped = false, next;
+        while((next = stream.next()) != null){
+            if (next == quote && !escaped) break;
+            escaped = !escaped && next == "\\";
+        }
+        if (!escaped) state.tokenize = tokenBase;
+        return "string";
+    };
+}
+function tokenOperator(operator) {
+    return function(stream, state) {
+        if (operator == "|") stream.eat(/\|/);
+        else if (operator == "&") stream.eat(/\&/);
+        state.tokenize = tokenBase;
+        return "operator";
+    };
+}
+function tokenWord(ch) {
+    return function(stream, state) {
+        var word = ch;
+        while((ch = stream.peek()) && ch.match(isStringChar) != null){
+            word += stream.next();
+        }
+        state.tokenize = tokenBase;
+        if (isOperatorString.test(word)) return "operator";
+        else if (isNumber(word)) return "number";
+        else if (stream.peek() == ":") return "propertyName";
+        else return "string";
+    };
+}
+function tokenBase(stream, state) {
+    var ch = stream.next();
+    if (ch == '"') state.tokenize = tokenString(ch);
+    else if (isOperatorChar.test(ch)) state.tokenize = tokenOperator(ch);
+    else if (isStringChar.test(ch)) state.tokenize = tokenWord(ch);
+    return state.tokenize != tokenBase ? state.tokenize(stream, state) : null;
+}
+const solr = {
+    name: "solr",
+    startState: function() {
+        return {
+            tokenize: tokenBase
+        };
+    },
+    token: function(stream, state) {
+        if (stream.eatSpace()) return null;
+        return state.tokenize(stream, state);
+    }
+};
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_solr_7e0192d6.js.map

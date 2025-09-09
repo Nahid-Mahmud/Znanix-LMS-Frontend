@@ -1,3 +1,156 @@
-module.exports=[391247,a=>{"use strict";function b(a){for(var b={},c=a.split(" "),d=0;d<c.length;++d)b[c[d]]=!0;return b}a.s(["modelica",()=>q]);var c=b("algorithm and annotation assert block break class connect connector constant constrainedby der discrete each else elseif elsewhen encapsulated end enumeration equation expandable extends external false final flow for function if import impure in initial inner input loop model not operator or outer output package parameter partial protected public pure record redeclare replaceable return stream then true type when while within"),d=b("abs acos actualStream asin atan atan2 cardinality ceil cos cosh delay div edge exp floor getInstanceName homotopy inStream integer log log10 mod pre reinit rem semiLinear sign sin sinh spatialDistribution sqrt tan tanh"),e=b("Real Boolean Integer String"),f=[].concat(Object.keys(c),Object.keys(d),Object.keys(e)),g=/[;=\(:\),{}.*<>+\-\/^\[\]]/,h=/(:=|<=|>=|==|<>|\.\+|\.\-|\.\*|\.\/|\.\^)/,i=/[0-9]/,j=/[_a-zA-Z]/;function k(a,b){return a.skipToEnd(),b.tokenize=null,"comment"}function l(a,b){for(var c,d=!1;c=a.next();){if(d&&"/"==c){b.tokenize=null;break}d="*"==c}return"comment"}function m(a,b){for(var c,d=!1;null!=(c=a.next());){if('"'==c&&!d){b.tokenize=null,b.sol=!1;break}d=!d&&"\\"==c}return"string"}function n(a,b){for(a.eatWhile(i);a.eat(i)||a.eat(j););var f=a.current();return(b.sol&&("package"==f||"model"==f||"when"==f||"connector"==f)?b.level++:b.sol&&"end"==f&&b.level>0&&b.level--,b.tokenize=null,b.sol=!1,c.propertyIsEnumerable(f))?"keyword":d.propertyIsEnumerable(f)?"builtin":e.propertyIsEnumerable(f)?"atom":"variable"}function o(a,b){for(;a.eat(/[^']/););return(b.tokenize=null,b.sol=!1,a.eat("'"))?"variable":"error"}function p(a,b){return a.eatWhile(i),a.eat(".")&&a.eatWhile(i),(a.eat("e")||a.eat("E"))&&(a.eat("-")||a.eat("+"),a.eatWhile(i)),b.tokenize=null,b.sol=!1,"number"}let q={name:"modelica",startState:function(){return{tokenize:null,level:0,sol:!0}},token:function(a,b){if(null!=b.tokenize)return b.tokenize(a,b);if(a.sol()&&(b.sol=!0),a.eatSpace())return b.tokenize=null,null;var c=a.next();if("/"==c&&a.eat("/"))b.tokenize=k;else if("/"==c&&a.eat("*"))b.tokenize=l;else if(h.test(c+a.peek()))return a.next(),b.tokenize=null,"operator";else if(g.test(c))return b.tokenize=null,"operator";else if(j.test(c))b.tokenize=n;else if("'"==c&&a.peek()&&"'"!=a.peek())b.tokenize=o;else if('"'==c)b.tokenize=m;else{if(!i.test(c))return b.tokenize=null,"error";b.tokenize=p}return b.tokenize(a,b)},indent:function(a,b,c){if(null!=a.tokenize)return null;var d=a.level;return(/(algorithm)/.test(b)&&d--,/(equation)/.test(b)&&d--,/(initial algorithm)/.test(b)&&d--,/(initial equation)/.test(b)&&d--,/(end)/.test(b)&&d--,d>0)?c.unit*d:0},languageData:{commentTokens:{line:"//",block:{open:"/*",close:"*/"}},autocomplete:f}}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/modelica.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "modelica",
+    ()=>modelica
+]);
+function words(str) {
+    var obj = {}, words = str.split(" ");
+    for(var i = 0; i < words.length; ++i)obj[words[i]] = true;
+    return obj;
+}
+var keywords = words("algorithm and annotation assert block break class connect connector constant constrainedby der discrete each else elseif elsewhen encapsulated end enumeration equation expandable extends external false final flow for function if import impure in initial inner input loop model not operator or outer output package parameter partial protected public pure record redeclare replaceable return stream then true type when while within");
+var builtin = words("abs acos actualStream asin atan atan2 cardinality ceil cos cosh delay div edge exp floor getInstanceName homotopy inStream integer log log10 mod pre reinit rem semiLinear sign sin sinh spatialDistribution sqrt tan tanh");
+var atoms = words("Real Boolean Integer String");
+var completions = [].concat(Object.keys(keywords), Object.keys(builtin), Object.keys(atoms));
+var isSingleOperatorChar = /[;=\(:\),{}.*<>+\-\/^\[\]]/;
+var isDoubleOperatorChar = /(:=|<=|>=|==|<>|\.\+|\.\-|\.\*|\.\/|\.\^)/;
+var isDigit = /[0-9]/;
+var isNonDigit = /[_a-zA-Z]/;
+function tokenLineComment(stream, state) {
+    stream.skipToEnd();
+    state.tokenize = null;
+    return "comment";
+}
+function tokenBlockComment(stream, state) {
+    var maybeEnd = false, ch;
+    while(ch = stream.next()){
+        if (maybeEnd && ch == "/") {
+            state.tokenize = null;
+            break;
+        }
+        maybeEnd = ch == "*";
+    }
+    return "comment";
+}
+function tokenString(stream, state) {
+    var escaped = false, ch;
+    while((ch = stream.next()) != null){
+        if (ch == '"' && !escaped) {
+            state.tokenize = null;
+            state.sol = false;
+            break;
+        }
+        escaped = !escaped && ch == "\\";
+    }
+    return "string";
+}
+function tokenIdent(stream, state) {
+    stream.eatWhile(isDigit);
+    while(stream.eat(isDigit) || stream.eat(isNonDigit)){}
+    var cur = stream.current();
+    if (state.sol && (cur == "package" || cur == "model" || cur == "when" || cur == "connector")) state.level++;
+    else if (state.sol && cur == "end" && state.level > 0) state.level--;
+    state.tokenize = null;
+    state.sol = false;
+    if (keywords.propertyIsEnumerable(cur)) return "keyword";
+    else if (builtin.propertyIsEnumerable(cur)) return "builtin";
+    else if (atoms.propertyIsEnumerable(cur)) return "atom";
+    else return "variable";
+}
+function tokenQIdent(stream, state) {
+    while(stream.eat(/[^']/)){}
+    state.tokenize = null;
+    state.sol = false;
+    if (stream.eat("'")) return "variable";
+    else return "error";
+}
+function tokenUnsignedNumber(stream, state) {
+    stream.eatWhile(isDigit);
+    if (stream.eat('.')) {
+        stream.eatWhile(isDigit);
+    }
+    if (stream.eat('e') || stream.eat('E')) {
+        if (!stream.eat('-')) stream.eat('+');
+        stream.eatWhile(isDigit);
+    }
+    state.tokenize = null;
+    state.sol = false;
+    return "number";
+}
+const modelica = {
+    name: "modelica",
+    startState: function() {
+        return {
+            tokenize: null,
+            level: 0,
+            sol: true
+        };
+    },
+    token: function(stream, state) {
+        if (state.tokenize != null) {
+            return state.tokenize(stream, state);
+        }
+        if (stream.sol()) {
+            state.sol = true;
+        }
+        // WHITESPACE
+        if (stream.eatSpace()) {
+            state.tokenize = null;
+            return null;
+        }
+        var ch = stream.next();
+        // LINECOMMENT
+        if (ch == '/' && stream.eat('/')) {
+            state.tokenize = tokenLineComment;
+        } else if (ch == '/' && stream.eat('*')) {
+            state.tokenize = tokenBlockComment;
+        } else if (isDoubleOperatorChar.test(ch + stream.peek())) {
+            stream.next();
+            state.tokenize = null;
+            return "operator";
+        } else if (isSingleOperatorChar.test(ch)) {
+            state.tokenize = null;
+            return "operator";
+        } else if (isNonDigit.test(ch)) {
+            state.tokenize = tokenIdent;
+        } else if (ch == "'" && stream.peek() && stream.peek() != "'") {
+            state.tokenize = tokenQIdent;
+        } else if (ch == '"') {
+            state.tokenize = tokenString;
+        } else if (isDigit.test(ch)) {
+            state.tokenize = tokenUnsignedNumber;
+        } else {
+            state.tokenize = null;
+            return "error";
+        }
+        return state.tokenize(stream, state);
+    },
+    indent: function(state, textAfter, cx) {
+        if (state.tokenize != null) return null;
+        var level = state.level;
+        if (/(algorithm)/.test(textAfter)) level--;
+        if (/(equation)/.test(textAfter)) level--;
+        if (/(initial algorithm)/.test(textAfter)) level--;
+        if (/(initial equation)/.test(textAfter)) level--;
+        if (/(end)/.test(textAfter)) level--;
+        if (level > 0) return cx.unit * level;
+        else return 0;
+    },
+    languageData: {
+        commentTokens: {
+            line: "//",
+            block: {
+                open: "/*",
+                close: "*/"
+            }
+        },
+        autocomplete: completions
+    }
+};
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_modelica_f6470b7b.js.map

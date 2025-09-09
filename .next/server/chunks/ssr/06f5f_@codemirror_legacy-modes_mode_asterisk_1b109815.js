@@ -1,3 +1,379 @@
-module.exports=[983450,a=>{"use strict";a.s(["asterisk",()=>e]);var b=["exten","same","include","ignorepat","switch"],c=["#include","#exec"],d=["addqueuemember","adsiprog","aelsub","agentlogin","agentmonitoroutgoing","agi","alarmreceiver","amd","answer","authenticate","background","backgrounddetect","bridge","busy","callcompletioncancel","callcompletionrequest","celgenuserevent","changemonitor","chanisavail","channelredirect","chanspy","clearhash","confbridge","congestion","continuewhile","controlplayback","dahdiacceptr2call","dahdibarge","dahdiras","dahdiscan","dahdisendcallreroutingfacility","dahdisendkeypadfacility","datetime","dbdel","dbdeltree","deadagi","dial","dictate","directory","disa","dumpchan","eagi","echo","endwhile","exec","execif","execiftime","exitwhile","extenspy","externalivr","festival","flash","followme","forkcdr","getcpeid","gosub","gosubif","goto","gotoif","gotoiftime","hangup","iax2provision","ices","importvar","incomplete","ivrdemo","jabberjoin","jabberleave","jabbersend","jabbersendgroup","jabberstatus","jack","log","macro","macroexclusive","macroexit","macroif","mailboxexists","meetme","meetmeadmin","meetmechanneladmin","meetmecount","milliwatt","minivmaccmess","minivmdelete","minivmgreet","minivmmwi","minivmnotify","minivmrecord","mixmonitor","monitor","morsecode","mp3player","mset","musiconhold","nbscat","nocdr","noop","odbc","odbc","odbcfinish","originate","ospauth","ospfinish","osplookup","ospnext","page","park","parkandannounce","parkedcall","pausemonitor","pausequeuemember","pickup","pickupchan","playback","playtones","privacymanager","proceeding","progress","queue","queuelog","raiseexception","read","readexten","readfile","receivefax","receivefax","receivefax","record","removequeuemember","resetcdr","retrydial","return","ringing","sayalpha","saycountedadj","saycountednoun","saycountpl","saydigits","saynumber","sayphonetic","sayunixtime","senddtmf","sendfax","sendfax","sendfax","sendimage","sendtext","sendurl","set","setamaflags","setcallerpres","setmusiconhold","sipaddheader","sipdtmfmode","sipremoveheader","skel","slastation","slatrunk","sms","softhangup","speechactivategrammar","speechbackground","speechcreate","speechdeactivategrammar","speechdestroy","speechloadgrammar","speechprocessingsound","speechstart","speechunloadgrammar","stackpop","startmusiconhold","stopmixmonitor","stopmonitor","stopmusiconhold","stopplaytones","system","testclient","testserver","transfer","tryexec","trysystem","unpausemonitor","unpausequeuemember","userevent","verbose","vmauthenticate","vmsayname","voicemail","voicemailmain","wait","waitexten","waitfornoise","waitforring","waitforsilence","waitmusiconhold","waituntil","while","zapateller"];let e={name:"asterisk",startState:function(){return{blockComment:!1,extenStart:!1,extenSame:!1,extenInclude:!1,extenExten:!1,extenPriority:!1,extenApplication:!1}},token:function(a,e){var f="";if(a.eatSpace())return null;if(e.extenStart)return(a.eatWhile(/[^\s]/),f=a.current(),/^=>?$/.test(f))?(e.extenExten=!0,e.extenStart=!1,"strong"):(e.extenStart=!1,a.skipToEnd(),"error");if(e.extenExten)return e.extenExten=!1,e.extenPriority=!0,a.eatWhile(/[^,]/),e.extenInclude&&(a.skipToEnd(),e.extenPriority=!1,e.extenInclude=!1),e.extenSame&&(e.extenPriority=!1,e.extenSame=!1,e.extenApplication=!0),"tag";if(e.extenPriority)return(e.extenPriority=!1,e.extenApplication=!0,a.next(),e.extenSame)?null:(a.eatWhile(/[^,]/),"number");if(e.extenApplication){if(a.eatWhile(/,/),","===(f=a.current()))return null;if(a.eatWhile(/\w/),f=a.current().toLowerCase(),e.extenApplication=!1,-1!==d.indexOf(f))return"def"}else{var g="",h=a.next();if(e.blockComment)return"-"==h&&a.match("-;",!0)?e.blockComment=!1:a.skipTo("--;")?(a.next(),a.next(),a.next(),e.blockComment=!1):a.skipToEnd(),"comment";if(";"==h)return a.match("--",!0)&&!a.match("-",!1)?e.blockComment=!0:a.skipToEnd(),"comment";if("["==h)return a.skipTo("]"),a.eat("]"),"header";if('"'==h)return a.skipTo('"'),"string";if("'"==h)return a.skipTo("'"),"string.special";if("#"==h&&(a.eatWhile(/\w/),g=a.current(),-1!==c.indexOf(g)))return a.skipToEnd(),"strong";if("$"==h&&"{"==a.peek())return a.skipTo("}"),a.eat("}"),"variableName.special";if(a.eatWhile(/\w/),g=a.current(),-1!==b.indexOf(g)){switch(e.extenStart=!0,g){case"same":e.extenSame=!0;break;case"include":case"switch":case"ignorepat":e.extenInclude=!0}return"atom"}return}return null},languageData:{commentTokens:{line:";",block:{open:";--",close:"--;"}}}}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/asterisk.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "asterisk",
+    ()=>asterisk
+]);
+var atoms = [
+    "exten",
+    "same",
+    "include",
+    "ignorepat",
+    "switch"
+], dpcmd = [
+    "#include",
+    "#exec"
+], apps = [
+    "addqueuemember",
+    "adsiprog",
+    "aelsub",
+    "agentlogin",
+    "agentmonitoroutgoing",
+    "agi",
+    "alarmreceiver",
+    "amd",
+    "answer",
+    "authenticate",
+    "background",
+    "backgrounddetect",
+    "bridge",
+    "busy",
+    "callcompletioncancel",
+    "callcompletionrequest",
+    "celgenuserevent",
+    "changemonitor",
+    "chanisavail",
+    "channelredirect",
+    "chanspy",
+    "clearhash",
+    "confbridge",
+    "congestion",
+    "continuewhile",
+    "controlplayback",
+    "dahdiacceptr2call",
+    "dahdibarge",
+    "dahdiras",
+    "dahdiscan",
+    "dahdisendcallreroutingfacility",
+    "dahdisendkeypadfacility",
+    "datetime",
+    "dbdel",
+    "dbdeltree",
+    "deadagi",
+    "dial",
+    "dictate",
+    "directory",
+    "disa",
+    "dumpchan",
+    "eagi",
+    "echo",
+    "endwhile",
+    "exec",
+    "execif",
+    "execiftime",
+    "exitwhile",
+    "extenspy",
+    "externalivr",
+    "festival",
+    "flash",
+    "followme",
+    "forkcdr",
+    "getcpeid",
+    "gosub",
+    "gosubif",
+    "goto",
+    "gotoif",
+    "gotoiftime",
+    "hangup",
+    "iax2provision",
+    "ices",
+    "importvar",
+    "incomplete",
+    "ivrdemo",
+    "jabberjoin",
+    "jabberleave",
+    "jabbersend",
+    "jabbersendgroup",
+    "jabberstatus",
+    "jack",
+    "log",
+    "macro",
+    "macroexclusive",
+    "macroexit",
+    "macroif",
+    "mailboxexists",
+    "meetme",
+    "meetmeadmin",
+    "meetmechanneladmin",
+    "meetmecount",
+    "milliwatt",
+    "minivmaccmess",
+    "minivmdelete",
+    "minivmgreet",
+    "minivmmwi",
+    "minivmnotify",
+    "minivmrecord",
+    "mixmonitor",
+    "monitor",
+    "morsecode",
+    "mp3player",
+    "mset",
+    "musiconhold",
+    "nbscat",
+    "nocdr",
+    "noop",
+    "odbc",
+    "odbc",
+    "odbcfinish",
+    "originate",
+    "ospauth",
+    "ospfinish",
+    "osplookup",
+    "ospnext",
+    "page",
+    "park",
+    "parkandannounce",
+    "parkedcall",
+    "pausemonitor",
+    "pausequeuemember",
+    "pickup",
+    "pickupchan",
+    "playback",
+    "playtones",
+    "privacymanager",
+    "proceeding",
+    "progress",
+    "queue",
+    "queuelog",
+    "raiseexception",
+    "read",
+    "readexten",
+    "readfile",
+    "receivefax",
+    "receivefax",
+    "receivefax",
+    "record",
+    "removequeuemember",
+    "resetcdr",
+    "retrydial",
+    "return",
+    "ringing",
+    "sayalpha",
+    "saycountedadj",
+    "saycountednoun",
+    "saycountpl",
+    "saydigits",
+    "saynumber",
+    "sayphonetic",
+    "sayunixtime",
+    "senddtmf",
+    "sendfax",
+    "sendfax",
+    "sendfax",
+    "sendimage",
+    "sendtext",
+    "sendurl",
+    "set",
+    "setamaflags",
+    "setcallerpres",
+    "setmusiconhold",
+    "sipaddheader",
+    "sipdtmfmode",
+    "sipremoveheader",
+    "skel",
+    "slastation",
+    "slatrunk",
+    "sms",
+    "softhangup",
+    "speechactivategrammar",
+    "speechbackground",
+    "speechcreate",
+    "speechdeactivategrammar",
+    "speechdestroy",
+    "speechloadgrammar",
+    "speechprocessingsound",
+    "speechstart",
+    "speechunloadgrammar",
+    "stackpop",
+    "startmusiconhold",
+    "stopmixmonitor",
+    "stopmonitor",
+    "stopmusiconhold",
+    "stopplaytones",
+    "system",
+    "testclient",
+    "testserver",
+    "transfer",
+    "tryexec",
+    "trysystem",
+    "unpausemonitor",
+    "unpausequeuemember",
+    "userevent",
+    "verbose",
+    "vmauthenticate",
+    "vmsayname",
+    "voicemail",
+    "voicemailmain",
+    "wait",
+    "waitexten",
+    "waitfornoise",
+    "waitforring",
+    "waitforsilence",
+    "waitmusiconhold",
+    "waituntil",
+    "while",
+    "zapateller"
+];
+function basicToken(stream, state) {
+    var cur = '';
+    var ch = stream.next();
+    // comment
+    if (state.blockComment) {
+        if (ch == "-" && stream.match("-;", true)) {
+            state.blockComment = false;
+        } else if (stream.skipTo("--;")) {
+            stream.next();
+            stream.next();
+            stream.next();
+            state.blockComment = false;
+        } else {
+            stream.skipToEnd();
+        }
+        return "comment";
+    }
+    if (ch == ";") {
+        if (stream.match("--", true)) {
+            if (!stream.match("-", false)) {
+                state.blockComment = true;
+                return "comment";
+            }
+        }
+        stream.skipToEnd();
+        return "comment";
+    }
+    // context
+    if (ch == '[') {
+        stream.skipTo(']');
+        stream.eat(']');
+        return "header";
+    }
+    // string
+    if (ch == '"') {
+        stream.skipTo('"');
+        return "string";
+    }
+    if (ch == "'") {
+        stream.skipTo("'");
+        return "string.special";
+    }
+    // dialplan commands
+    if (ch == '#') {
+        stream.eatWhile(/\w/);
+        cur = stream.current();
+        if (dpcmd.indexOf(cur) !== -1) {
+            stream.skipToEnd();
+            return "strong";
+        }
+    }
+    // application args
+    if (ch == '$') {
+        var ch1 = stream.peek();
+        if (ch1 == '{') {
+            stream.skipTo('}');
+            stream.eat('}');
+            return "variableName.special";
+        }
+    }
+    // extension
+    stream.eatWhile(/\w/);
+    cur = stream.current();
+    if (atoms.indexOf(cur) !== -1) {
+        state.extenStart = true;
+        switch(cur){
+            case 'same':
+                state.extenSame = true;
+                break;
+            case 'include':
+            case 'switch':
+            case 'ignorepat':
+                state.extenInclude = true;
+                break;
+            default:
+                break;
+        }
+        return "atom";
+    }
+}
+const asterisk = {
+    name: "asterisk",
+    startState: function() {
+        return {
+            blockComment: false,
+            extenStart: false,
+            extenSame: false,
+            extenInclude: false,
+            extenExten: false,
+            extenPriority: false,
+            extenApplication: false
+        };
+    },
+    token: function(stream, state) {
+        var cur = '';
+        if (stream.eatSpace()) return null;
+        // extension started
+        if (state.extenStart) {
+            stream.eatWhile(/[^\s]/);
+            cur = stream.current();
+            if (/^=>?$/.test(cur)) {
+                state.extenExten = true;
+                state.extenStart = false;
+                return "strong";
+            } else {
+                state.extenStart = false;
+                stream.skipToEnd();
+                return "error";
+            }
+        } else if (state.extenExten) {
+            // set exten and priority
+            state.extenExten = false;
+            state.extenPriority = true;
+            stream.eatWhile(/[^,]/);
+            if (state.extenInclude) {
+                stream.skipToEnd();
+                state.extenPriority = false;
+                state.extenInclude = false;
+            }
+            if (state.extenSame) {
+                state.extenPriority = false;
+                state.extenSame = false;
+                state.extenApplication = true;
+            }
+            return "tag";
+        } else if (state.extenPriority) {
+            state.extenPriority = false;
+            state.extenApplication = true;
+            stream.next(); // get comma
+            if (state.extenSame) return null;
+            stream.eatWhile(/[^,]/);
+            return "number";
+        } else if (state.extenApplication) {
+            stream.eatWhile(/,/);
+            cur = stream.current();
+            if (cur === ',') return null;
+            stream.eatWhile(/\w/);
+            cur = stream.current().toLowerCase();
+            state.extenApplication = false;
+            if (apps.indexOf(cur) !== -1) {
+                return "def";
+            }
+        } else {
+            return basicToken(stream, state);
+        }
+        return null;
+    },
+    languageData: {
+        commentTokens: {
+            line: ";",
+            block: {
+                open: ";--",
+                close: "--;"
+            }
+        }
+    }
+};
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_asterisk_1b109815.js.map

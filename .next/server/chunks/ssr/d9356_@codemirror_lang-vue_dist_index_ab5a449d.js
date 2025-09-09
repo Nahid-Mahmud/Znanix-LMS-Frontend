@@ -1,3 +1,144 @@
-module.exports=[753347,a=>{"use strict";a.s(["vue",()=>t,"vueLanguage",()=>r]);var b=a.i(27312),c=a.i(379330),d=a.i(545159),e=a.i(439262),f=a.i(62036),g=a.i(643037);let h=g.LRParser.deserialize({version:14,states:"%pOVOWOOObQPOOOpOSO'#C_OOOO'#Cp'#CpQVOWOOQxQPOOO!TQQOOQ!YQPOOOOOO,58y,58yO!_OSO,58yOOOO-E6n-E6nO!dQQO'#CqQ{QPOOO!iQPOOQ{QPOOO!qQPOOOOOO1G.e1G.eOOQO,59],59]OOQO-E6o-E6oO!yOpO'#CiO#RO`O'#CiQOQPOOO#ZO#tO'#CmO#fO!bO'#CmOOQO,59T,59TO#qOpO,59TO#vO`O,59TOOOO'#Cr'#CrO#{O#tO,59XOOQO,59X,59XOOOO'#Cs'#CsO$WO!bO,59XOOQO1G.o1G.oOOOO-E6p-E6pOOQO1G.s1G.sOOOO-E6q-E6q",stateData:"$g~OjOS~OQROUROkQO~OWTOXUOZUO`VO~OSXOTWO~OXUO[]OlZO~OY^O~O[_O~OT`O~OYaO~OmcOodO~OmfOogO~O^iOnhO~O_jOphO~ObkOqkOrmO~OcnOsnOtmO~OnpO~OppO~ObkOqkOrrO~OcnOsnOtrO~OWX`~",goto:"!^hPPPiPPPPPPPPPmPPPpPPsy!Q!WTROSRe]Re_QSORYSS[T^Rb[QlfRqlQogRso",nodeNames:"⚠ Content Text Interpolation InterpolationContent }} Entity Attribute VueAttributeName : Identifier @ Is ScriptAttributeValue AttributeScript AttributeScript AttributeName AttributeValue Entity Entity",maxTerm:36,nodeProps:[["isolate",-3,3,13,17,""]],skippedNodes:[0],repeatNodeCount:4,tokenData:"'y~RdXY!aYZ!a]^!apq!ars!rwx!w}!O!|!O!P#t!Q![#y![!]$s!_!`%g!b!c%l!c!}#y#R#S#y#T#j#y#j#k%q#k#o#y%W;'S#y;'S;:j$m<%lO#y~!fSj~XY!aYZ!a]^!apq!a~!wOm~~!|Oo~!b#RX`!b}!O!|!Q![!|![!]!|!c!}!|#R#S!|#T#o!|%W;'S!|;'S;:j#n<%lO!|!b#qP;=`<%l!|~#yOl~%W$QXY#t`!b}!O!|!Q![#y![!]!|!c!}#y#R#S#y#T#o#y%W;'S#y;'S;:j$m<%lO#y%W$pP;=`<%l#y~$zXX~`!b}!O!|!Q![!|![!]!|!c!}!|#R#S!|#T#o!|%W;'S!|;'S;:j#n<%lO!|~%lO[~~%qOZ~%W%xXY#t`!b}!O&e!Q![#y![!]!|!c!}#y#R#S#y#T#o#y%W;'S#y;'S;:j$m<%lO#y!b&jX`!b}!O!|!Q![!|![!]!|!c!}'V#R#S!|#T#o'V%W;'S!|;'S;:j#n<%lO!|!b'^XW!b`!b}!O!|!Q![!|![!]!|!c!}'V#R#S!|#T#o'V%W;'S!|;'S;:j#n<%lO!|",tokenizers:[6,7,new g.LocalTokenGroup("b~RP#q#rU~XP#q#r[~aOT~~",17,4),new g.LocalTokenGroup("!k~RQvwX#o#p!_~^TU~Opmq!]m!^;'Sm;'S;=`!X<%lOm~pUOpmq!]m!]!^!S!^;'Sm;'S;=`!X<%lOm~!XOU~~![P;=`<%lm~!bP#o#p!e~!jOk~~",72,2),new g.LocalTokenGroup("[~RPwxU~ZOp~~",11,15),new g.LocalTokenGroup("[~RPrsU~ZOn~~",11,14),new g.LocalTokenGroup("!e~RQvwXwx!_~^Tc~Opmq!]m!^;'Sm;'S;=`!X<%lOm~pUOpmq!]m!]!^!S!^;'Sm;'S;=`!X<%lOm~!XOc~~![P;=`<%lm~!dOt~~",66,35),new g.LocalTokenGroup("!e~RQrsXvw^~^Or~~cTb~Oprq!]r!^;'Sr;'S;=`!^<%lOr~uUOprq!]r!]!^!X!^;'Sr;'S;=`!^<%lOr~!^Ob~~!aP;=`<%lr~",66,33)],topRules:{Content:[0,1],Attribute:[1,7]},tokenPrec:157}),i=d.javascriptLanguage.parser.configure({top:"SingleExpression"}),j=h.configure({props:[(0,e.styleTags)({Text:e.tags.content,Is:e.tags.definitionOperator,AttributeName:e.tags.attributeName,VueAttributeName:e.tags.keyword,Identifier:e.tags.variableName,"AttributeValue ScriptAttributeValue":e.tags.attributeValue,Entity:e.tags.character,"{{ }}":e.tags.brace,"@ :":e.tags.punctuation})]}),k={parser:i},l=j.configure({wrap:(0,f.parseMixed)((a,b)=>"InterpolationContent"==a.name?k:null)}),m=j.configure({wrap:(0,f.parseMixed)((a,b)=>"AttributeScript"==a.name?k:null),top:"Attribute"}),n={parser:l},o={parser:m},p=(0,c.html)();function q(a){return a.configure({dialect:"selfClosing",wrap:(0,f.parseMixed)(s)},"vue")}let r=q(p.language);function s(a,b){switch(a.name){case"Attribute":return/^(@|:|v-)/.test(b.read(a.from,a.from+2))?o:null;case"Text":return n}return null}function t(a={}){let c=p;if(a.base){if("html"!=a.base.language.name||!(a.base.language instanceof b.LRLanguage))throw RangeError("The base option must be the result of calling html(...)");c=a.base}return new b.LanguageSupport(c.language==p.language?r:q(c.language),[c.support,c.language.data.of({closeBrackets:{brackets:["{",'"']}})])}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+lang-vue@0.1.3/node_modules/@codemirror/lang-vue/dist/index.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "vue",
+    ()=>vue,
+    "vueLanguage",
+    ()=>vueLanguage
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$codemirror$2b$language$40$6$2e$11$2e$3$2f$node_modules$2f40$codemirror$2f$language$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@codemirror+language@6.11.3/node_modules/@codemirror/language/dist/index.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$codemirror$2b$lang$2d$html$40$6$2e$4$2e$9$2f$node_modules$2f40$codemirror$2f$lang$2d$html$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@codemirror+lang-html@6.4.9/node_modules/@codemirror/lang-html/dist/index.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$codemirror$2b$lang$2d$javascript$40$6$2e$2$2e$4$2f$node_modules$2f40$codemirror$2f$lang$2d$javascript$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@codemirror+lang-javascript@6.2.4/node_modules/@codemirror/lang-javascript/dist/index.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@lezer+highlight@1.2.1/node_modules/@lezer/highlight/dist/index.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$common$40$1$2e$2$2e$3$2f$node_modules$2f40$lezer$2f$common$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@lezer+common@1.2.3/node_modules/@lezer/common/dist/index.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$lr$40$1$2e$4$2e$2$2f$node_modules$2f40$lezer$2f$lr$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@lezer+lr@1.4.2/node_modules/@lezer/lr/dist/index.js [app-ssr] (ecmascript)");
+;
+;
+;
+;
+;
+;
+// This file was generated by lezer-generator. You probably shouldn't edit it.
+const parser = /*@__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$lr$40$1$2e$4$2e$2$2f$node_modules$2f40$lezer$2f$lr$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["LRParser"].deserialize({
+    version: 14,
+    states: "%pOVOWOOObQPOOOpOSO'#C_OOOO'#Cp'#CpQVOWOOQxQPOOO!TQQOOQ!YQPOOOOOO,58y,58yO!_OSO,58yOOOO-E6n-E6nO!dQQO'#CqQ{QPOOO!iQPOOQ{QPOOO!qQPOOOOOO1G.e1G.eOOQO,59],59]OOQO-E6o-E6oO!yOpO'#CiO#RO`O'#CiQOQPOOO#ZO#tO'#CmO#fO!bO'#CmOOQO,59T,59TO#qOpO,59TO#vO`O,59TOOOO'#Cr'#CrO#{O#tO,59XOOQO,59X,59XOOOO'#Cs'#CsO$WO!bO,59XOOQO1G.o1G.oOOOO-E6p-E6pOOQO1G.s1G.sOOOO-E6q-E6q",
+    stateData: "$g~OjOS~OQROUROkQO~OWTOXUOZUO`VO~OSXOTWO~OXUO[]OlZO~OY^O~O[_O~OT`O~OYaO~OmcOodO~OmfOogO~O^iOnhO~O_jOphO~ObkOqkOrmO~OcnOsnOtmO~OnpO~OppO~ObkOqkOrrO~OcnOsnOtrO~OWX`~",
+    goto: "!^hPPPiPPPPPPPPPmPPPpPPsy!Q!WTROSRe]Re_QSORYSS[T^Rb[QlfRqlQogRso",
+    nodeNames: "⚠ Content Text Interpolation InterpolationContent }} Entity Attribute VueAttributeName : Identifier @ Is ScriptAttributeValue AttributeScript AttributeScript AttributeName AttributeValue Entity Entity",
+    maxTerm: 36,
+    nodeProps: [
+        [
+            "isolate",
+            -3,
+            3,
+            13,
+            17,
+            ""
+        ]
+    ],
+    skippedNodes: [
+        0
+    ],
+    repeatNodeCount: 4,
+    tokenData: "'y~RdXY!aYZ!a]^!apq!ars!rwx!w}!O!|!O!P#t!Q![#y![!]$s!_!`%g!b!c%l!c!}#y#R#S#y#T#j#y#j#k%q#k#o#y%W;'S#y;'S;:j$m<%lO#y~!fSj~XY!aYZ!a]^!apq!a~!wOm~~!|Oo~!b#RX`!b}!O!|!Q![!|![!]!|!c!}!|#R#S!|#T#o!|%W;'S!|;'S;:j#n<%lO!|!b#qP;=`<%l!|~#yOl~%W$QXY#t`!b}!O!|!Q![#y![!]!|!c!}#y#R#S#y#T#o#y%W;'S#y;'S;:j$m<%lO#y%W$pP;=`<%l#y~$zXX~`!b}!O!|!Q![!|![!]!|!c!}!|#R#S!|#T#o!|%W;'S!|;'S;:j#n<%lO!|~%lO[~~%qOZ~%W%xXY#t`!b}!O&e!Q![#y![!]!|!c!}#y#R#S#y#T#o#y%W;'S#y;'S;:j$m<%lO#y!b&jX`!b}!O!|!Q![!|![!]!|!c!}'V#R#S!|#T#o'V%W;'S!|;'S;:j#n<%lO!|!b'^XW!b`!b}!O!|!Q![!|![!]!|!c!}'V#R#S!|#T#o'V%W;'S!|;'S;:j#n<%lO!|",
+    tokenizers: [
+        6,
+        7,
+        /*@__PURE__*/ new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$lr$40$1$2e$4$2e$2$2f$node_modules$2f40$lezer$2f$lr$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["LocalTokenGroup"]("b~RP#q#rU~XP#q#r[~aOT~~", 17, 4),
+        /*@__PURE__*/ new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$lr$40$1$2e$4$2e$2$2f$node_modules$2f40$lezer$2f$lr$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["LocalTokenGroup"]("!k~RQvwX#o#p!_~^TU~Opmq!]m!^;'Sm;'S;=`!X<%lOm~pUOpmq!]m!]!^!S!^;'Sm;'S;=`!X<%lOm~!XOU~~![P;=`<%lm~!bP#o#p!e~!jOk~~", 72, 2),
+        /*@__PURE__*/ new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$lr$40$1$2e$4$2e$2$2f$node_modules$2f40$lezer$2f$lr$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["LocalTokenGroup"]("[~RPwxU~ZOp~~", 11, 15),
+        /*@__PURE__*/ new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$lr$40$1$2e$4$2e$2$2f$node_modules$2f40$lezer$2f$lr$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["LocalTokenGroup"]("[~RPrsU~ZOn~~", 11, 14),
+        /*@__PURE__*/ new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$lr$40$1$2e$4$2e$2$2f$node_modules$2f40$lezer$2f$lr$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["LocalTokenGroup"]("!e~RQvwXwx!_~^Tc~Opmq!]m!^;'Sm;'S;=`!X<%lOm~pUOpmq!]m!]!^!S!^;'Sm;'S;=`!X<%lOm~!XOc~~![P;=`<%lm~!dOt~~", 66, 35),
+        /*@__PURE__*/ new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$lr$40$1$2e$4$2e$2$2f$node_modules$2f40$lezer$2f$lr$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["LocalTokenGroup"]("!e~RQrsXvw^~^Or~~cTb~Oprq!]r!^;'Sr;'S;=`!^<%lOr~uUOprq!]r!]!^!X!^;'Sr;'S;=`!^<%lOr~!^Ob~~!aP;=`<%lr~", 66, 33)
+    ],
+    topRules: {
+        "Content": [
+            0,
+            1
+        ],
+        "Attribute": [
+            1,
+            7
+        ]
+    },
+    tokenPrec: 157
+});
+const exprParser = /*@__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$codemirror$2b$lang$2d$javascript$40$6$2e$2$2e$4$2f$node_modules$2f40$codemirror$2f$lang$2d$javascript$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["javascriptLanguage"].parser.configure({
+    top: "SingleExpression"
+});
+const baseParser = /*@__PURE__*/ parser.configure({
+    props: [
+        /*@__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["styleTags"])({
+            Text: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].content,
+            Is: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].definitionOperator,
+            AttributeName: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].attributeName,
+            VueAttributeName: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].keyword,
+            Identifier: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].variableName,
+            "AttributeValue ScriptAttributeValue": __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].attributeValue,
+            Entity: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].character,
+            "{{ }}": __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].brace,
+            "@ :": __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].punctuation
+        })
+    ]
+});
+const exprMixed = {
+    parser: exprParser
+};
+const textParser = /*@__PURE__*/ baseParser.configure({
+    wrap: /*@__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$common$40$1$2e$2$2e$3$2f$node_modules$2f40$lezer$2f$common$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["parseMixed"])((node, input)=>node.name == "InterpolationContent" ? exprMixed : null)
+});
+const attrParser = /*@__PURE__*/ baseParser.configure({
+    wrap: /*@__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$common$40$1$2e$2$2e$3$2f$node_modules$2f40$lezer$2f$common$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["parseMixed"])((node, input)=>node.name == "AttributeScript" ? exprMixed : null),
+    top: "Attribute"
+});
+const textMixed = {
+    parser: textParser
+}, attrMixed = {
+    parser: attrParser
+};
+const baseHTML = /*@__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$codemirror$2b$lang$2d$html$40$6$2e$4$2e$9$2f$node_modules$2f40$codemirror$2f$lang$2d$html$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["html"])();
+function makeVue(base) {
+    return base.configure({
+        dialect: "selfClosing",
+        wrap: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$common$40$1$2e$2$2e$3$2f$node_modules$2f40$lezer$2f$common$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["parseMixed"])(mixVue)
+    }, "vue");
+}
+/**
+A language provider for Vue templates.
+*/ const vueLanguage = /*@__PURE__*/ makeVue(baseHTML.language);
+function mixVue(node, input) {
+    switch(node.name){
+        case "Attribute":
+            return /^(@|:|v-)/.test(input.read(node.from, node.from + 2)) ? attrMixed : null;
+        case "Text":
+            return textMixed;
+    }
+    return null;
+}
+/**
+Vue template support.
+*/ function vue(config = {}) {
+    let base = baseHTML;
+    if (config.base) {
+        if (config.base.language.name != "html" || !(config.base.language instanceof __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$codemirror$2b$language$40$6$2e$11$2e$3$2f$node_modules$2f40$codemirror$2f$language$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["LRLanguage"])) throw new RangeError("The base option must be the result of calling html(...)");
+        base = config.base;
+    }
+    return new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$codemirror$2b$language$40$6$2e$11$2e$3$2f$node_modules$2f40$codemirror$2f$language$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["LanguageSupport"](base.language == baseHTML.language ? vueLanguage : makeVue(base.language), [
+        base.support,
+        base.language.data.of({
+            closeBrackets: {
+                brackets: [
+                    "{",
+                    '"'
+                ]
+            }
+        })
+    ]);
+}
+;
+}),
+];
 
 //# sourceMappingURL=d9356_%40codemirror_lang-vue_dist_index_ab5a449d.js.map

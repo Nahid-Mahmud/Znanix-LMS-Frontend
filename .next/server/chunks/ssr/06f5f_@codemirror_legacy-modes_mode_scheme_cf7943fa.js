@@ -1,3 +1,253 @@
-module.exports=[378200,a=>{"use strict";a.s(["scheme",()=>v]);var b="comment",c="string",d="symbol",e="atom",f="number",g="bracket";function h(a){for(var b={},c=a.split(" "),d=0;d<c.length;++d)b[c[d]]=!0;return b}var i=h("λ case-lambda call/cc class cond-expand define-class define-values exit-handler field import inherit init-field interface let*-values let-values let/ec mixin opt-lambda override protect provide public rename require require-for-syntax syntax syntax-case syntax-error unit/sig unless when with-syntax and begin call-with-current-continuation call-with-input-file call-with-output-file case cond define define-syntax define-macro defmacro delay do dynamic-wind else for-each if lambda let let* let-syntax letrec letrec-syntax map or syntax-rules abs acos angle append apply asin assoc assq assv atan boolean? caar cadr call-with-input-file call-with-output-file call-with-values car cdddar cddddr cdr ceiling char->integer char-alphabetic? char-ci<=? char-ci<? char-ci=? char-ci>=? char-ci>? char-downcase char-lower-case? char-numeric? char-ready? char-upcase char-upper-case? char-whitespace? char<=? char<? char=? char>=? char>? char? close-input-port close-output-port complex? cons cos current-input-port current-output-port denominator display eof-object? eq? equal? eqv? eval even? exact->inexact exact? exp expt #f floor force gcd imag-part inexact->exact inexact? input-port? integer->char integer? interaction-environment lcm length list list->string list->vector list-ref list-tail list? load log magnitude make-polar make-rectangular make-string make-vector max member memq memv min modulo negative? newline not null-environment null? number->string number? numerator odd? open-input-file open-output-file output-port? pair? peek-char port? positive? procedure? quasiquote quote quotient rational? rationalize read read-char real-part real? remainder reverse round scheme-report-environment set! set-car! set-cdr! sin sqrt string string->list string->number string->symbol string-append string-ci<=? string-ci<? string-ci=? string-ci>=? string-ci>? string-copy string-fill! string-length string-ref string-set! string<=? string<? string=? string>=? string>? string? substring symbol->string symbol? #t tan transcript-off transcript-on truncate values vector vector->list vector-fill! vector-length vector-ref vector-set! with-input-from-file with-output-to-file write write-char zero?"),j=h("define let letrec let* lambda define-macro defmacro let-syntax letrec-syntax let-values let*-values define-syntax syntax-rules define-values when unless");function k(a,b,c){this.indent=a,this.type=b,this.prev=c}function l(a,b,c){a.indentStack=new k(b,c,a.indentStack)}var m=new RegExp(/^(?:[-+]i|[-+][01]+#*(?:\/[01]+#*)?i|[-+]?[01]+#*(?:\/[01]+#*)?@[-+]?[01]+#*(?:\/[01]+#*)?|[-+]?[01]+#*(?:\/[01]+#*)?[-+](?:[01]+#*(?:\/[01]+#*)?)?i|[-+]?[01]+#*(?:\/[01]+#*)?)(?=[()\s;"]|$)/i),n=new RegExp(/^(?:[-+]i|[-+][0-7]+#*(?:\/[0-7]+#*)?i|[-+]?[0-7]+#*(?:\/[0-7]+#*)?@[-+]?[0-7]+#*(?:\/[0-7]+#*)?|[-+]?[0-7]+#*(?:\/[0-7]+#*)?[-+](?:[0-7]+#*(?:\/[0-7]+#*)?)?i|[-+]?[0-7]+#*(?:\/[0-7]+#*)?)(?=[()\s;"]|$)/i),o=new RegExp(/^(?:[-+]i|[-+][\da-f]+#*(?:\/[\da-f]+#*)?i|[-+]?[\da-f]+#*(?:\/[\da-f]+#*)?@[-+]?[\da-f]+#*(?:\/[\da-f]+#*)?|[-+]?[\da-f]+#*(?:\/[\da-f]+#*)?[-+](?:[\da-f]+#*(?:\/[\da-f]+#*)?)?i|[-+]?[\da-f]+#*(?:\/[\da-f]+#*)?)(?=[()\s;"]|$)/i),p=new RegExp(/^(?:[-+]i|[-+](?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)i|[-+]?(?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)@[-+]?(?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)|[-+]?(?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)[-+](?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)?i|(?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*))(?=[()\s;"]|$)/i);function q(a){return a.match(m)}function r(a){return a.match(n)}function s(a,b){return!0===b&&a.backUp(1),a.match(p)}function t(a){return a.match(o)}function u(a,b){for(var c,d=!1;null!=(c=a.next());){if(c==b.token&&!d){b.state.mode=!1;break}d=!d&&"\\"==c}}let v={name:"scheme",startState:function(){return{indentStack:null,indentation:0,mode:!1,sExprComment:!1,sExprQuote:!1}},token:function(a,h){if(null==h.indentStack&&a.sol()&&(h.indentation=a.indentation()),a.eatSpace())return null;var k=null;switch(h.mode){case"string":u(a,{token:'"',state:h}),k=c;break;case"symbol":u(a,{token:"|",state:h}),k=d;break;case"comment":for(var m,n=!1;null!=(m=a.next());){if("#"==m&&n){h.mode=!1;break}n="|"==m}k=b;break;case"s-expr-comment":if(h.mode=!1,"("==a.peek()||"["==a.peek())h.sExprComment=0;else{a.eatWhile(/[^\s\(\)\[\]]/),k=b;break}default:var o=a.next();if('"'==o)h.mode="string",k=c;else if("'"==o)"("==a.peek()||"["==a.peek()?"number"!=typeof h.sExprQuote&&(h.sExprQuote=0):a.eatWhile(/[\w_\-!$%&*+\.\/:<=>?@\^~]/),k=e;else if("|"==o)h.mode="symbol",k=d;else if("#"==o)if(a.eat("|"))h.mode="comment",k=b;else if(a.eat(/[tf]/i))k=e;else if(a.eat(";"))h.mode="s-expr-comment",k=b;else{var p=null,v=!1,w=!0;a.eat(/[ei]/i)?v=!0:a.backUp(1),a.match(/^#b/i)?p=q:a.match(/^#o/i)?p=r:a.match(/^#x/i)?p=t:a.match(/^#d/i)?p=s:a.match(/^[-+0-9.]/,!1)?(w=!1,p=s):v||a.eat("#"),null!=p&&(w&&!v&&a.match(/^#[ei]/i),p(a)&&(k=f))}else if(/^[-+0-9.]/.test(o)&&s(a,!0))k=f;else if(";"==o)a.skipToEnd(),k=b;else if("("==o||"["==o){for(var x,y="",z=a.column();null!=(x=a.eat(/[^\s\(\[\;\)\]]/));)y+=x;y.length>0&&j.propertyIsEnumerable(y)?l(h,z+2,o):(a.eatSpace(),a.eol()||";"==a.peek()?l(h,z+1,o):l(h,z+a.current().length,o)),a.backUp(a.current().length-1),"number"==typeof h.sExprComment&&h.sExprComment++,"number"==typeof h.sExprQuote&&h.sExprQuote++,k=g}else")"==o||"]"==o?(k=g,null!=h.indentStack&&h.indentStack.type==(")"==o?"(":"[")&&(h.indentStack=h.indentStack.prev,"number"==typeof h.sExprComment&&0==--h.sExprComment&&(k=b,h.sExprComment=!1),"number"==typeof h.sExprQuote&&0==--h.sExprQuote&&(k=e,h.sExprQuote=!1))):(a.eatWhile(/[\w_\-!$%&*+\.\/:<=>?@\^~]/),k=i&&i.propertyIsEnumerable(a.current())?"builtin":"variable")}return"number"==typeof h.sExprComment?b:"number"==typeof h.sExprQuote?e:k},indent:function(a){return null==a.indentStack?a.indentation:a.indentStack.indent},languageData:{closeBrackets:{brackets:["(","[","{",'"']},commentTokens:{line:";;"}}}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/scheme.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "scheme",
+    ()=>scheme
+]);
+var BUILTIN = "builtin", COMMENT = "comment", STRING = "string", SYMBOL = "symbol", ATOM = "atom", NUMBER = "number", BRACKET = "bracket";
+var INDENT_WORD_SKIP = 2;
+function makeKeywords(str) {
+    var obj = {}, words = str.split(" ");
+    for(var i = 0; i < words.length; ++i)obj[words[i]] = true;
+    return obj;
+}
+var keywords = makeKeywords("λ case-lambda call/cc class cond-expand define-class define-values exit-handler field import inherit init-field interface let*-values let-values let/ec mixin opt-lambda override protect provide public rename require require-for-syntax syntax syntax-case syntax-error unit/sig unless when with-syntax and begin call-with-current-continuation call-with-input-file call-with-output-file case cond define define-syntax define-macro defmacro delay do dynamic-wind else for-each if lambda let let* let-syntax letrec letrec-syntax map or syntax-rules abs acos angle append apply asin assoc assq assv atan boolean? caar cadr call-with-input-file call-with-output-file call-with-values car cdddar cddddr cdr ceiling char->integer char-alphabetic? char-ci<=? char-ci<? char-ci=? char-ci>=? char-ci>? char-downcase char-lower-case? char-numeric? char-ready? char-upcase char-upper-case? char-whitespace? char<=? char<? char=? char>=? char>? char? close-input-port close-output-port complex? cons cos current-input-port current-output-port denominator display eof-object? eq? equal? eqv? eval even? exact->inexact exact? exp expt #f floor force gcd imag-part inexact->exact inexact? input-port? integer->char integer? interaction-environment lcm length list list->string list->vector list-ref list-tail list? load log magnitude make-polar make-rectangular make-string make-vector max member memq memv min modulo negative? newline not null-environment null? number->string number? numerator odd? open-input-file open-output-file output-port? pair? peek-char port? positive? procedure? quasiquote quote quotient rational? rationalize read read-char real-part real? remainder reverse round scheme-report-environment set! set-car! set-cdr! sin sqrt string string->list string->number string->symbol string-append string-ci<=? string-ci<? string-ci=? string-ci>=? string-ci>? string-copy string-fill! string-length string-ref string-set! string<=? string<? string=? string>=? string>? string? substring symbol->string symbol? #t tan transcript-off transcript-on truncate values vector vector->list vector-fill! vector-length vector-ref vector-set! with-input-from-file with-output-to-file write write-char zero?");
+var indentKeys = makeKeywords("define let letrec let* lambda define-macro defmacro let-syntax letrec-syntax let-values let*-values define-syntax syntax-rules define-values when unless");
+function stateStack(indent, type, prev) {
+    this.indent = indent;
+    this.type = type;
+    this.prev = prev;
+}
+function pushStack(state, indent, type) {
+    state.indentStack = new stateStack(indent, type, state.indentStack);
+}
+function popStack(state) {
+    state.indentStack = state.indentStack.prev;
+}
+var binaryMatcher = new RegExp(/^(?:[-+]i|[-+][01]+#*(?:\/[01]+#*)?i|[-+]?[01]+#*(?:\/[01]+#*)?@[-+]?[01]+#*(?:\/[01]+#*)?|[-+]?[01]+#*(?:\/[01]+#*)?[-+](?:[01]+#*(?:\/[01]+#*)?)?i|[-+]?[01]+#*(?:\/[01]+#*)?)(?=[()\s;"]|$)/i);
+var octalMatcher = new RegExp(/^(?:[-+]i|[-+][0-7]+#*(?:\/[0-7]+#*)?i|[-+]?[0-7]+#*(?:\/[0-7]+#*)?@[-+]?[0-7]+#*(?:\/[0-7]+#*)?|[-+]?[0-7]+#*(?:\/[0-7]+#*)?[-+](?:[0-7]+#*(?:\/[0-7]+#*)?)?i|[-+]?[0-7]+#*(?:\/[0-7]+#*)?)(?=[()\s;"]|$)/i);
+var hexMatcher = new RegExp(/^(?:[-+]i|[-+][\da-f]+#*(?:\/[\da-f]+#*)?i|[-+]?[\da-f]+#*(?:\/[\da-f]+#*)?@[-+]?[\da-f]+#*(?:\/[\da-f]+#*)?|[-+]?[\da-f]+#*(?:\/[\da-f]+#*)?[-+](?:[\da-f]+#*(?:\/[\da-f]+#*)?)?i|[-+]?[\da-f]+#*(?:\/[\da-f]+#*)?)(?=[()\s;"]|$)/i);
+var decimalMatcher = new RegExp(/^(?:[-+]i|[-+](?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)i|[-+]?(?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)@[-+]?(?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)|[-+]?(?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)[-+](?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*)?i|(?:(?:(?:\d+#+\.?#*|\d+\.\d*#*|\.\d+#*|\d+)(?:[esfdl][-+]?\d+)?)|\d+#*\/\d+#*))(?=[()\s;"]|$)/i);
+function isBinaryNumber(stream) {
+    return stream.match(binaryMatcher);
+}
+function isOctalNumber(stream) {
+    return stream.match(octalMatcher);
+}
+function isDecimalNumber(stream, backup) {
+    if (backup === true) {
+        stream.backUp(1);
+    }
+    return stream.match(decimalMatcher);
+}
+function isHexNumber(stream) {
+    return stream.match(hexMatcher);
+}
+function processEscapedSequence(stream, options) {
+    var next, escaped = false;
+    while((next = stream.next()) != null){
+        if (next == options.token && !escaped) {
+            options.state.mode = false;
+            break;
+        }
+        escaped = !escaped && next == "\\";
+    }
+}
+const scheme = {
+    name: "scheme",
+    startState: function() {
+        return {
+            indentStack: null,
+            indentation: 0,
+            mode: false,
+            sExprComment: false,
+            sExprQuote: false
+        };
+    },
+    token: function(stream, state) {
+        if (state.indentStack == null && stream.sol()) {
+            // update indentation, but only if indentStack is empty
+            state.indentation = stream.indentation();
+        }
+        // skip spaces
+        if (stream.eatSpace()) {
+            return null;
+        }
+        var returnType = null;
+        switch(state.mode){
+            case "string":
+                processEscapedSequence(stream, {
+                    token: "\"",
+                    state: state
+                });
+                returnType = STRING; // continue on in scheme-string mode
+                break;
+            case "symbol":
+                processEscapedSequence(stream, {
+                    token: "|",
+                    state: state
+                });
+                returnType = SYMBOL; // continue on in scheme-symbol mode
+                break;
+            case "comment":
+                var next, maybeEnd = false;
+                while((next = stream.next()) != null){
+                    if (next == "#" && maybeEnd) {
+                        state.mode = false;
+                        break;
+                    }
+                    maybeEnd = next == "|";
+                }
+                returnType = COMMENT;
+                break;
+            case "s-expr-comment":
+                state.mode = false;
+                if (stream.peek() == "(" || stream.peek() == "[") {
+                    // actually start scheme s-expr commenting mode
+                    state.sExprComment = 0;
+                } else {
+                    // if not we just comment the entire of the next token
+                    stream.eatWhile(/[^\s\(\)\[\]]/); // eat symbol atom
+                    returnType = COMMENT;
+                    break;
+                }
+            default:
+                var ch = stream.next();
+                if (ch == "\"") {
+                    state.mode = "string";
+                    returnType = STRING;
+                } else if (ch == "'") {
+                    if (stream.peek() == "(" || stream.peek() == "[") {
+                        if (typeof state.sExprQuote != "number") {
+                            state.sExprQuote = 0;
+                        } // else already in a quoted expression
+                        returnType = ATOM;
+                    } else {
+                        stream.eatWhile(/[\w_\-!$%&*+\.\/:<=>?@\^~]/);
+                        returnType = ATOM;
+                    }
+                } else if (ch == '|') {
+                    state.mode = "symbol";
+                    returnType = SYMBOL;
+                } else if (ch == '#') {
+                    if (stream.eat("|")) {
+                        state.mode = "comment"; // toggle to comment mode
+                        returnType = COMMENT;
+                    } else if (stream.eat(/[tf]/i)) {
+                        returnType = ATOM;
+                    } else if (stream.eat(';')) {
+                        state.mode = "s-expr-comment";
+                        returnType = COMMENT;
+                    } else {
+                        var numTest = null, hasExactness = false, hasRadix = true;
+                        if (stream.eat(/[ei]/i)) {
+                            hasExactness = true;
+                        } else {
+                            stream.backUp(1); // must be radix specifier
+                        }
+                        if (stream.match(/^#b/i)) {
+                            numTest = isBinaryNumber;
+                        } else if (stream.match(/^#o/i)) {
+                            numTest = isOctalNumber;
+                        } else if (stream.match(/^#x/i)) {
+                            numTest = isHexNumber;
+                        } else if (stream.match(/^#d/i)) {
+                            numTest = isDecimalNumber;
+                        } else if (stream.match(/^[-+0-9.]/, false)) {
+                            hasRadix = false;
+                            numTest = isDecimalNumber;
+                        // re-consume the initial # if all matches failed
+                        } else if (!hasExactness) {
+                            stream.eat('#');
+                        }
+                        if (numTest != null) {
+                            if (hasRadix && !hasExactness) {
+                                // consume optional exactness after radix
+                                stream.match(/^#[ei]/i);
+                            }
+                            if (numTest(stream)) returnType = NUMBER;
+                        }
+                    }
+                } else if (/^[-+0-9.]/.test(ch) && isDecimalNumber(stream, true)) {
+                    returnType = NUMBER;
+                } else if (ch == ";") {
+                    stream.skipToEnd(); // rest of the line is a comment
+                    returnType = COMMENT;
+                } else if (ch == "(" || ch == "[") {
+                    var keyWord = '';
+                    var indentTemp = stream.column(), letter;
+                    /**
+           Either
+           (indent-word ..
+           (non-indent-word ..
+           (;something else, bracket, etc.
+        */ while((letter = stream.eat(/[^\s\(\[\;\)\]]/)) != null){
+                        keyWord += letter;
+                    }
+                    if (keyWord.length > 0 && indentKeys.propertyIsEnumerable(keyWord)) {
+                        pushStack(state, indentTemp + INDENT_WORD_SKIP, ch);
+                    } else {
+                        // we continue eating the spaces
+                        stream.eatSpace();
+                        if (stream.eol() || stream.peek() == ";") {
+                            // nothing significant after
+                            // we restart indentation 1 space after
+                            pushStack(state, indentTemp + 1, ch);
+                        } else {
+                            pushStack(state, indentTemp + stream.current().length, ch); // else we match
+                        }
+                    }
+                    stream.backUp(stream.current().length - 1); // undo all the eating
+                    if (typeof state.sExprComment == "number") state.sExprComment++;
+                    if (typeof state.sExprQuote == "number") state.sExprQuote++;
+                    returnType = BRACKET;
+                } else if (ch == ")" || ch == "]") {
+                    returnType = BRACKET;
+                    if (state.indentStack != null && state.indentStack.type == (ch == ")" ? "(" : "[")) {
+                        popStack(state);
+                        if (typeof state.sExprComment == "number") {
+                            if (--state.sExprComment == 0) {
+                                returnType = COMMENT; // final closing bracket
+                                state.sExprComment = false; // turn off s-expr commenting mode
+                            }
+                        }
+                        if (typeof state.sExprQuote == "number") {
+                            if (--state.sExprQuote == 0) {
+                                returnType = ATOM; // final closing bracket
+                                state.sExprQuote = false; // turn off s-expr quote mode
+                            }
+                        }
+                    }
+                } else {
+                    stream.eatWhile(/[\w_\-!$%&*+\.\/:<=>?@\^~]/);
+                    if (keywords && keywords.propertyIsEnumerable(stream.current())) {
+                        returnType = BUILTIN;
+                    } else returnType = "variable";
+                }
+        }
+        return typeof state.sExprComment == "number" ? COMMENT : typeof state.sExprQuote == "number" ? ATOM : returnType;
+    },
+    indent: function(state) {
+        if (state.indentStack == null) return state.indentation;
+        return state.indentStack.indent;
+    },
+    languageData: {
+        closeBrackets: {
+            brackets: [
+                "(",
+                "[",
+                "{",
+                '"'
+            ]
+        },
+        commentTokens: {
+            line: ";;"
+        }
+    }
+};
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_scheme_cf7943fa.js.map

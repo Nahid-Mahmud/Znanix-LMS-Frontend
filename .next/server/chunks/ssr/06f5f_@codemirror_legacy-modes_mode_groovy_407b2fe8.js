@@ -1,3 +1,247 @@
-module.exports=[614568,a=>{"use strict";function b(a){for(var b={},c=a.split(" "),d=0;d<c.length;++d)b[c[d]]=!0;return b}a.s(["groovy",()=>p]);var c,d=b("abstract as assert boolean break byte case catch char class const continue def default do double else enum extends final finally float for goto if implements import in instanceof int interface long native new package private protected public return short static strictfp super switch synchronized threadsafe throw throws trait transient try void volatile while"),e=b("catch class def do else enum finally for if interface switch trait try while"),f=b("return break continue"),g=b("null true false this");function h(a,b){var h=a.next();if('"'==h||"'"==h)return i(h,a,b);if(/[\[\]{}\(\),;\:\.]/.test(h))return c=h,null;if(/\d/.test(h))return a.eatWhile(/[\w\.]/),a.eat(/eE/)&&(a.eat(/\+\-/),a.eatWhile(/\d/)),"number";if("/"==h){if(a.eat("*"))return b.tokenize.push(k),k(a,b);if(a.eat("/"))return a.skipToEnd(),"comment";if(l(b.lastToken,!1))return i(h,a,b)}if("-"==h&&a.eat(">"))return c="->",null;if(/[+\-*&%=<>!?|\/~]/.test(h))return a.eatWhile(/[+\-*&%=<>|~]/),"operator";if(a.eatWhile(/[\w\$_]/),"@"==h)return a.eatWhile(/[\w\$_\.]/),"meta";if("."==b.lastToken)return"property";if(a.eat(":"))return c="proplabel","property";var j=a.current();return g.propertyIsEnumerable(j)?"atom":d.propertyIsEnumerable(j)?(e.propertyIsEnumerable(j)?c="newstatement":f.propertyIsEnumerable(j)&&(c="standalone"),"keyword"):"variable"}function i(a,b,c){var d=!1;if("/"!=a&&b.eat(a))if(!b.eat(a))return"string";else d=!0;function e(b,c){for(var e,f=!1,g=!d;null!=(e=b.next());){if(e==a&&!f){if(!d)break;if(b.match(a+a)){g=!0;break}}if('"'==a&&"$"==e&&!f){if(b.eat("{"))return c.tokenize.push(function(){var a=1;function b(b,c){if("}"==b.peek()){if(0==--a)return c.tokenize.pop(),c.tokenize[c.tokenize.length-1](b,c)}else"{"==b.peek()&&a++;return h(b,c)}return b.isBase=!0,b}()),"string";else if(b.match(/^\w/,!1))return c.tokenize.push(j),"string"}f=!f&&"\\"==e}return g&&c.tokenize.pop(),"string"}return c.tokenize.push(e),e(b,c)}function j(a,b){var c=a.match(/^(\.|[\w\$_]+)/);return(c&&a.match("."==c[0]?/^[\w$_]/:/^\./)||b.tokenize.pop(),c)?"."==c[0]?null:"variable":b.tokenize[b.tokenize.length-1](a,b)}function k(a,b){for(var c,d=!1;c=a.next();){if("/"==c&&d){b.tokenize.pop();break}d="*"==c}return"comment"}function l(a,b){return!a||"operator"==a||"->"==a||/[\.\[\{\(,;:]/.test(a)||"newstatement"==a||"keyword"==a||"proplabel"==a||"standalone"==a&&!b}function m(a,b,c,d,e){this.indented=a,this.column=b,this.type=c,this.align=d,this.prev=e}function n(a,b,c){return a.context=new m(a.indented,b,c,null,a.context)}function o(a){var b=a.context.type;return(")"==b||"]"==b||"}"==b)&&(a.indented=a.context.indented),a.context=a.context.prev}h.isBase=!0;let p={name:"groovy",startState:function(a){return{tokenize:[h],context:new m(-a,0,"top",!1),indented:0,startOfLine:!0,lastToken:null}},token:function(a,b){var d=b.context;if(a.sol()&&(null==d.align&&(d.align=!1),b.indented=a.indentation(),b.startOfLine=!0,"statement"!=d.type||l(b.lastToken,!0)||(o(b),d=b.context)),a.eatSpace())return null;c=null;var e=b.tokenize[b.tokenize.length-1](a,b);if("comment"==e)return e;if(null==d.align&&(d.align=!0),(";"==c||":"==c)&&"statement"==d.type)o(b);else if("->"==c&&"statement"==d.type&&"}"==d.prev.type)o(b),b.context.align=!1;else if("{"==c)n(b,a.column(),"}");else if("["==c)n(b,a.column(),"]");else if("("==c)n(b,a.column(),")");else if("}"==c){for(;"statement"==d.type;)d=o(b);for("}"==d.type&&(d=o(b));"statement"==d.type;)d=o(b)}else c==d.type?o(b):("}"==d.type||"top"==d.type||"statement"==d.type&&"newstatement"==c)&&n(b,a.column(),"statement");return b.startOfLine=!1,b.lastToken=c||e,e},indent:function(a,b,c){if(!a.tokenize[a.tokenize.length-1].isBase)return null;var d=b&&b.charAt(0),e=a.context;"statement"!=e.type||l(a.lastToken,!0)||(e=e.prev);var f=d==e.type;return"statement"==e.type?e.indented+("{"==d?0:c.unit):e.align?e.column+ +!f:e.indented+(f?0:c.unit)},languageData:{indentOnInput:/^\s*[{}]$/,commentTokens:{line:"//",block:{open:"/*",close:"*/"}},closeBrackets:{brackets:["(","[","{","'",'"',"'''",'"""']}}}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/groovy.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "groovy",
+    ()=>groovy
+]);
+function words(str) {
+    var obj = {}, words = str.split(" ");
+    for(var i = 0; i < words.length; ++i)obj[words[i]] = true;
+    return obj;
+}
+var keywords = words("abstract as assert boolean break byte case catch char class const continue def default " + "do double else enum extends final finally float for goto if implements import in " + "instanceof int interface long native new package private protected public return " + "short static strictfp super switch synchronized threadsafe throw throws trait transient " + "try void volatile while");
+var blockKeywords = words("catch class def do else enum finally for if interface switch trait try while");
+var standaloneKeywords = words("return break continue");
+var atoms = words("null true false this");
+var curPunc;
+function tokenBase(stream, state) {
+    var ch = stream.next();
+    if (ch == '"' || ch == "'") {
+        return startString(ch, stream, state);
+    }
+    if (/[\[\]{}\(\),;\:\.]/.test(ch)) {
+        curPunc = ch;
+        return null;
+    }
+    if (/\d/.test(ch)) {
+        stream.eatWhile(/[\w\.]/);
+        if (stream.eat(/eE/)) {
+            stream.eat(/\+\-/);
+            stream.eatWhile(/\d/);
+        }
+        return "number";
+    }
+    if (ch == "/") {
+        if (stream.eat("*")) {
+            state.tokenize.push(tokenComment);
+            return tokenComment(stream, state);
+        }
+        if (stream.eat("/")) {
+            stream.skipToEnd();
+            return "comment";
+        }
+        if (expectExpression(state.lastToken, false)) {
+            return startString(ch, stream, state);
+        }
+    }
+    if (ch == "-" && stream.eat(">")) {
+        curPunc = "->";
+        return null;
+    }
+    if (/[+\-*&%=<>!?|\/~]/.test(ch)) {
+        stream.eatWhile(/[+\-*&%=<>|~]/);
+        return "operator";
+    }
+    stream.eatWhile(/[\w\$_]/);
+    if (ch == "@") {
+        stream.eatWhile(/[\w\$_\.]/);
+        return "meta";
+    }
+    if (state.lastToken == ".") return "property";
+    if (stream.eat(":")) {
+        curPunc = "proplabel";
+        return "property";
+    }
+    var cur = stream.current();
+    if (atoms.propertyIsEnumerable(cur)) {
+        return "atom";
+    }
+    if (keywords.propertyIsEnumerable(cur)) {
+        if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "newstatement";
+        else if (standaloneKeywords.propertyIsEnumerable(cur)) curPunc = "standalone";
+        return "keyword";
+    }
+    return "variable";
+}
+tokenBase.isBase = true;
+function startString(quote, stream, state) {
+    var tripleQuoted = false;
+    if (quote != "/" && stream.eat(quote)) {
+        if (stream.eat(quote)) tripleQuoted = true;
+        else return "string";
+    }
+    function t(stream, state) {
+        var escaped = false, next, end = !tripleQuoted;
+        while((next = stream.next()) != null){
+            if (next == quote && !escaped) {
+                if (!tripleQuoted) {
+                    break;
+                }
+                if (stream.match(quote + quote)) {
+                    end = true;
+                    break;
+                }
+            }
+            if (quote == '"' && next == "$" && !escaped) {
+                if (stream.eat("{")) {
+                    state.tokenize.push(tokenBaseUntilBrace());
+                    return "string";
+                } else if (stream.match(/^\w/, false)) {
+                    state.tokenize.push(tokenVariableDeref);
+                    return "string";
+                }
+            }
+            escaped = !escaped && next == "\\";
+        }
+        if (end) state.tokenize.pop();
+        return "string";
+    }
+    state.tokenize.push(t);
+    return t(stream, state);
+}
+function tokenBaseUntilBrace() {
+    var depth = 1;
+    function t(stream, state) {
+        if (stream.peek() == "}") {
+            depth--;
+            if (depth == 0) {
+                state.tokenize.pop();
+                return state.tokenize[state.tokenize.length - 1](stream, state);
+            }
+        } else if (stream.peek() == "{") {
+            depth++;
+        }
+        return tokenBase(stream, state);
+    }
+    t.isBase = true;
+    return t;
+}
+function tokenVariableDeref(stream, state) {
+    var next = stream.match(/^(\.|[\w\$_]+)/);
+    if (!next || !stream.match(next[0] == "." ? /^[\w$_]/ : /^\./)) state.tokenize.pop();
+    if (!next) return state.tokenize[state.tokenize.length - 1](stream, state);
+    return next[0] == "." ? null : "variable";
+}
+function tokenComment(stream, state) {
+    var maybeEnd = false, ch;
+    while(ch = stream.next()){
+        if (ch == "/" && maybeEnd) {
+            state.tokenize.pop();
+            break;
+        }
+        maybeEnd = ch == "*";
+    }
+    return "comment";
+}
+function expectExpression(last, newline) {
+    return !last || last == "operator" || last == "->" || /[\.\[\{\(,;:]/.test(last) || last == "newstatement" || last == "keyword" || last == "proplabel" || last == "standalone" && !newline;
+}
+function Context(indented, column, type, align, prev) {
+    this.indented = indented;
+    this.column = column;
+    this.type = type;
+    this.align = align;
+    this.prev = prev;
+}
+function pushContext(state, col, type) {
+    return state.context = new Context(state.indented, col, type, null, state.context);
+}
+function popContext(state) {
+    var t = state.context.type;
+    if (t == ")" || t == "]" || t == "}") state.indented = state.context.indented;
+    return state.context = state.context.prev;
+}
+const groovy = {
+    name: "groovy",
+    startState: function(indentUnit) {
+        return {
+            tokenize: [
+                tokenBase
+            ],
+            context: new Context(-indentUnit, 0, "top", false),
+            indented: 0,
+            startOfLine: true,
+            lastToken: null
+        };
+    },
+    token: function(stream, state) {
+        var ctx = state.context;
+        if (stream.sol()) {
+            if (ctx.align == null) ctx.align = false;
+            state.indented = stream.indentation();
+            state.startOfLine = true;
+            // Automatic semicolon insertion
+            if (ctx.type == "statement" && !expectExpression(state.lastToken, true)) {
+                popContext(state);
+                ctx = state.context;
+            }
+        }
+        if (stream.eatSpace()) return null;
+        curPunc = null;
+        var style = state.tokenize[state.tokenize.length - 1](stream, state);
+        if (style == "comment") return style;
+        if (ctx.align == null) ctx.align = true;
+        if ((curPunc == ";" || curPunc == ":") && ctx.type == "statement") popContext(state);
+        else if (curPunc == "->" && ctx.type == "statement" && ctx.prev.type == "}") {
+            popContext(state);
+            state.context.align = false;
+        } else if (curPunc == "{") pushContext(state, stream.column(), "}");
+        else if (curPunc == "[") pushContext(state, stream.column(), "]");
+        else if (curPunc == "(") pushContext(state, stream.column(), ")");
+        else if (curPunc == "}") {
+            while(ctx.type == "statement")ctx = popContext(state);
+            if (ctx.type == "}") ctx = popContext(state);
+            while(ctx.type == "statement")ctx = popContext(state);
+        } else if (curPunc == ctx.type) popContext(state);
+        else if (ctx.type == "}" || ctx.type == "top" || ctx.type == "statement" && curPunc == "newstatement") pushContext(state, stream.column(), "statement");
+        state.startOfLine = false;
+        state.lastToken = curPunc || style;
+        return style;
+    },
+    indent: function(state, textAfter, cx) {
+        if (!state.tokenize[state.tokenize.length - 1].isBase) return null;
+        var firstChar = textAfter && textAfter.charAt(0), ctx = state.context;
+        if (ctx.type == "statement" && !expectExpression(state.lastToken, true)) ctx = ctx.prev;
+        var closing = firstChar == ctx.type;
+        if (ctx.type == "statement") return ctx.indented + (firstChar == "{" ? 0 : cx.unit);
+        else if (ctx.align) return ctx.column + (closing ? 0 : 1);
+        else return ctx.indented + (closing ? 0 : cx.unit);
+    },
+    languageData: {
+        indentOnInput: /^\s*[{}]$/,
+        commentTokens: {
+            line: "//",
+            block: {
+                open: "/*",
+                close: "*/"
+            }
+        },
+        closeBrackets: {
+            brackets: [
+                "(",
+                "[",
+                "{",
+                "'",
+                '"',
+                "'''",
+                '"""'
+            ]
+        }
+    }
+};
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_groovy_407b2fe8.js.map

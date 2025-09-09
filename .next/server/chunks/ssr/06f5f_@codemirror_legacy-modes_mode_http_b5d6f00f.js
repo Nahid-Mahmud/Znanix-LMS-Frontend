@@ -1,3 +1,90 @@
-module.exports=[691725,a=>{"use strict";function b(a,b){return a.skipToEnd(),b.cur=h,"error"}function c(a,c){return a.match(/^HTTP\/\d\.\d/)?(c.cur=d,"keyword"):a.match(/^[A-Z]+/)&&/[ \t]/.test(a.peek())?(c.cur=f,"keyword"):b(a,c)}function d(a,c){var d=a.match(/^\d+/);if(!d)return b(a,c);c.cur=e;var f=Number(d[0]);return f>=100&&f<400?"atom":"error"}function e(a,b){return a.skipToEnd(),b.cur=h,null}function f(a,b){return a.eatWhile(/\S/),b.cur=g,"string.special"}function g(a,c){return a.match(/^HTTP\/\d\.\d$/)?(c.cur=h,"keyword"):b(a,c)}function h(a){return!a.sol()||a.eat(/[ \t]/)?(a.skipToEnd(),"string"):a.match(/^.*?:/)?"atom":(a.skipToEnd(),"error")}function i(a){return a.skipToEnd(),null}a.s(["http",()=>j]);let j={name:"http",token:function(a,b){var c=b.cur;return c!=h&&c!=i&&a.eatSpace()?null:c(a,b)},blankLine:function(a){a.cur=i},startState:function(){return{cur:c}}}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/http.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "http",
+    ()=>http
+]);
+function failFirstLine(stream, state) {
+    stream.skipToEnd();
+    state.cur = header;
+    return "error";
+}
+function start(stream, state) {
+    if (stream.match(/^HTTP\/\d\.\d/)) {
+        state.cur = responseStatusCode;
+        return "keyword";
+    } else if (stream.match(/^[A-Z]+/) && /[ \t]/.test(stream.peek())) {
+        state.cur = requestPath;
+        return "keyword";
+    } else {
+        return failFirstLine(stream, state);
+    }
+}
+function responseStatusCode(stream, state) {
+    var code = stream.match(/^\d+/);
+    if (!code) return failFirstLine(stream, state);
+    state.cur = responseStatusText;
+    var status = Number(code[0]);
+    if (status >= 100 && status < 400) {
+        return "atom";
+    } else {
+        return "error";
+    }
+}
+function responseStatusText(stream, state) {
+    stream.skipToEnd();
+    state.cur = header;
+    return null;
+}
+function requestPath(stream, state) {
+    stream.eatWhile(/\S/);
+    state.cur = requestProtocol;
+    return "string.special";
+}
+function requestProtocol(stream, state) {
+    if (stream.match(/^HTTP\/\d\.\d$/)) {
+        state.cur = header;
+        return "keyword";
+    } else {
+        return failFirstLine(stream, state);
+    }
+}
+function header(stream) {
+    if (stream.sol() && !stream.eat(/[ \t]/)) {
+        if (stream.match(/^.*?:/)) {
+            return "atom";
+        } else {
+            stream.skipToEnd();
+            return "error";
+        }
+    } else {
+        stream.skipToEnd();
+        return "string";
+    }
+}
+function body(stream) {
+    stream.skipToEnd();
+    return null;
+}
+const http = {
+    name: "http",
+    token: function(stream, state) {
+        var cur = state.cur;
+        if (cur != header && cur != body && stream.eatSpace()) return null;
+        return cur(stream, state);
+    },
+    blankLine: function(state) {
+        state.cur = body;
+    },
+    startState: function() {
+        return {
+            cur: start
+        };
+    }
+};
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_http_b5d6f00f.js.map

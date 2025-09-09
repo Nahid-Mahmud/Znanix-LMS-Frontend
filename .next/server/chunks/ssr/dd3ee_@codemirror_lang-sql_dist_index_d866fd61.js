@@ -1,3 +1,810 @@
-module.exports=[406356,a=>{"use strict";a.s(["Cassandra",()=>T,"MSSQL",()=>R,"MariaSQL",()=>Q,"MySQL",()=>P,"PLSQL",()=>U,"PostgreSQL",()=>L,"SQLDialect",()=>F,"SQLite",()=>S,"StandardSQL",()=>K,"keywordCompletionSource",()=>H,"schemaCompletionSource",()=>I,"sql",()=>J]);var b=a.i(27312),c=a.i(439262),d=a.i(643037),e=a.i(851878);function f(a){return a>=65&&a<=90||a>=97&&a<=122||a>=48&&a<=57}function g(a,b,c){for(let d=!1;;){if(a.next<0)return;if(a.next==b&&!d)return void a.advance();d=c&&!d&&92==a.next,a.advance()}}function h(a,b){for(;95==a.next||f(a.next);)null!=b&&(b+=String.fromCharCode(a.next)),a.advance();return b}function i(a,b){for(;48==a.next||49==a.next;)a.advance();b&&a.next==b&&a.advance()}function j(a,b){for(;;){if(46==a.next){if(b)break;b=!0}else if(a.next<48||a.next>57)break;a.advance()}if(69==a.next||101==a.next)for(a.advance(),(43==a.next||45==a.next)&&a.advance();a.next>=48&&a.next<=57;)a.advance()}function k(a){for(;!(a.next<0||10==a.next);)a.advance()}function l(a,b){for(let c=0;c<b.length;c++)if(b.charCodeAt(c)==a)return!0;return!1}let m=" 	\r\n";function n(a,b,c){let d=Object.create(null);for(let b of(d.true=d.false=5,d.null=d.unknown=6,a.split(" ")))b&&(d[b]=20);for(let a of b.split(" "))a&&(d[a]=21);for(let a of(c||"").split(" "))a&&(d[a]=24);return d}let o="array binary bit boolean char character clob date decimal double float int integer interval large national nchar nclob numeric object precision real smallint time timestamp varchar varying ",p="absolute action add after all allocate alter and any are as asc assertion at authorization before begin between both breadth by call cascade cascaded case cast catalog check close collate collation column commit condition connect connection constraint constraints constructor continue corresponding count create cross cube current current_date current_default_transform_group current_transform_group_for_type current_path current_role current_time current_timestamp current_user cursor cycle data day deallocate declare default deferrable deferred delete depth deref desc describe descriptor deterministic diagnostics disconnect distinct do domain drop dynamic each else elseif end end-exec equals escape except exception exec execute exists exit external fetch first for foreign found from free full function general get global go goto grant group grouping handle having hold hour identity if immediate in indicator initially inner inout input insert intersect into is isolation join key language last lateral leading leave left level like limit local localtime localtimestamp locator loop map match method minute modifies module month names natural nesting new next no none not of old on only open option or order ordinality out outer output overlaps pad parameter partial path prepare preserve primary prior privileges procedure public read reads recursive redo ref references referencing relative release repeat resignal restrict result return returns revoke right role rollback rollup routine row rows savepoint schema scroll search second section select session session_user set sets signal similar size some space specific specifictype sql sqlexception sqlstate sqlwarning start state static system_user table temporary then timezone_hour timezone_minute to trailing transaction translation treat trigger under undo union unique unnest until update usage user using value values view when whenever where while with without work write year zone ",q={backslashEscapes:!1,hashComments:!1,spaceAfterDashes:!1,slashComments:!1,doubleQuotedStrings:!1,doubleDollarQuotedStrings:!1,unquotedBitLiterals:!1,treatBitsAsBytes:!1,charSetCasts:!1,plsqlQuotingMechanism:!1,operatorChars:"*+-%<>!=&|~^/",specialVar:"?",identifierQuotes:'"',caseInsensitiveIdentifiers:!1,words:n(p,o)};function r(a){return new d.ExternalTokenizer(b=>{let{next:c}=b;if(b.advance(),l(c,m)){for(;l(b.next,m);)b.advance();b.acceptToken(36)}else if(36==c&&a.doubleDollarQuotedStrings){let a=h(b,"");36==b.next&&(b.advance(),function(a,b){a:for(;;){if(a.next<0)return;if(36==a.next){a.advance();for(let c=0;c<b.length;c++){if(a.next!=b.charCodeAt(c))continue a;a.advance()}if(36==a.next)return void a.advance()}else a.advance()}}(b,a),b.acceptToken(3))}else if(39==c||34==c&&a.doubleQuotedStrings)g(b,c,a.backslashEscapes),b.acceptToken(3);else if(35==c&&a.hashComments||47==c&&47==b.next&&a.slashComments)k(b),b.acceptToken(1);else if(45!=c||45!=b.next||a.spaceAfterDashes&&32!=b.peek(1)){if(47==c&&42==b.next){b.advance();for(let a=1;;){let c=b.next;if(b.next<0)break;if(b.advance(),42==c&&47==b.next){if(a--,b.advance(),!a)break}else 47==c&&42==b.next&&(a++,b.advance())}b.acceptToken(2)}else if((101==c||69==c)&&39==b.next)b.advance(),g(b,39,!0),b.acceptToken(3);else if((110==c||78==c)&&39==b.next&&a.charSetCasts)b.advance(),g(b,39,a.backslashEscapes),b.acceptToken(3);else if(95==c&&a.charSetCasts)for(let c=0;;c++){if(39==b.next&&c>1){b.advance(),g(b,39,a.backslashEscapes),b.acceptToken(3);break}if(!f(b.next))break;b.advance()}else if(a.plsqlQuotingMechanism&&(113==c||81==c)&&39==b.next&&b.peek(1)>0&&!l(b.peek(1),m)){let a=b.peek(1);b.advance(2),function(a,b){let c="[{<(".indexOf(String.fromCharCode(b)),d=c<0?b:"]}>)".charCodeAt(c);for(;;){if(a.next<0)return;if(a.next==d&&39==a.peek(1))return void a.advance(2);a.advance()}}(b,a),b.acceptToken(3)}else if(40==c)b.acceptToken(7);else if(41==c)b.acceptToken(8);else if(123==c)b.acceptToken(9);else if(125==c)b.acceptToken(10);else if(91==c)b.acceptToken(11);else if(93==c)b.acceptToken(12);else if(59==c)b.acceptToken(13);else if(a.unquotedBitLiterals&&48==c&&98==b.next)b.advance(),i(b),b.acceptToken(22);else if((98==c||66==c)&&(39==b.next||34==b.next)){let c=b.next;b.advance(),a.treatBitsAsBytes?(g(b,c,a.backslashEscapes),b.acceptToken(23)):(i(b,c),b.acceptToken(22))}else if(48==c&&(120==b.next||88==b.next)||(120==c||88==c)&&39==b.next){let a=39==b.next;for(b.advance();(e=b.next)>=48&&e<=57||e>=97&&e<=102||e>=65&&e<=70;)b.advance();a&&39==b.next&&b.advance(),b.acceptToken(4)}else if(46==c&&b.next>=48&&b.next<=57)j(b,!0),b.acceptToken(4);else if(46==c)b.acceptToken(14);else if(c>=48&&c<=57)j(b,!1),b.acceptToken(4);else if(l(c,a.operatorChars)){for(;l(b.next,a.operatorChars);)b.advance();b.acceptToken(15)}else if(l(c,a.specialVar)){var d,e;if(b.next==c&&b.advance(),39==b.next||34==b.next||96==b.next){let a=b.next;b.advance(),g(b,a,!1)}else h(b);b.acceptToken(17)}else if(l(c,a.identifierQuotes))g(b,c,!1),b.acceptToken(19);else if(58==c||44==c)b.acceptToken(16);else if(f(c)){let e=h(b,String.fromCharCode(c));b.acceptToken(46==b.next||46==b.peek(-e.length-1)?18:null!=(d=a.words[e.toLowerCase()])?d:18)}}else k(b),b.acceptToken(1)})}let s=r(q),t=d.LRParser.deserialize({version:14,states:"%vQ]QQOOO#wQRO'#DSO$OQQO'#CwO%eQQO'#CxO%lQQO'#CyO%sQQO'#CzOOQQ'#DS'#DSOOQQ'#C}'#C}O'UQRO'#C{OOQQ'#Cv'#CvOOQQ'#C|'#C|Q]QQOOQOQQOOO'`QQO'#DOO(xQRO,59cO)PQQO,59cO)UQQO'#DSOOQQ,59d,59dO)cQQO,59dOOQQ,59e,59eO)jQQO,59eOOQQ,59f,59fO)qQQO,59fOOQQ-E6{-E6{OOQQ,59b,59bOOQQ-E6z-E6zOOQQ,59j,59jOOQQ-E6|-E6|O+VQRO1G.}O+^QQO,59cOOQQ1G/O1G/OOOQQ1G/P1G/POOQQ1G/Q1G/QP+kQQO'#C}O+rQQO1G.}O)PQQO,59cO,PQQO'#Cw",stateData:",[~OtOSPOSQOS~ORUOSUOTUOUUOVROXSOZTO]XO^QO_UO`UOaPObPOcPOdUOeUOfUOgUOhUO~O^]ORvXSvXTvXUvXVvXXvXZvX]vX_vX`vXavXbvXcvXdvXevXfvXgvXhvX~OsvX~P!jOa_Ob_Oc_O~ORUOSUOTUOUUOVROXSOZTO^tO_UO`UOa`Ob`Oc`OdUOeUOfUOgUOhUO~OWaO~P$ZOYcO~P$ZO[eO~P$ZORUOSUOTUOUUOVROXSOZTO^QO_UO`UOaPObPOcPOdUOeUOfUOgUOhUO~O]hOsoX~P%zOajObjOcjO~O^]ORkaSkaTkaUkaVkaXkaZka]ka_ka`kaakabkackadkaekafkagkahka~Oska~P'kO^]O~OWvXYvX[vX~P!jOWnO~P$ZOYoO~P$ZO[pO~P$ZO^]ORkiSkiTkiUkiVkiXkiZki]ki_ki`kiakibkickidkiekifkigkihki~Oski~P)xOWkaYka[ka~P'kO]hO~P$ZOWkiYki[ki~P)xOasObsOcsO~O",goto:"#hwPPPPPPPPPPPPPPPPPPPPPPPPPPx||||!Y!^!d!xPPP#[TYOZeUORSTWZbdfqT[OZQZORiZSWOZQbRQdSQfTZgWbdfqQ^PWk^lmrQl_Qm`RrseVORSTWZbdfq",nodeNames:"⚠ LineComment BlockComment String Number Bool Null ( ) { } [ ] ; . Operator Punctuation SpecialVar Identifier QuotedIdentifier Keyword Type Bits Bytes Builtin Script Statement CompositeIdentifier Parens Braces Brackets Statement",maxTerm:38,nodeProps:[["isolate",-4,1,2,3,19,""]],skippedNodes:[0,1,2],repeatNodeCount:3,tokenData:"RORO",tokenizers:[0,s],topRules:{Script:[0,25]},tokenPrec:0});function u(a){let b=a.cursor().moveTo(a.from,-1);for(;/Comment/.test(b.name);)b.moveTo(b.from,-1);return b.node}function v(a,b){let c=a.sliceString(b.from,b.to),d=/^([`'"])(.*)\1$/.exec(c);return d?d[2]:c}function w(a){return a&&("Identifier"==a.name||"QuotedIdentifier"==a.name)}function x(a,b){for(let c=[];;){if(!b||"."!=b.name)return c;let d=u(b);if(!w(d))return c;c.unshift(v(a,d)),b=u(d)}}let y=new Set("where group having order union intersect except all distinct limit offset fetch for".split(" ")),z=/^\w*$/,A=/^[`'"]?\w*[`'"]?$/;function B(a){return a.self&&"string"==typeof a.self.label}class C{constructor(a,b){this.idQuote=a,this.idCaseInsensitive=b,this.list=[],this.children=void 0}child(a){let b=this.children||(this.children=Object.create(null)),c=b[a];return c||(a&&!this.list.some(b=>b.label==a)&&this.list.push(D(a,"type",this.idQuote,this.idCaseInsensitive)),b[a]=new C(this.idQuote,this.idCaseInsensitive))}maybeChild(a){return this.children?this.children[a]:null}addCompletion(a){let b=this.list.findIndex(b=>b.label==a.label);b>-1?this.list[b]=a:this.list.push(a)}addCompletions(a){for(let b of a)this.addCompletion("string"==typeof b?D(b,"property",this.idQuote,this.idCaseInsensitive):b)}addNamespace(a){Array.isArray(a)?this.addCompletions(a):B(a)?this.addNamespace(a.children):this.addNamespaceObject(a)}addNamespaceObject(a){for(let b of Object.keys(a)){let c=a[b],d=null,e=b.replace(/\\?\./g,a=>"."==a?"\0":a).split("\0"),f=this;B(c)&&(d=c.self,c=c.children);for(let a=0;a<e.length;a++)d&&a==e.length-1&&f.addCompletion(d),f=f.child(e[a].replace(/\\\./g,"."));f.addNamespace(c)}}}function D(a,b,c,d){return RegExp("^[a-z_][a-z_\\d]*$",d?"i":"").test(a)?{label:a,type:b}:{label:a,type:b,apply:c+a+c}}let E=t.configure({props:[b.indentNodeProp.add({Statement:(0,b.continuedIndent)()}),b.foldNodeProp.add({Statement:(a,b)=>({from:Math.min(a.from+100,b.doc.lineAt(a.from).to),to:a.to}),BlockComment:a=>({from:a.from+2,to:a.to-2})}),(0,c.styleTags)({Keyword:c.tags.keyword,Type:c.tags.typeName,Builtin:c.tags.standard(c.tags.name),Bits:c.tags.number,Bytes:c.tags.string,Bool:c.tags.bool,Null:c.tags.null,Number:c.tags.number,String:c.tags.string,Identifier:c.tags.name,QuotedIdentifier:c.tags.special(c.tags.string),SpecialVar:c.tags.special(c.tags.name),LineComment:c.tags.lineComment,BlockComment:c.tags.blockComment,Operator:c.tags.operator,"Semi Punctuation":c.tags.punctuation,"( )":c.tags.paren,"{ }":c.tags.brace,"[ ]":c.tags.squareBracket})]});class F{constructor(a,b,c){this.dialect=a,this.language=b,this.spec=c}get extension(){return this.language.extension}configureLanguage(a,b){return new F(this.dialect,this.language.configure(a,b),this.spec)}static define(a){let c=function(a,b,c,d){let e={};for(let b in q)e[b]=(a.hasOwnProperty(b)?a:q)[b];return b&&(e.words=n(b,c||"",d)),e}(a,a.keywords,a.types,a.builtin),d=b.LRLanguage.define({name:"sql",parser:E.configure({tokenizers:[{from:s,to:r(c)}]}),languageData:{commentTokens:{line:"--",block:{open:"/*",close:"*/"}},closeBrackets:{brackets:["(","[","{","'",'"',"`"]}}});return new F(c,d,a)}}function G(a,b){return{label:a,type:b,boost:-1}}function H(a,b=!1,c){var d,f;let g;return d=a.dialect.words,f=c||G,g=Object.keys(d).map(a=>{var c;return f(b?a.toUpperCase():a,21==(c=d[a])?"type":20==c?"keyword":"variable")}),(0,e.ifNotIn)(["QuotedIdentifier","String","LineComment","BlockComment","."],(0,e.completeFromList)(g))}function I(a){var c,d,e,f,g,h,i;let j,k;return a.schema?(c=a.schema,d=a.tables,e=a.schemas,f=a.defaultTable,g=a.defaultSchema,j=new C((null==(i=null==(h=a.dialect||K)?void 0:h.spec.identifierQuotes)?void 0:i[0])||'"',!!(null==h?void 0:h.spec.caseInsensitiveIdentifiers)),k=g?j.child(g):null,j.addNamespace(c),d&&(k||j).addCompletions(d),e&&j.addCompletions(e),k&&j.addCompletions(k.list),f&&j.addCompletions((k||j).child(f).list),a=>{var c,d,e;let g,h,{parents:i,from:l,quoted:m,empty:n,aliases:o}=(c=a.state,d=a.pos,g=(0,b.syntaxTree)(c).resolveInner(d,-1),h=function(a,b){let c;for(let a=b;!c;a=a.parent){if(!a)return null;"Statement"==a.name&&(c=a)}let d=null;for(let b=c.firstChild,e=!1,f=null;b;b=b.nextSibling){let c="Keyword"==b.name?a.sliceString(b.from,b.to).toLowerCase():null,g=null;if(e)if("as"==c&&f&&w(b.nextSibling))g=v(a,b.nextSibling);else if(c&&y.has(c))break;else f&&w(b)&&(g=v(a,b));else e="from"==c;g&&(d||(d=Object.create(null)),d[g]=function(a,b){if("CompositeIdentifier"==b.name){let c=[];for(let d=b.firstChild;d;d=d.nextSibling)w(d)&&c.push(v(a,d));return c}return[v(a,b)]}(a,f)),f=/Identifier$/.test(b.name)?b:null}return d}(c.doc,g),"Identifier"==g.name||"QuotedIdentifier"==g.name||"Keyword"==g.name?{from:g.from,quoted:"QuotedIdentifier"==g.name?c.doc.sliceString(g.from,g.from+1):null,parents:x(c.doc,u(g)),aliases:h}:"."==g.name?{from:d,quoted:null,parents:x(c.doc,g),aliases:h}:{from:d,quoted:null,parents:[],empty:!0,aliases:h});if(n&&!a.explicit)return null;o&&1==i.length&&(i=o[i[0]]||i);let p=j;for(let a of i){for(;!p.children||!p.children[a];)if(p==j&&k)p=k;else{if(p!=k||!f)return null;p=p.child(f)}let b=p.maybeChild(a);if(!b)return null;p=b}let q=m&&a.state.sliceDoc(a.pos,a.pos+1)==m,r=p.list;return p==j&&o&&(r=r.concat(Object.keys(o).map(a=>({label:a,type:"constant"})))),{from:l,to:q?a.pos+1:void 0,options:(e=r,m?e.map(a=>({...a,label:a.label[0]==m?a.label:m+a.label+m,apply:void 0})):e),validFor:m?A:z}}):()=>null}function J(a={}){let c=a.dialect||K;return new b.LanguageSupport(c.language,[a.schema?(a.dialect||K).language.data.of({autocomplete:I(a)}):[],c.language.data.of({autocomplete:H(c,a.upperCaseKeywords,a.keywordCompletion)})])}let K=F.define({}),L=F.define({charSetCasts:!0,doubleDollarQuotedStrings:!0,operatorChars:"+-*/<>=~!@#%^&|`?",specialVar:"",keywords:p+"abort abs absent access according ada admin aggregate alias also always analyse analyze array_agg array_max_cardinality asensitive assert assignment asymmetric atomic attach attribute attributes avg backward base64 begin_frame begin_partition bernoulli bit_length blocked bom cache called cardinality catalog_name ceil ceiling chain char_length character_length character_set_catalog character_set_name character_set_schema characteristics characters checkpoint class class_origin cluster coalesce cobol collation_catalog collation_name collation_schema collect column_name columns command_function command_function_code comment comments committed concurrently condition_number configuration conflict connection_name constant constraint_catalog constraint_name constraint_schema contains content control conversion convert copy corr cost covar_pop covar_samp csv cume_dist current_catalog current_row current_schema cursor_name database datalink datatype datetime_interval_code datetime_interval_precision db debug defaults defined definer degree delimiter delimiters dense_rank depends derived detach detail dictionary disable discard dispatch dlnewcopy dlpreviouscopy dlurlcomplete dlurlcompleteonly dlurlcompletewrite dlurlpath dlurlpathonly dlurlpathwrite dlurlscheme dlurlserver dlvalue document dump dynamic_function dynamic_function_code element elsif empty enable encoding encrypted end_frame end_partition endexec enforced enum errcode error event every exclude excluding exclusive exp explain expression extension extract family file filter final first_value flag floor following force foreach fortran forward frame_row freeze fs functions fusion generated granted greatest groups handler header hex hierarchy hint id ignore ilike immediately immutable implementation implicit import include including increment indent index indexes info inherit inherits inline insensitive instance instantiable instead integrity intersection invoker isnull key_member key_type label lag last_value lead leakproof least length library like_regex link listen ln load location lock locked log logged lower mapping matched materialized max max_cardinality maxvalue member merge message message_length message_octet_length message_text min minvalue mod mode more move multiset mumps name namespace nfc nfd nfkc nfkd nil normalize normalized nothing notice notify notnull nowait nth_value ntile nullable nullif nulls number occurrences_regex octet_length octets off offset oids operator options ordering others over overlay overriding owned owner parallel parameter_mode parameter_name parameter_ordinal_position parameter_specific_catalog parameter_specific_name parameter_specific_schema parser partition pascal passing passthrough password percent percent_rank percentile_cont percentile_disc perform period permission pg_context pg_datatype_name pg_exception_context pg_exception_detail pg_exception_hint placing plans pli policy portion position position_regex power precedes preceding prepared print_strict_params procedural procedures program publication query quote raise range rank reassign recheck recovery refresh regr_avgx regr_avgy regr_count regr_intercept regr_r2 regr_slope regr_sxx regr_sxy regr_syy reindex rename repeatable replace replica requiring reset respect restart restore result_oid returned_cardinality returned_length returned_octet_length returned_sqlstate returning reverse routine_catalog routine_name routine_schema routines row_count row_number rowtype rule scale schema_name schemas scope scope_catalog scope_name scope_schema security selective self sensitive sequence sequences serializable server server_name setof share show simple skip slice snapshot source specific_name sqlcode sqlerror sqrt stable stacked standalone statement statistics stddev_pop stddev_samp stdin stdout storage strict strip structure style subclass_origin submultiset subscription substring substring_regex succeeds sum symmetric sysid system system_time table_name tables tablesample tablespace temp template ties token top_level_count transaction_active transactions_committed transactions_rolled_back transform transforms translate translate_regex trigger_catalog trigger_name trigger_schema trim trim_array truncate trusted type types uescape unbounded uncommitted unencrypted unlink unlisten unlogged unnamed untyped upper uri use_column use_variable user_defined_type_catalog user_defined_type_code user_defined_type_name user_defined_type_schema vacuum valid validate validator value_of var_pop var_samp varbinary variable_conflict variadic verbose version versioning views volatile warning whitespace width_bucket window within wrapper xmlagg xmlattributes xmlbinary xmlcast xmlcomment xmlconcat xmldeclaration xmldocument xmlelement xmlexists xmlforest xmliterate xmlnamespaces xmlparse xmlpi xmlquery xmlroot xmlschema xmlserialize xmltable xmltext xmlvalidate yes",types:o+"bigint int8 bigserial serial8 varbit bool box bytea cidr circle precision float8 inet int4 json jsonb line lseg macaddr macaddr8 money numeric pg_lsn point polygon float4 int2 smallserial serial2 serial serial4 text timetz timestamptz tsquery tsvector txid_snapshot uuid xml"}),M="accessible algorithm analyze asensitive authors auto_increment autocommit avg avg_row_length binlog btree cache catalog_name chain change changed checkpoint checksum class_origin client_statistics coalesce code collations columns comment committed completion concurrent consistent contains contributors convert database databases day_hour day_microsecond day_minute day_second delay_key_write delayed delimiter des_key_file dev_pop dev_samp deviance directory disable discard distinctrow div dual dumpfile enable enclosed ends engine engines enum errors escaped even event events every explain extended fast field fields flush force found_rows fulltext grants handler hash high_priority hosts hour_microsecond hour_minute hour_second ignore ignore_server_ids import index index_statistics infile innodb insensitive insert_method install invoker iterate keys kill linear lines list load lock logs low_priority master master_heartbeat_period master_ssl_verify_server_cert masters max max_rows maxvalue message_text middleint migrate min min_rows minute_microsecond minute_second mod mode modify mutex mysql_errno no_write_to_binlog offline offset one online optimize optionally outfile pack_keys parser partition partitions password phase plugin plugins prev processlist profile profiles purge query quick range read_write rebuild recover regexp relaylog remove rename reorganize repair repeatable replace require resume rlike row_format rtree schedule schema_name schemas second_microsecond security sensitive separator serializable server share show slave slow snapshot soname spatial sql_big_result sql_buffer_result sql_cache sql_calc_found_rows sql_no_cache sql_small_result ssl starting starts std stddev stddev_pop stddev_samp storage straight_join subclass_origin sum suspend table_name table_statistics tables tablespace terminated triggers truncate uncommitted uninstall unlock upgrade use use_frm user_resources user_statistics utc_date utc_time utc_timestamp variables views warnings xa xor year_month zerofill",N=o+"bool blob long longblob longtext medium mediumblob mediumint mediumtext tinyblob tinyint tinytext text bigint int1 int2 int3 int4 int8 float4 float8 varbinary varcharacter precision datetime unsigned signed",O="charset clear edit ego help nopager notee nowarning pager print prompt quit rehash source status system tee",P=F.define({operatorChars:"*+-%<>!=&|^",charSetCasts:!0,doubleQuotedStrings:!0,unquotedBitLiterals:!0,hashComments:!0,spaceAfterDashes:!0,specialVar:"@?",identifierQuotes:"`",keywords:p+"group_concat "+M,types:N,builtin:O}),Q=F.define({operatorChars:"*+-%<>!=&|^",charSetCasts:!0,doubleQuotedStrings:!0,unquotedBitLiterals:!0,hashComments:!0,spaceAfterDashes:!0,specialVar:"@?",identifierQuotes:"`",keywords:p+"always generated groupby_concat hard persistent shutdown soft virtual "+M,types:N,builtin:O}),R=F.define({keywords:p+"add external procedure all fetch public alter file raiserror and fillfactor read any for readtext as foreign reconfigure asc freetext references authorization freetexttable replication backup from restore begin full restrict between function return break goto revert browse grant revoke bulk group right by having rollback cascade holdlock rowcount case identity rowguidcol check identity_insert rule checkpoint identitycol save close if schema clustered in securityaudit coalesce index select collate inner semantickeyphrasetable column insert semanticsimilaritydetailstable commit intersect semanticsimilaritytable compute into session_user constraint is set contains join setuser containstable key shutdown continue kill some convert left statistics create like system_user cross lineno table current load tablesample current_date merge textsize current_time national then current_timestamp nocheck to current_user nonclustered top cursor not tran database null transaction dbcc nullif trigger deallocate of truncate declare off try_convert default offsets tsequal delete on union deny open unique desc opendatasource unpivot disk openquery update distinct openrowset updatetext distributed openxml use double option user drop or values dump order varying else outer view end over waitfor errlvl percent when escape pivot where except plan while exec precision with execute primary within group exists print writetext exit proc noexpand index forceseek forcescan holdlock nolock nowait paglock readcommitted readcommittedlock readpast readuncommitted repeatableread rowlock serializable snapshot spatial_window_max_cells tablock tablockx updlock xlock keepidentity keepdefaults ignore_constraints ignore_triggers",types:o+"smalldatetime datetimeoffset datetime2 datetime bigint smallint smallmoney tinyint money real text nvarchar ntext varbinary image hierarchyid uniqueidentifier sql_variant xml",builtin:"approx_count_distinct approx_percentile_cont approx_percentile_disc avg checksum_agg count count_big grouping grouping_id max min product stdev stdevp sum var varp ai_generate_embeddings ai_generate_chunks cume_dist first_value lag last_value lead percentile_cont percentile_disc percent_rank left_shift right_shift bit_count get_bit set_bit collationproperty tertiary_weights @@datefirst @@dbts @@langid @@language @@lock_timeout @@max_connections @@max_precision @@nestlevel @@options @@remserver @@servername @@servicename @@spid @@textsize @@version cast convert parse try_cast try_convert try_parse asymkey_id asymkeyproperty certproperty cert_id crypt_gen_random decryptbyasymkey decryptbycert decryptbykey decryptbykeyautoasymkey decryptbykeyautocert decryptbypassphrase encryptbyasymkey encryptbycert encryptbykey encryptbypassphrase hashbytes is_objectsigned key_guid key_id key_name signbyasymkey signbycert symkeyproperty verifysignedbycert verifysignedbyasymkey @@cursor_rows @@fetch_status cursor_status datalength ident_current ident_incr ident_seed identity sql_variant_property @@datefirst current_timestamp current_timezone current_timezone_id date_bucket dateadd datediff datediff_big datefromparts datename datepart datetime2fromparts datetimefromparts datetimeoffsetfromparts datetrunc day eomonth getdate getutcdate isdate month smalldatetimefromparts switchoffset sysdatetime sysdatetimeoffset sysutcdatetime timefromparts todatetimeoffset year edit_distance edit_distance_similarity jaro_winkler_distance jaro_winkler_similarity edge_id_from_parts graph_id_from_edge_id graph_id_from_node_id node_id_from_parts object_id_from_edge_id object_id_from_node_id json isjson json_array json_contains json_modify json_object json_path_exists json_query json_value regexp_like regexp_replace regexp_substr regexp_instr regexp_count regexp_matches regexp_split_to_table abs acos asin atan atn2 ceiling cos cot degrees exp floor log log10 pi power radians rand round sign sin sqrt square tan choose greatest iif least @@procid app_name applock_mode applock_test assemblyproperty col_length col_name columnproperty databasepropertyex db_id db_name file_id file_idex file_name filegroup_id filegroup_name filegroupproperty fileproperty filepropertyex fulltextcatalogproperty fulltextserviceproperty index_col indexkey_property indexproperty next value for object_definition object_id object_name object_schema_name objectproperty objectpropertyex original_db_name parsename schema_id schema_name scope_identity serverproperty stats_date type_id type_name typeproperty dense_rank ntile rank row_number publishingservername certenclosed certprivatekey current_user database_principal_id has_dbaccess has_perms_by_name is_member is_rolemember is_srvrolemember loginproperty original_login permissions pwdencrypt pwdcompare session_user sessionproperty suser_id suser_name suser_sid suser_sname system_user user user_id user_name ascii char charindex concat concat_ws difference format left len lower ltrim nchar patindex quotename replace replicate reverse right rtrim soundex space str string_agg string_escape stuff substring translate trim unicode upper $partition @@error @@identity @@pack_received @@rowcount @@trancount binary_checksum checksum compress connectionproperty context_info current_request_id current_transaction_id decompress error_line error_message error_number error_procedure error_severity error_state formatmessage get_filestream_transaction_context getansinull host_id host_name isnull isnumeric min_active_rowversion newid newsequentialid rowcount_big session_context xact_state @@connections @@cpu_busy @@idle @@io_busy @@pack_sent @@packet_errors @@timeticks @@total_errors @@total_read @@total_write textptr textvalid columns_updated eventdata trigger_nestlevel vector_distance vectorproperty vector_search generate_series opendatasource openjson openquery openrowset openxml predict string_split coalesce nullif apply catch filter force include keep keepfixed modify optimize parameterization parameters partition recompile sequence set",operatorChars:"*+-%<>!=^&|/",specialVar:"@"}),S=F.define({keywords:p+"abort analyze attach autoincrement conflict database detach exclusive fail glob ignore index indexed instead isnull notnull offset plan pragma query raise regexp reindex rename replace temp vacuum virtual",types:o+"bool blob long longblob longtext medium mediumblob mediumint mediumtext tinyblob tinyint tinytext text bigint int2 int8 unsigned signed real",builtin:"auth backup bail changes clone databases dbinfo dump echo eqp explain fullschema headers help import imposter indexes iotrace lint load log mode nullvalue once print prompt quit restore save scanstats separator shell show stats system tables testcase timeout timer trace vfsinfo vfslist vfsname width",operatorChars:"*+-%<>!=&|/~",identifierQuotes:'`"',specialVar:"@:?$"}),T=F.define({keywords:"add all allow alter and any apply as asc authorize batch begin by clustering columnfamily compact consistency count create custom delete desc distinct drop each_quorum exists filtering from grant if in index insert into key keyspace keyspaces level limit local_one local_quorum modify nan norecursive nosuperuser not of on one order password permission permissions primary quorum rename revoke schema select set storage superuser table three to token truncate ttl two type unlogged update use user users using values where with writetime infinity NaN",types:o+"ascii bigint blob counter frozen inet list map static text timeuuid tuple uuid varint",slashComments:!0}),U=F.define({keywords:p+"abort accept access add all alter and any arraylen as asc assert assign at attributes audit authorization avg base_table begin between binary_integer body by case cast char_base check close cluster clusters colauth column comment commit compress connected constant constraint crash create current currval cursor data_base database dba deallocate debugoff debugon declare default definition delay delete desc digits dispose distinct do drop else elseif elsif enable end entry exception exception_init exchange exclusive exists external fast fetch file for force form from function generic goto grant group having identified if immediate in increment index indexes indicator initial initrans insert interface intersect into is key level library like limited local lock log logging loop master maxextents maxtrans member minextents minus mislabel mode modify multiset new next no noaudit nocompress nologging noparallel not nowait number_base of off offline on online only option or order out package parallel partition pctfree pctincrease pctused pls_integer positive positiven pragma primary prior private privileges procedure public raise range raw rebuild record ref references refresh rename replace resource restrict return returning returns reverse revoke rollback row rowid rowlabel rownum rows run savepoint schema segment select separate set share snapshot some space split sql start statement storage subtype successful synonym tabauth table tables tablespace task terminate then to trigger truncate type union unique unlimited unrecoverable unusable update use using validate value values variable view views when whenever where while with work",builtin:"appinfo arraysize autocommit autoprint autorecovery autotrace blockterminator break btitle cmdsep colsep compatibility compute concat copycommit copytypecheck define echo editfile embedded feedback flagger flush heading headsep instance linesize lno loboffset logsource longchunksize markup native newpage numformat numwidth pagesize pause pno recsep recsepchar repfooter repheader serveroutput shiftinout show showmode spool sqlblanklines sqlcase sqlcode sqlcontinue sqlnumber sqlpluscompatibility sqlprefix sqlprompt sqlterminator suffix tab term termout timing trimout trimspool ttitle underline verify version wrap",types:o+"ascii bfile bfilename bigserial bit blob dec long number nvarchar nvarchar2 serial smallint string text uid varchar2 xml",operatorChars:"*/+-%<>!=~",doubleQuotedStrings:!0,charSetCasts:!0,plsqlQuotingMechanism:!0})}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+lang-sql@6.9.1/node_modules/@codemirror/lang-sql/dist/index.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "Cassandra",
+    ()=>Cassandra,
+    "MSSQL",
+    ()=>MSSQL,
+    "MariaSQL",
+    ()=>MariaSQL,
+    "MySQL",
+    ()=>MySQL,
+    "PLSQL",
+    ()=>PLSQL,
+    "PostgreSQL",
+    ()=>PostgreSQL,
+    "SQLDialect",
+    ()=>SQLDialect,
+    "SQLite",
+    ()=>SQLite,
+    "StandardSQL",
+    ()=>StandardSQL,
+    "keywordCompletionSource",
+    ()=>keywordCompletionSource,
+    "schemaCompletionSource",
+    ()=>schemaCompletionSource,
+    "sql",
+    ()=>sql
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$codemirror$2b$language$40$6$2e$11$2e$3$2f$node_modules$2f40$codemirror$2f$language$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@codemirror+language@6.11.3/node_modules/@codemirror/language/dist/index.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@lezer+highlight@1.2.1/node_modules/@lezer/highlight/dist/index.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$lr$40$1$2e$4$2e$2$2f$node_modules$2f40$lezer$2f$lr$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@lezer+lr@1.4.2/node_modules/@lezer/lr/dist/index.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$codemirror$2b$autocomplete$40$6$2e$18$2e$7$2f$node_modules$2f40$codemirror$2f$autocomplete$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@codemirror+autocomplete@6.18.7/node_modules/@codemirror/autocomplete/dist/index.js [app-ssr] (ecmascript)");
+;
+;
+;
+;
+// This file was generated by lezer-generator. You probably shouldn't edit it.
+const whitespace = 36, LineComment = 1, BlockComment = 2, String$1 = 3, Number = 4, Bool = 5, Null = 6, ParenL = 7, ParenR = 8, BraceL = 9, BraceR = 10, BracketL = 11, BracketR = 12, Semi = 13, Dot = 14, Operator = 15, Punctuation = 16, SpecialVar = 17, Identifier = 18, QuotedIdentifier = 19, Keyword = 20, Type = 21, Bits = 22, Bytes = 23, Builtin = 24;
+function isAlpha(ch) {
+    return ch >= 65 /* Ch.A */  && ch <= 90 /* Ch.Z */  || ch >= 97 /* Ch.a */  && ch <= 122 /* Ch.z */  || ch >= 48 /* Ch._0 */  && ch <= 57 /* Ch._9 */ ;
+}
+function isHexDigit(ch) {
+    return ch >= 48 /* Ch._0 */  && ch <= 57 /* Ch._9 */  || ch >= 97 /* Ch.a */  && ch <= 102 /* Ch.f */  || ch >= 65 /* Ch.A */  && ch <= 70 /* Ch.F */ ;
+}
+function readLiteral(input, endQuote, backslashEscapes) {
+    for(let escaped = false;;){
+        if (input.next < 0) return;
+        if (input.next == endQuote && !escaped) {
+            input.advance();
+            return;
+        }
+        escaped = backslashEscapes && !escaped && input.next == 92 /* Ch.Backslash */ ;
+        input.advance();
+    }
+}
+function readDoubleDollarLiteral(input, tag) {
+    scan: for(;;){
+        if (input.next < 0) return;
+        if (input.next == 36 /* Ch.Dollar */ ) {
+            input.advance();
+            for(let i = 0; i < tag.length; i++){
+                if (input.next != tag.charCodeAt(i)) continue scan;
+                input.advance();
+            }
+            if (input.next == 36 /* Ch.Dollar */ ) {
+                input.advance();
+                return;
+            }
+        } else {
+            input.advance();
+        }
+    }
+}
+function readPLSQLQuotedLiteral(input, openDelim) {
+    let matchingDelim = "[{<(".indexOf(String.fromCharCode(openDelim));
+    let closeDelim = matchingDelim < 0 ? openDelim : "]}>)".charCodeAt(matchingDelim);
+    for(;;){
+        if (input.next < 0) return;
+        if (input.next == closeDelim && input.peek(1) == 39 /* Ch.SingleQuote */ ) {
+            input.advance(2);
+            return;
+        }
+        input.advance();
+    }
+}
+function readWord(input, result) {
+    for(;;){
+        if (input.next != 95 /* Ch.Underscore */  && !isAlpha(input.next)) break;
+        if (result != null) result += String.fromCharCode(input.next);
+        input.advance();
+    }
+    return result;
+}
+function readWordOrQuoted(input) {
+    if (input.next == 39 /* Ch.SingleQuote */  || input.next == 34 /* Ch.DoubleQuote */  || input.next == 96 /* Ch.Backtick */ ) {
+        let quote = input.next;
+        input.advance();
+        readLiteral(input, quote, false);
+    } else {
+        readWord(input);
+    }
+}
+function readBits(input, endQuote) {
+    while(input.next == 48 /* Ch._0 */  || input.next == 49 /* Ch._1 */ )input.advance();
+    if (endQuote && input.next == endQuote) input.advance();
+}
+function readNumber(input, sawDot) {
+    for(;;){
+        if (input.next == 46 /* Ch.Dot */ ) {
+            if (sawDot) break;
+            sawDot = true;
+        } else if (input.next < 48 /* Ch._0 */  || input.next > 57 /* Ch._9 */ ) {
+            break;
+        }
+        input.advance();
+    }
+    if (input.next == 69 /* Ch.E */  || input.next == 101 /* Ch.e */ ) {
+        input.advance();
+        if (input.next == 43 /* Ch.Plus */  || input.next == 45 /* Ch.Dash */ ) input.advance();
+        while(input.next >= 48 /* Ch._0 */  && input.next <= 57 /* Ch._9 */ )input.advance();
+    }
+}
+function eol(input) {
+    while(!(input.next < 0 || input.next == 10 /* Ch.Newline */ ))input.advance();
+}
+function inString(ch, str) {
+    for(let i = 0; i < str.length; i++)if (str.charCodeAt(i) == ch) return true;
+    return false;
+}
+const Space = " \t\r\n";
+function keywords(keywords, types, builtin) {
+    let result = Object.create(null);
+    result["true"] = result["false"] = Bool;
+    result["null"] = result["unknown"] = Null;
+    for (let kw of keywords.split(" "))if (kw) result[kw] = Keyword;
+    for (let tp of types.split(" "))if (tp) result[tp] = Type;
+    for (let kw of (builtin || "").split(" "))if (kw) result[kw] = Builtin;
+    return result;
+}
+const SQLTypes = "array binary bit boolean char character clob date decimal double float int integer interval large national nchar nclob numeric object precision real smallint time timestamp varchar varying ";
+const SQLKeywords = "absolute action add after all allocate alter and any are as asc assertion at authorization before begin between both breadth by call cascade cascaded case cast catalog check close collate collation column commit condition connect connection constraint constraints constructor continue corresponding count create cross cube current current_date current_default_transform_group current_transform_group_for_type current_path current_role current_time current_timestamp current_user cursor cycle data day deallocate declare default deferrable deferred delete depth deref desc describe descriptor deterministic diagnostics disconnect distinct do domain drop dynamic each else elseif end end-exec equals escape except exception exec execute exists exit external fetch first for foreign found from free full function general get global go goto grant group grouping handle having hold hour identity if immediate in indicator initially inner inout input insert intersect into is isolation join key language last lateral leading leave left level like limit local localtime localtimestamp locator loop map match method minute modifies module month names natural nesting new next no none not of old on only open option or order ordinality out outer output overlaps pad parameter partial path prepare preserve primary prior privileges procedure public read reads recursive redo ref references referencing relative release repeat resignal restrict result return returns revoke right role rollback rollup routine row rows savepoint schema scroll search second section select session session_user set sets signal similar size some space specific specifictype sql sqlexception sqlstate sqlwarning start state static system_user table temporary then timezone_hour timezone_minute to trailing transaction translation treat trigger under undo union unique unnest until update usage user using value values view when whenever where while with without work write year zone ";
+const defaults = {
+    backslashEscapes: false,
+    hashComments: false,
+    spaceAfterDashes: false,
+    slashComments: false,
+    doubleQuotedStrings: false,
+    doubleDollarQuotedStrings: false,
+    unquotedBitLiterals: false,
+    treatBitsAsBytes: false,
+    charSetCasts: false,
+    plsqlQuotingMechanism: false,
+    operatorChars: "*+\-%<>!=&|~^/",
+    specialVar: "?",
+    identifierQuotes: '"',
+    caseInsensitiveIdentifiers: false,
+    words: /*@__PURE__*/ keywords(SQLKeywords, SQLTypes)
+};
+function dialect(spec, kws, types, builtin) {
+    let dialect = {};
+    for(let prop in defaults)dialect[prop] = (spec.hasOwnProperty(prop) ? spec : defaults)[prop];
+    if (kws) dialect.words = keywords(kws, types || "", builtin);
+    return dialect;
+}
+function tokensFor(d) {
+    return new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$lr$40$1$2e$4$2e$2$2f$node_modules$2f40$lezer$2f$lr$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ExternalTokenizer"]((input)=>{
+        var _a;
+        let { next } = input;
+        input.advance();
+        if (inString(next, Space)) {
+            while(inString(input.next, Space))input.advance();
+            input.acceptToken(whitespace);
+        } else if (next == 36 /* Ch.Dollar */  && d.doubleDollarQuotedStrings) {
+            let tag = readWord(input, "");
+            if (input.next == 36 /* Ch.Dollar */ ) {
+                input.advance();
+                readDoubleDollarLiteral(input, tag);
+                input.acceptToken(String$1);
+            }
+        } else if (next == 39 /* Ch.SingleQuote */  || next == 34 /* Ch.DoubleQuote */  && d.doubleQuotedStrings) {
+            readLiteral(input, next, d.backslashEscapes);
+            input.acceptToken(String$1);
+        } else if (next == 35 /* Ch.Hash */  && d.hashComments || next == 47 /* Ch.Slash */  && input.next == 47 /* Ch.Slash */  && d.slashComments) {
+            eol(input);
+            input.acceptToken(LineComment);
+        } else if (next == 45 /* Ch.Dash */  && input.next == 45 /* Ch.Dash */  && (!d.spaceAfterDashes || input.peek(1) == 32 /* Ch.Space */ )) {
+            eol(input);
+            input.acceptToken(LineComment);
+        } else if (next == 47 /* Ch.Slash */  && input.next == 42 /* Ch.Star */ ) {
+            input.advance();
+            for(let depth = 1;;){
+                let cur = input.next;
+                if (input.next < 0) break;
+                input.advance();
+                if (cur == 42 /* Ch.Star */  && input.next == 47 /* Ch.Slash */ ) {
+                    depth--;
+                    input.advance();
+                    if (!depth) break;
+                } else if (cur == 47 /* Ch.Slash */  && input.next == 42 /* Ch.Star */ ) {
+                    depth++;
+                    input.advance();
+                }
+            }
+            input.acceptToken(BlockComment);
+        } else if ((next == 101 /* Ch.e */  || next == 69 /* Ch.E */ ) && input.next == 39 /* Ch.SingleQuote */ ) {
+            input.advance();
+            readLiteral(input, 39 /* Ch.SingleQuote */ , true);
+            input.acceptToken(String$1);
+        } else if ((next == 110 /* Ch.n */  || next == 78 /* Ch.N */ ) && input.next == 39 /* Ch.SingleQuote */  && d.charSetCasts) {
+            input.advance();
+            readLiteral(input, 39 /* Ch.SingleQuote */ , d.backslashEscapes);
+            input.acceptToken(String$1);
+        } else if (next == 95 /* Ch.Underscore */  && d.charSetCasts) {
+            for(let i = 0;; i++){
+                if (input.next == 39 /* Ch.SingleQuote */  && i > 1) {
+                    input.advance();
+                    readLiteral(input, 39 /* Ch.SingleQuote */ , d.backslashEscapes);
+                    input.acceptToken(String$1);
+                    break;
+                }
+                if (!isAlpha(input.next)) break;
+                input.advance();
+            }
+        } else if (d.plsqlQuotingMechanism && (next == 113 /* Ch.q */  || next == 81 /* Ch.Q */ ) && input.next == 39 /* Ch.SingleQuote */  && input.peek(1) > 0 && !inString(input.peek(1), Space)) {
+            let openDelim = input.peek(1);
+            input.advance(2);
+            readPLSQLQuotedLiteral(input, openDelim);
+            input.acceptToken(String$1);
+        } else if (next == 40 /* Ch.ParenL */ ) {
+            input.acceptToken(ParenL);
+        } else if (next == 41 /* Ch.ParenR */ ) {
+            input.acceptToken(ParenR);
+        } else if (next == 123 /* Ch.BraceL */ ) {
+            input.acceptToken(BraceL);
+        } else if (next == 125 /* Ch.BraceR */ ) {
+            input.acceptToken(BraceR);
+        } else if (next == 91 /* Ch.BracketL */ ) {
+            input.acceptToken(BracketL);
+        } else if (next == 93 /* Ch.BracketR */ ) {
+            input.acceptToken(BracketR);
+        } else if (next == 59 /* Ch.Semi */ ) {
+            input.acceptToken(Semi);
+        } else if (d.unquotedBitLiterals && next == 48 /* Ch._0 */  && input.next == 98 /* Ch.b */ ) {
+            input.advance();
+            readBits(input);
+            input.acceptToken(Bits);
+        } else if ((next == 98 /* Ch.b */  || next == 66 /* Ch.B */ ) && (input.next == 39 /* Ch.SingleQuote */  || input.next == 34 /* Ch.DoubleQuote */ )) {
+            const quoteStyle = input.next;
+            input.advance();
+            if (d.treatBitsAsBytes) {
+                readLiteral(input, quoteStyle, d.backslashEscapes);
+                input.acceptToken(Bytes);
+            } else {
+                readBits(input, quoteStyle);
+                input.acceptToken(Bits);
+            }
+        } else if (next == 48 /* Ch._0 */  && (input.next == 120 /* Ch.x */  || input.next == 88 /* Ch.X */ ) || (next == 120 /* Ch.x */  || next == 88 /* Ch.X */ ) && input.next == 39 /* Ch.SingleQuote */ ) {
+            let quoted = input.next == 39 /* Ch.SingleQuote */ ;
+            input.advance();
+            while(isHexDigit(input.next))input.advance();
+            if (quoted && input.next == 39 /* Ch.SingleQuote */ ) input.advance();
+            input.acceptToken(Number);
+        } else if (next == 46 /* Ch.Dot */  && input.next >= 48 /* Ch._0 */  && input.next <= 57 /* Ch._9 */ ) {
+            readNumber(input, true);
+            input.acceptToken(Number);
+        } else if (next == 46 /* Ch.Dot */ ) {
+            input.acceptToken(Dot);
+        } else if (next >= 48 /* Ch._0 */  && next <= 57 /* Ch._9 */ ) {
+            readNumber(input, false);
+            input.acceptToken(Number);
+        } else if (inString(next, d.operatorChars)) {
+            while(inString(input.next, d.operatorChars))input.advance();
+            input.acceptToken(Operator);
+        } else if (inString(next, d.specialVar)) {
+            if (input.next == next) input.advance();
+            readWordOrQuoted(input);
+            input.acceptToken(SpecialVar);
+        } else if (inString(next, d.identifierQuotes)) {
+            readLiteral(input, next, false);
+            input.acceptToken(QuotedIdentifier);
+        } else if (next == 58 /* Ch.Colon */  || next == 44 /* Ch.Comma */ ) {
+            input.acceptToken(Punctuation);
+        } else if (isAlpha(next)) {
+            let word = readWord(input, String.fromCharCode(next));
+            input.acceptToken(input.next == 46 /* Ch.Dot */  || input.peek(-word.length - 1) == 46 /* Ch.Dot */  ? Identifier : (_a = d.words[word.toLowerCase()]) !== null && _a !== void 0 ? _a : Identifier);
+        }
+    });
+}
+const tokens = /*@__PURE__*/ tokensFor(defaults);
+// This file was generated by lezer-generator. You probably shouldn't edit it.
+const parser$1 = /*@__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$lr$40$1$2e$4$2e$2$2f$node_modules$2f40$lezer$2f$lr$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["LRParser"].deserialize({
+    version: 14,
+    states: "%vQ]QQOOO#wQRO'#DSO$OQQO'#CwO%eQQO'#CxO%lQQO'#CyO%sQQO'#CzOOQQ'#DS'#DSOOQQ'#C}'#C}O'UQRO'#C{OOQQ'#Cv'#CvOOQQ'#C|'#C|Q]QQOOQOQQOOO'`QQO'#DOO(xQRO,59cO)PQQO,59cO)UQQO'#DSOOQQ,59d,59dO)cQQO,59dOOQQ,59e,59eO)jQQO,59eOOQQ,59f,59fO)qQQO,59fOOQQ-E6{-E6{OOQQ,59b,59bOOQQ-E6z-E6zOOQQ,59j,59jOOQQ-E6|-E6|O+VQRO1G.}O+^QQO,59cOOQQ1G/O1G/OOOQQ1G/P1G/POOQQ1G/Q1G/QP+kQQO'#C}O+rQQO1G.}O)PQQO,59cO,PQQO'#Cw",
+    stateData: ",[~OtOSPOSQOS~ORUOSUOTUOUUOVROXSOZTO]XO^QO_UO`UOaPObPOcPOdUOeUOfUOgUOhUO~O^]ORvXSvXTvXUvXVvXXvXZvX]vX_vX`vXavXbvXcvXdvXevXfvXgvXhvX~OsvX~P!jOa_Ob_Oc_O~ORUOSUOTUOUUOVROXSOZTO^tO_UO`UOa`Ob`Oc`OdUOeUOfUOgUOhUO~OWaO~P$ZOYcO~P$ZO[eO~P$ZORUOSUOTUOUUOVROXSOZTO^QO_UO`UOaPObPOcPOdUOeUOfUOgUOhUO~O]hOsoX~P%zOajObjOcjO~O^]ORkaSkaTkaUkaVkaXkaZka]ka_ka`kaakabkackadkaekafkagkahka~Oska~P'kO^]O~OWvXYvX[vX~P!jOWnO~P$ZOYoO~P$ZO[pO~P$ZO^]ORkiSkiTkiUkiVkiXkiZki]ki_ki`kiakibkickidkiekifkigkihki~Oski~P)xOWkaYka[ka~P'kO]hO~P$ZOWkiYki[ki~P)xOasObsOcsO~O",
+    goto: "#hwPPPPPPPPPPPPPPPPPPPPPPPPPPx||||!Y!^!d!xPPP#[TYOZeUORSTWZbdfqT[OZQZORiZSWOZQbRQdSQfTZgWbdfqQ^PWk^lmrQl_Qm`RrseVORSTWZbdfq",
+    nodeNames: "⚠ LineComment BlockComment String Number Bool Null ( ) { } [ ] ; . Operator Punctuation SpecialVar Identifier QuotedIdentifier Keyword Type Bits Bytes Builtin Script Statement CompositeIdentifier Parens Braces Brackets Statement",
+    maxTerm: 38,
+    nodeProps: [
+        [
+            "isolate",
+            -4,
+            1,
+            2,
+            3,
+            19,
+            ""
+        ]
+    ],
+    skippedNodes: [
+        0,
+        1,
+        2
+    ],
+    repeatNodeCount: 3,
+    tokenData: "RORO",
+    tokenizers: [
+        0,
+        tokens
+    ],
+    topRules: {
+        "Script": [
+            0,
+            25
+        ]
+    },
+    tokenPrec: 0
+});
+function tokenBefore(tree) {
+    let cursor = tree.cursor().moveTo(tree.from, -1);
+    while(/Comment/.test(cursor.name))cursor.moveTo(cursor.from, -1);
+    return cursor.node;
+}
+function idName(doc, node) {
+    let text = doc.sliceString(node.from, node.to);
+    let quoted = /^([`'"])(.*)\1$/.exec(text);
+    return quoted ? quoted[2] : text;
+}
+function plainID(node) {
+    return node && (node.name == "Identifier" || node.name == "QuotedIdentifier");
+}
+function pathFor(doc, id) {
+    if (id.name == "CompositeIdentifier") {
+        let path = [];
+        for(let ch = id.firstChild; ch; ch = ch.nextSibling)if (plainID(ch)) path.push(idName(doc, ch));
+        return path;
+    }
+    return [
+        idName(doc, id)
+    ];
+}
+function parentsFor(doc, node) {
+    for(let path = [];;){
+        if (!node || node.name != ".") return path;
+        let name = tokenBefore(node);
+        if (!plainID(name)) return path;
+        path.unshift(idName(doc, name));
+        node = tokenBefore(name);
+    }
+}
+function sourceContext(state, startPos) {
+    let pos = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$codemirror$2b$language$40$6$2e$11$2e$3$2f$node_modules$2f40$codemirror$2f$language$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["syntaxTree"])(state).resolveInner(startPos, -1);
+    let aliases = getAliases(state.doc, pos);
+    if (pos.name == "Identifier" || pos.name == "QuotedIdentifier" || pos.name == "Keyword") {
+        return {
+            from: pos.from,
+            quoted: pos.name == "QuotedIdentifier" ? state.doc.sliceString(pos.from, pos.from + 1) : null,
+            parents: parentsFor(state.doc, tokenBefore(pos)),
+            aliases
+        };
+    }
+    if (pos.name == ".") {
+        return {
+            from: startPos,
+            quoted: null,
+            parents: parentsFor(state.doc, pos),
+            aliases
+        };
+    } else {
+        return {
+            from: startPos,
+            quoted: null,
+            parents: [],
+            empty: true,
+            aliases
+        };
+    }
+}
+const EndFrom = /*@__PURE__*/ new Set(/*@__PURE__*/ "where group having order union intersect except all distinct limit offset fetch for".split(" "));
+function getAliases(doc, at) {
+    let statement;
+    for(let parent = at; !statement; parent = parent.parent){
+        if (!parent) return null;
+        if (parent.name == "Statement") statement = parent;
+    }
+    let aliases = null;
+    for(let scan = statement.firstChild, sawFrom = false, prevID = null; scan; scan = scan.nextSibling){
+        let kw = scan.name == "Keyword" ? doc.sliceString(scan.from, scan.to).toLowerCase() : null;
+        let alias = null;
+        if (!sawFrom) {
+            sawFrom = kw == "from";
+        } else if (kw == "as" && prevID && plainID(scan.nextSibling)) {
+            alias = idName(doc, scan.nextSibling);
+        } else if (kw && EndFrom.has(kw)) {
+            break;
+        } else if (prevID && plainID(scan)) {
+            alias = idName(doc, scan);
+        }
+        if (alias) {
+            if (!aliases) aliases = Object.create(null);
+            aliases[alias] = pathFor(doc, prevID);
+        }
+        prevID = /Identifier$/.test(scan.name) ? scan : null;
+    }
+    return aliases;
+}
+function maybeQuoteCompletions(quote, completions) {
+    if (!quote) return completions;
+    return completions.map((c)=>({
+            ...c,
+            label: c.label[0] == quote ? c.label : quote + c.label + quote,
+            apply: undefined
+        }));
+}
+const Span = /^\w*$/, QuotedSpan = /^[`'"]?\w*[`'"]?$/;
+function isSelfTag(namespace) {
+    return namespace.self && typeof namespace.self.label == "string";
+}
+class CompletionLevel {
+    constructor(idQuote, idCaseInsensitive){
+        this.idQuote = idQuote;
+        this.idCaseInsensitive = idCaseInsensitive;
+        this.list = [];
+        this.children = undefined;
+    }
+    child(name) {
+        let children = this.children || (this.children = Object.create(null));
+        let found = children[name];
+        if (found) return found;
+        if (name && !this.list.some((c)=>c.label == name)) this.list.push(nameCompletion(name, "type", this.idQuote, this.idCaseInsensitive));
+        return children[name] = new CompletionLevel(this.idQuote, this.idCaseInsensitive);
+    }
+    maybeChild(name) {
+        return this.children ? this.children[name] : null;
+    }
+    addCompletion(option) {
+        let found = this.list.findIndex((o)=>o.label == option.label);
+        if (found > -1) this.list[found] = option;
+        else this.list.push(option);
+    }
+    addCompletions(completions) {
+        for (let option of completions)this.addCompletion(typeof option == "string" ? nameCompletion(option, "property", this.idQuote, this.idCaseInsensitive) : option);
+    }
+    addNamespace(namespace) {
+        if (Array.isArray(namespace)) {
+            this.addCompletions(namespace);
+        } else if (isSelfTag(namespace)) {
+            this.addNamespace(namespace.children);
+        } else {
+            this.addNamespaceObject(namespace);
+        }
+    }
+    addNamespaceObject(namespace) {
+        for (let name of Object.keys(namespace)){
+            let children = namespace[name], self = null;
+            let parts = name.replace(/\\?\./g, (p)=>p == "." ? "\0" : p).split("\0");
+            let scope = this;
+            if (isSelfTag(children)) {
+                self = children.self;
+                children = children.children;
+            }
+            for(let i = 0; i < parts.length; i++){
+                if (self && i == parts.length - 1) scope.addCompletion(self);
+                scope = scope.child(parts[i].replace(/\\\./g, "."));
+            }
+            scope.addNamespace(children);
+        }
+    }
+}
+function nameCompletion(label, type, idQuote, idCaseInsensitive) {
+    if (new RegExp("^[a-z_][a-z_\\d]*$", idCaseInsensitive ? "i" : "").test(label)) return {
+        label,
+        type
+    };
+    return {
+        label,
+        type,
+        apply: idQuote + label + idQuote
+    };
+}
+// Some of this is more gnarly than it has to be because we're also
+// supporting the deprecated, not-so-well-considered style of
+// supplying the schema (dotted property names for schemas, separate
+// `tables` and `schemas` completions).
+function completeFromSchema(schema, tables, schemas, defaultTableName, defaultSchemaName, dialect) {
+    var _a;
+    let idQuote = ((_a = dialect === null || dialect === void 0 ? void 0 : dialect.spec.identifierQuotes) === null || _a === void 0 ? void 0 : _a[0]) || '"';
+    let top = new CompletionLevel(idQuote, !!(dialect === null || dialect === void 0 ? void 0 : dialect.spec.caseInsensitiveIdentifiers));
+    let defaultSchema = defaultSchemaName ? top.child(defaultSchemaName) : null;
+    top.addNamespace(schema);
+    if (tables) (defaultSchema || top).addCompletions(tables);
+    if (schemas) top.addCompletions(schemas);
+    if (defaultSchema) top.addCompletions(defaultSchema.list);
+    if (defaultTableName) top.addCompletions((defaultSchema || top).child(defaultTableName).list);
+    return (context)=>{
+        let { parents, from, quoted, empty, aliases } = sourceContext(context.state, context.pos);
+        if (empty && !context.explicit) return null;
+        if (aliases && parents.length == 1) parents = aliases[parents[0]] || parents;
+        let level = top;
+        for (let name of parents){
+            while(!level.children || !level.children[name]){
+                if (level == top && defaultSchema) level = defaultSchema;
+                else if (level == defaultSchema && defaultTableName) level = level.child(defaultTableName);
+                else return null;
+            }
+            let next = level.maybeChild(name);
+            if (!next) return null;
+            level = next;
+        }
+        let quoteAfter = quoted && context.state.sliceDoc(context.pos, context.pos + 1) == quoted;
+        let options = level.list;
+        if (level == top && aliases) options = options.concat(Object.keys(aliases).map((name)=>({
+                label: name,
+                type: "constant"
+            })));
+        return {
+            from,
+            to: quoteAfter ? context.pos + 1 : undefined,
+            options: maybeQuoteCompletions(quoted, options),
+            validFor: quoted ? QuotedSpan : Span
+        };
+    };
+}
+function completionType(tokenType) {
+    return tokenType == Type ? "type" : tokenType == Keyword ? "keyword" : "variable";
+}
+function completeKeywords(keywords, upperCase, build) {
+    let completions = Object.keys(keywords).map((keyword)=>build(upperCase ? keyword.toUpperCase() : keyword, completionType(keywords[keyword])));
+    return (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$codemirror$2b$autocomplete$40$6$2e$18$2e$7$2f$node_modules$2f40$codemirror$2f$autocomplete$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ifNotIn"])([
+        "QuotedIdentifier",
+        "String",
+        "LineComment",
+        "BlockComment",
+        "."
+    ], (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$codemirror$2b$autocomplete$40$6$2e$18$2e$7$2f$node_modules$2f40$codemirror$2f$autocomplete$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["completeFromList"])(completions));
+}
+let parser = /*@__PURE__*/ parser$1.configure({
+    props: [
+        /*@__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$codemirror$2b$language$40$6$2e$11$2e$3$2f$node_modules$2f40$codemirror$2f$language$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["indentNodeProp"].add({
+            Statement: /*@__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$codemirror$2b$language$40$6$2e$11$2e$3$2f$node_modules$2f40$codemirror$2f$language$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["continuedIndent"])()
+        }),
+        /*@__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$codemirror$2b$language$40$6$2e$11$2e$3$2f$node_modules$2f40$codemirror$2f$language$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["foldNodeProp"].add({
+            Statement (tree, state) {
+                return {
+                    from: Math.min(tree.from + 100, state.doc.lineAt(tree.from).to),
+                    to: tree.to
+                };
+            },
+            BlockComment (tree) {
+                return {
+                    from: tree.from + 2,
+                    to: tree.to - 2
+                };
+            }
+        }),
+        /*@__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["styleTags"])({
+            Keyword: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].keyword,
+            Type: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].typeName,
+            Builtin: /*@__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].standard(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].name),
+            Bits: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].number,
+            Bytes: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].string,
+            Bool: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].bool,
+            Null: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].null,
+            Number: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].number,
+            String: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].string,
+            Identifier: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].name,
+            QuotedIdentifier: /*@__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].special(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].string),
+            SpecialVar: /*@__PURE__*/ __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].special(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].name),
+            LineComment: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].lineComment,
+            BlockComment: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].blockComment,
+            Operator: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].operator,
+            "Semi Punctuation": __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].punctuation,
+            "( )": __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].paren,
+            "{ }": __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].brace,
+            "[ ]": __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$lezer$2b$highlight$40$1$2e$2$2e$1$2f$node_modules$2f40$lezer$2f$highlight$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["tags"].squareBracket
+        })
+    ]
+});
+/**
+Represents an SQL dialect.
+*/ class SQLDialect {
+    constructor(/**
+    @internal
+    */ dialect, /**
+    The language for this dialect.
+    */ language, /**
+    The spec used to define this dialect.
+    */ spec){
+        this.dialect = dialect;
+        this.language = language;
+        this.spec = spec;
+    }
+    /**
+    Returns the language for this dialect as an extension.
+    */ get extension() {
+        return this.language.extension;
+    }
+    /**
+    Reconfigure the parser used by this dialect. Returns a new
+    dialect object.
+    */ configureLanguage(options, name) {
+        return new SQLDialect(this.dialect, this.language.configure(options, name), this.spec);
+    }
+    /**
+    Define a new dialect.
+    */ static define(spec) {
+        let d = dialect(spec, spec.keywords, spec.types, spec.builtin);
+        let language = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$codemirror$2b$language$40$6$2e$11$2e$3$2f$node_modules$2f40$codemirror$2f$language$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["LRLanguage"].define({
+            name: "sql",
+            parser: parser.configure({
+                tokenizers: [
+                    {
+                        from: tokens,
+                        to: tokensFor(d)
+                    }
+                ]
+            }),
+            languageData: {
+                commentTokens: {
+                    line: "--",
+                    block: {
+                        open: "/*",
+                        close: "*/"
+                    }
+                },
+                closeBrackets: {
+                    brackets: [
+                        "(",
+                        "[",
+                        "{",
+                        "'",
+                        '"',
+                        "`"
+                    ]
+                }
+            }
+        });
+        return new SQLDialect(d, language, spec);
+    }
+}
+function defaultKeyword(label, type) {
+    return {
+        label,
+        type,
+        boost: -1
+    };
+}
+/**
+Returns a completion source that provides keyword completion for
+the given SQL dialect.
+*/ function keywordCompletionSource(dialect, upperCase = false, build) {
+    return completeKeywords(dialect.dialect.words, upperCase, build || defaultKeyword);
+}
+/**
+Returns a completion sources that provides schema-based completion
+for the given configuration.
+*/ function schemaCompletionSource(config) {
+    return config.schema ? completeFromSchema(config.schema, config.tables, config.schemas, config.defaultTable, config.defaultSchema, config.dialect || StandardSQL) : ()=>null;
+}
+function schemaCompletion(config) {
+    return config.schema ? (config.dialect || StandardSQL).language.data.of({
+        autocomplete: schemaCompletionSource(config)
+    }) : [];
+}
+/**
+SQL language support for the given SQL dialect, with keyword
+completion, and, if provided, schema-based completion as extra
+extensions.
+*/ function sql(config = {}) {
+    let lang = config.dialect || StandardSQL;
+    return new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$codemirror$2b$language$40$6$2e$11$2e$3$2f$node_modules$2f40$codemirror$2f$language$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["LanguageSupport"](lang.language, [
+        schemaCompletion(config),
+        lang.language.data.of({
+            autocomplete: keywordCompletionSource(lang, config.upperCaseKeywords, config.keywordCompletion)
+        })
+    ]);
+}
+/**
+The standard SQL dialect.
+*/ const StandardSQL = /*@__PURE__*/ SQLDialect.define({});
+/**
+Dialect for [PostgreSQL](https://www.postgresql.org).
+*/ const PostgreSQL = /*@__PURE__*/ SQLDialect.define({
+    charSetCasts: true,
+    doubleDollarQuotedStrings: true,
+    operatorChars: "+-*/<>=~!@#%^&|`?",
+    specialVar: "",
+    keywords: SQLKeywords + "abort abs absent access according ada admin aggregate alias also always analyse analyze array_agg array_max_cardinality asensitive assert assignment asymmetric atomic attach attribute attributes avg backward base64 begin_frame begin_partition bernoulli bit_length blocked bom cache called cardinality catalog_name ceil ceiling chain char_length character_length character_set_catalog character_set_name character_set_schema characteristics characters checkpoint class class_origin cluster coalesce cobol collation_catalog collation_name collation_schema collect column_name columns command_function command_function_code comment comments committed concurrently condition_number configuration conflict connection_name constant constraint_catalog constraint_name constraint_schema contains content control conversion convert copy corr cost covar_pop covar_samp csv cume_dist current_catalog current_row current_schema cursor_name database datalink datatype datetime_interval_code datetime_interval_precision db debug defaults defined definer degree delimiter delimiters dense_rank depends derived detach detail dictionary disable discard dispatch dlnewcopy dlpreviouscopy dlurlcomplete dlurlcompleteonly dlurlcompletewrite dlurlpath dlurlpathonly dlurlpathwrite dlurlscheme dlurlserver dlvalue document dump dynamic_function dynamic_function_code element elsif empty enable encoding encrypted end_frame end_partition endexec enforced enum errcode error event every exclude excluding exclusive exp explain expression extension extract family file filter final first_value flag floor following force foreach fortran forward frame_row freeze fs functions fusion generated granted greatest groups handler header hex hierarchy hint id ignore ilike immediately immutable implementation implicit import include including increment indent index indexes info inherit inherits inline insensitive instance instantiable instead integrity intersection invoker isnull key_member key_type label lag last_value lead leakproof least length library like_regex link listen ln load location lock locked log logged lower mapping matched materialized max max_cardinality maxvalue member merge message message_length message_octet_length message_text min minvalue mod mode more move multiset mumps name namespace nfc nfd nfkc nfkd nil normalize normalized nothing notice notify notnull nowait nth_value ntile nullable nullif nulls number occurrences_regex octet_length octets off offset oids operator options ordering others over overlay overriding owned owner parallel parameter_mode parameter_name parameter_ordinal_position parameter_specific_catalog parameter_specific_name parameter_specific_schema parser partition pascal passing passthrough password percent percent_rank percentile_cont percentile_disc perform period permission pg_context pg_datatype_name pg_exception_context pg_exception_detail pg_exception_hint placing plans pli policy portion position position_regex power precedes preceding prepared print_strict_params procedural procedures program publication query quote raise range rank reassign recheck recovery refresh regr_avgx regr_avgy regr_count regr_intercept regr_r2 regr_slope regr_sxx regr_sxy regr_syy reindex rename repeatable replace replica requiring reset respect restart restore result_oid returned_cardinality returned_length returned_octet_length returned_sqlstate returning reverse routine_catalog routine_name routine_schema routines row_count row_number rowtype rule scale schema_name schemas scope scope_catalog scope_name scope_schema security selective self sensitive sequence sequences serializable server server_name setof share show simple skip slice snapshot source specific_name sqlcode sqlerror sqrt stable stacked standalone statement statistics stddev_pop stddev_samp stdin stdout storage strict strip structure style subclass_origin submultiset subscription substring substring_regex succeeds sum symmetric sysid system system_time table_name tables tablesample tablespace temp template ties token top_level_count transaction_active transactions_committed transactions_rolled_back transform transforms translate translate_regex trigger_catalog trigger_name trigger_schema trim trim_array truncate trusted type types uescape unbounded uncommitted unencrypted unlink unlisten unlogged unnamed untyped upper uri use_column use_variable user_defined_type_catalog user_defined_type_code user_defined_type_name user_defined_type_schema vacuum valid validate validator value_of var_pop var_samp varbinary variable_conflict variadic verbose version versioning views volatile warning whitespace width_bucket window within wrapper xmlagg xmlattributes xmlbinary xmlcast xmlcomment xmlconcat xmldeclaration xmldocument xmlelement xmlexists xmlforest xmliterate xmlnamespaces xmlparse xmlpi xmlquery xmlroot xmlschema xmlserialize xmltable xmltext xmlvalidate yes",
+    types: SQLTypes + "bigint int8 bigserial serial8 varbit bool box bytea cidr circle precision float8 inet int4 json jsonb line lseg macaddr macaddr8 money numeric pg_lsn point polygon float4 int2 smallserial serial2 serial serial4 text timetz timestamptz tsquery tsvector txid_snapshot uuid xml"
+});
+const MySQLKeywords = "accessible algorithm analyze asensitive authors auto_increment autocommit avg avg_row_length binlog btree cache catalog_name chain change changed checkpoint checksum class_origin client_statistics coalesce code collations columns comment committed completion concurrent consistent contains contributors convert database databases day_hour day_microsecond day_minute day_second delay_key_write delayed delimiter des_key_file dev_pop dev_samp deviance directory disable discard distinctrow div dual dumpfile enable enclosed ends engine engines enum errors escaped even event events every explain extended fast field fields flush force found_rows fulltext grants handler hash high_priority hosts hour_microsecond hour_minute hour_second ignore ignore_server_ids import index index_statistics infile innodb insensitive insert_method install invoker iterate keys kill linear lines list load lock logs low_priority master master_heartbeat_period master_ssl_verify_server_cert masters max max_rows maxvalue message_text middleint migrate min min_rows minute_microsecond minute_second mod mode modify mutex mysql_errno no_write_to_binlog offline offset one online optimize optionally outfile pack_keys parser partition partitions password phase plugin plugins prev processlist profile profiles purge query quick range read_write rebuild recover regexp relaylog remove rename reorganize repair repeatable replace require resume rlike row_format rtree schedule schema_name schemas second_microsecond security sensitive separator serializable server share show slave slow snapshot soname spatial sql_big_result sql_buffer_result sql_cache sql_calc_found_rows sql_no_cache sql_small_result ssl starting starts std stddev stddev_pop stddev_samp storage straight_join subclass_origin sum suspend table_name table_statistics tables tablespace terminated triggers truncate uncommitted uninstall unlock upgrade use use_frm user_resources user_statistics utc_date utc_time utc_timestamp variables views warnings xa xor year_month zerofill";
+const MySQLTypes = SQLTypes + "bool blob long longblob longtext medium mediumblob mediumint mediumtext tinyblob tinyint tinytext text bigint int1 int2 int3 int4 int8 float4 float8 varbinary varcharacter precision datetime unsigned signed";
+const MySQLBuiltin = "charset clear edit ego help nopager notee nowarning pager print prompt quit rehash source status system tee";
+/**
+[MySQL](https://dev.mysql.com/) dialect.
+*/ const MySQL = /*@__PURE__*/ SQLDialect.define({
+    operatorChars: "*+-%<>!=&|^",
+    charSetCasts: true,
+    doubleQuotedStrings: true,
+    unquotedBitLiterals: true,
+    hashComments: true,
+    spaceAfterDashes: true,
+    specialVar: "@?",
+    identifierQuotes: "`",
+    keywords: SQLKeywords + "group_concat " + MySQLKeywords,
+    types: MySQLTypes,
+    builtin: MySQLBuiltin
+});
+/**
+Variant of [`MySQL`](https://codemirror.net/6/docs/ref/#lang-sql.MySQL) for
+[MariaDB](https://mariadb.org/).
+*/ const MariaSQL = /*@__PURE__*/ SQLDialect.define({
+    operatorChars: "*+-%<>!=&|^",
+    charSetCasts: true,
+    doubleQuotedStrings: true,
+    unquotedBitLiterals: true,
+    hashComments: true,
+    spaceAfterDashes: true,
+    specialVar: "@?",
+    identifierQuotes: "`",
+    keywords: SQLKeywords + "always generated groupby_concat hard persistent shutdown soft virtual " + MySQLKeywords,
+    types: MySQLTypes,
+    builtin: MySQLBuiltin
+});
+let MSSQLBuiltin = // Aggregate https://msdn.microsoft.com/en-us/library/ms173454.aspx
+"approx_count_distinct approx_percentile_cont approx_percentile_disc avg checksum_agg count count_big grouping grouping_id max min product stdev stdevp sum var varp " + // AI https://learn.microsoft.com/en-us/sql/t-sql/functions/ai-functions-transact-sql?view=sql-server-ver17
+"ai_generate_embeddings ai_generate_chunks " + // Analytic https://learn.microsoft.com/en-us/sql/t-sql/functions/analytic-functions-transact-sql?view=sql-server-ver17
+"cume_dist first_value lag last_value lead percentile_cont percentile_disc percent_rank " + // Bit Manipulation https://learn.microsoft.com/en-us/sql/t-sql/functions/bit-manipulation-functions-overview?view=sql-server-ver17
+"left_shift right_shift bit_count get_bit set_bit " + // Collation Functions https://learn.microsoft.com/en-us/sql/t-sql/functions/collation-functions-collationproperty-transact-sql?view=sql-server-ver17
+"collationproperty tertiary_weights " + // Configuration https://learn.microsoft.com/en-us/sql/t-sql/functions/configuration-functions-transact-sql?view=sql-server-ver17
+"@@datefirst @@dbts @@langid @@language @@lock_timeout @@max_connections @@max_precision @@nestlevel @@options @@remserver @@servername @@servicename @@spid @@textsize @@version " + // Conversion https://learn.microsoft.com/en-us/sql/t-sql/functions/conversion-functions-transact-sql?view=sql-server-ver17
+"cast convert parse try_cast try_convert try_parse " + // Cryptographic https://learn.microsoft.com/en-us/sql/t-sql/functions/cryptographic-functions-transact-sql?view=sql-server-ver17
+"asymkey_id asymkeyproperty certproperty cert_id crypt_gen_random decryptbyasymkey decryptbycert decryptbykey decryptbykeyautoasymkey decryptbykeyautocert decryptbypassphrase encryptbyasymkey encryptbycert encryptbykey encryptbypassphrase hashbytes is_objectsigned key_guid key_id key_name signbyasymkey signbycert symkeyproperty verifysignedbycert verifysignedbyasymkey " + // Cursor https://learn.microsoft.com/en-us/sql/t-sql/functions/cursor-functions-transact-sql?view=sql-server-ver17
+"@@cursor_rows @@fetch_status cursor_status " + // Data type https://learn.microsoft.com/en-us/sql/t-sql/functions/data-type-functions-transact-sql?view=sql-server-ver17
+"datalength ident_current ident_incr ident_seed identity sql_variant_property " + // Date & time https://learn.microsoft.com/en-us/sql/t-sql/functions/date-and-time-data-types-and-functions-transact-sql?view=sql-server-ver17
+"@@datefirst current_timestamp current_timezone current_timezone_id date_bucket dateadd datediff datediff_big datefromparts datename datepart datetime2fromparts datetimefromparts datetimeoffsetfromparts datetrunc day eomonth getdate getutcdate isdate month smalldatetimefromparts switchoffset sysdatetime sysdatetimeoffset sysutcdatetime timefromparts todatetimeoffset year " + // Fuzzy string match https://learn.microsoft.com/en-us/sql/t-sql/functions/edit-distance-transact-sql?view=sql-server-ver17
+"edit_distance edit_distance_similarity jaro_winkler_distance jaro_winkler_similarity " + // Graph https://learn.microsoft.com/en-us/sql/t-sql/functions/graph-functions-transact-sql?view=sql-server-ver17
+"edge_id_from_parts graph_id_from_edge_id graph_id_from_node_id node_id_from_parts object_id_from_edge_id object_id_from_node_id " + // JSON https://learn.microsoft.com/en-us/sql/t-sql/functions/json-functions-transact-sql?view=sql-server-ver17
+"json isjson json_array json_contains json_modify json_object json_path_exists json_query json_value " + // Regular Expressions https://learn.microsoft.com/en-us/sql/t-sql/functions/regular-expressions-functions-transact-sql?view=sql-server-ver17
+"regexp_like regexp_replace regexp_substr regexp_instr regexp_count regexp_matches regexp_split_to_table " + // Mathematical https://learn.microsoft.com/en-us/sql/t-sql/functions/mathematical-functions-transact-sql?view=sql-server-ver17
+"abs acos asin atan atn2 ceiling cos cot degrees exp floor log log10 pi power radians rand round sign sin sqrt square tan " + // Logical https://learn.microsoft.com/en-us/sql/t-sql/functions/logical-functions-choose-transact-sql?view=sql-server-ver17
+"choose greatest iif least " + // Metadata https://learn.microsoft.com/en-us/sql/t-sql/functions/metadata-functions-transact-sql?view=sql-server-ver17
+"@@procid app_name applock_mode applock_test assemblyproperty col_length col_name columnproperty databasepropertyex db_id db_name file_id file_idex file_name filegroup_id filegroup_name filegroupproperty fileproperty filepropertyex fulltextcatalogproperty fulltextserviceproperty index_col indexkey_property indexproperty next value for object_definition object_id object_name object_schema_name objectproperty objectpropertyex original_db_name parsename schema_id schema_name scope_identity serverproperty stats_date type_id type_name typeproperty " + // Ranking https://learn.microsoft.com/en-us/sql/t-sql/functions/ranking-functions-transact-sql?view=sql-server-ver17
+"dense_rank ntile rank row_number " + // Replication https://learn.microsoft.com/en-us/sql/t-sql/functions/replication-functions-publishingservername?view=sql-server-ver17
+"publishingservername " + // Security https://learn.microsoft.com/en-us/sql/t-sql/functions/security-functions-transact-sql?view=sql-server-ver17
+"certenclosed certprivatekey current_user database_principal_id has_dbaccess has_perms_by_name is_member is_rolemember is_srvrolemember loginproperty original_login permissions pwdencrypt pwdcompare session_user sessionproperty suser_id suser_name suser_sid suser_sname system_user user user_id user_name " + // String https://learn.microsoft.com/en-us/sql/t-sql/functions/string-functions-transact-sql?view=sql-server-ver17
+"ascii char charindex concat concat_ws difference format left len lower ltrim nchar patindex quotename replace replicate reverse right rtrim soundex space str string_agg string_escape stuff substring translate trim unicode upper " + // System https://learn.microsoft.com/en-us/sql/t-sql/functions/system-functions-transact-sql?view=sql-server-ver17
+"$partition @@error @@identity @@pack_received @@rowcount @@trancount binary_checksum checksum compress connectionproperty context_info current_request_id current_transaction_id decompress error_line error_message error_number error_procedure error_severity error_state formatmessage get_filestream_transaction_context getansinull host_id host_name isnull isnumeric min_active_rowversion newid newsequentialid rowcount_big session_context xact_state " + // System Statistical https://learn.microsoft.com/en-us/sql/t-sql/functions/system-statistical-functions-transact-sql?view=sql-server-ver17
+"@@connections @@cpu_busy @@idle @@io_busy @@pack_sent @@packet_errors @@timeticks @@total_errors @@total_read @@total_write " + // Text & Image https://learn.microsoft.com/en-us/sql/t-sql/functions/text-and-image-functions-textptr-transact-sql?view=sql-server-ver17
+"textptr textvalid " + // Trigger https://learn.microsoft.com/en-us/sql/t-sql/functions/trigger-functions-transact-sql?view=sql-server-ver17
+"columns_updated eventdata trigger_nestlevel " + // Vectors https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-functions-transact-sql?view=sql-server-ver17
+"vector_distance vectorproperty vector_search " + // Relational operators https://msdn.microsoft.com/en-us/library/ms187957.aspx
+"generate_series opendatasource openjson openquery openrowset openxml predict string_split " + // Other
+"coalesce nullif apply catch filter force include keep keepfixed modify optimize parameterization parameters partition recompile sequence set";
+/**
+SQL dialect for Microsoft [SQL
+Server](https://www.microsoft.com/en-us/sql-server).
+*/ const MSSQL = /*@__PURE__*/ SQLDialect.define({
+    keywords: SQLKeywords + // Reserved Keywords https://learn.microsoft.com/en-us/sql/t-sql/language-elements/reserved-keywords-transact-sql?view=sql-server-ver17
+    "add external procedure all fetch public alter file raiserror and fillfactor read any for readtext as foreign reconfigure asc freetext references authorization freetexttable replication backup from restore begin full restrict between function return break goto revert browse grant revoke bulk group right by having rollback cascade holdlock rowcount case identity rowguidcol check identity_insert rule checkpoint identitycol save close if schema clustered in securityaudit coalesce index select collate inner semantickeyphrasetable column insert semanticsimilaritydetailstable commit intersect semanticsimilaritytable compute into session_user constraint is set contains join setuser containstable key shutdown continue kill some convert left statistics create like system_user cross lineno table current load tablesample current_date merge textsize current_time national then current_timestamp nocheck to current_user nonclustered top cursor not tran database null transaction dbcc nullif trigger deallocate of truncate declare off try_convert default offsets tsequal delete on union deny open unique desc opendatasource unpivot disk openquery update distinct openrowset updatetext distributed openxml use double option user drop or values dump order varying else outer view end over waitfor errlvl percent when escape pivot where except plan while exec precision with execute primary within group exists print writetext exit proc " + // table hints https://learn.microsoft.com/en-us/sql/t-sql/queries/hints-transact-sql-table?view=sql-server-ver17
+    "noexpand index forceseek forcescan holdlock nolock nowait paglock readcommitted readcommittedlock readpast readuncommitted repeatableread rowlock serializable snapshot spatial_window_max_cells tablock tablockx updlock xlock keepidentity keepdefaults ignore_constraints ignore_triggers",
+    types: SQLTypes + "smalldatetime datetimeoffset datetime2 datetime bigint smallint smallmoney tinyint money real text nvarchar ntext varbinary image hierarchyid uniqueidentifier sql_variant xml",
+    builtin: MSSQLBuiltin,
+    operatorChars: "*+-%<>!=^&|/",
+    specialVar: "@"
+});
+/**
+[SQLite](https://sqlite.org/) dialect.
+*/ const SQLite = /*@__PURE__*/ SQLDialect.define({
+    keywords: SQLKeywords + "abort analyze attach autoincrement conflict database detach exclusive fail glob ignore index indexed instead isnull notnull offset plan pragma query raise regexp reindex rename replace temp vacuum virtual",
+    types: SQLTypes + "bool blob long longblob longtext medium mediumblob mediumint mediumtext tinyblob tinyint tinytext text bigint int2 int8 unsigned signed real",
+    builtin: "auth backup bail changes clone databases dbinfo dump echo eqp explain fullschema headers help import imposter indexes iotrace lint load log mode nullvalue once print prompt quit restore save scanstats separator shell show stats system tables testcase timeout timer trace vfsinfo vfslist vfsname width",
+    operatorChars: "*+-%<>!=&|/~",
+    identifierQuotes: "`\"",
+    specialVar: "@:?$"
+});
+/**
+Dialect for [Cassandra](https://cassandra.apache.org/)'s SQL-ish query language.
+*/ const Cassandra = /*@__PURE__*/ SQLDialect.define({
+    keywords: "add all allow alter and any apply as asc authorize batch begin by clustering columnfamily compact consistency count create custom delete desc distinct drop each_quorum exists filtering from grant if in index insert into key keyspace keyspaces level limit local_one local_quorum modify nan norecursive nosuperuser not of on one order password permission permissions primary quorum rename revoke schema select set storage superuser table three to token truncate ttl two type unlogged update use user users using values where with writetime infinity NaN",
+    types: SQLTypes + "ascii bigint blob counter frozen inet list map static text timeuuid tuple uuid varint",
+    slashComments: true
+});
+/**
+[PL/SQL](https://en.wikipedia.org/wiki/PL/SQL) dialect.
+*/ const PLSQL = /*@__PURE__*/ SQLDialect.define({
+    keywords: SQLKeywords + "abort accept access add all alter and any arraylen as asc assert assign at attributes audit authorization avg base_table begin between binary_integer body by case cast char_base check close cluster clusters colauth column comment commit compress connected constant constraint crash create current currval cursor data_base database dba deallocate debugoff debugon declare default definition delay delete desc digits dispose distinct do drop else elseif elsif enable end entry exception exception_init exchange exclusive exists external fast fetch file for force form from function generic goto grant group having identified if immediate in increment index indexes indicator initial initrans insert interface intersect into is key level library like limited local lock log logging loop master maxextents maxtrans member minextents minus mislabel mode modify multiset new next no noaudit nocompress nologging noparallel not nowait number_base of off offline on online only option or order out package parallel partition pctfree pctincrease pctused pls_integer positive positiven pragma primary prior private privileges procedure public raise range raw rebuild record ref references refresh rename replace resource restrict return returning returns reverse revoke rollback row rowid rowlabel rownum rows run savepoint schema segment select separate set share snapshot some space split sql start statement storage subtype successful synonym tabauth table tables tablespace task terminate then to trigger truncate type union unique unlimited unrecoverable unusable update use using validate value values variable view views when whenever where while with work",
+    builtin: "appinfo arraysize autocommit autoprint autorecovery autotrace blockterminator break btitle cmdsep colsep compatibility compute concat copycommit copytypecheck define echo editfile embedded feedback flagger flush heading headsep instance linesize lno loboffset logsource longchunksize markup native newpage numformat numwidth pagesize pause pno recsep recsepchar repfooter repheader serveroutput shiftinout show showmode spool sqlblanklines sqlcase sqlcode sqlcontinue sqlnumber sqlpluscompatibility sqlprefix sqlprompt sqlterminator suffix tab term termout timing trimout trimspool ttitle underline verify version wrap",
+    types: SQLTypes + "ascii bfile bfilename bigserial bit blob dec long number nvarchar nvarchar2 serial smallint string text uid varchar2 xml",
+    operatorChars: "*/+-%<>!=~",
+    doubleQuotedStrings: true,
+    charSetCasts: true,
+    plsqlQuotingMechanism: true
+});
+;
+}),
+];
 
 //# sourceMappingURL=dd3ee_%40codemirror_lang-sql_dist_index_d866fd61.js.map

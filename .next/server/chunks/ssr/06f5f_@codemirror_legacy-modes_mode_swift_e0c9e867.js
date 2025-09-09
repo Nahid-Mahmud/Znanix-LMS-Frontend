@@ -1,3 +1,336 @@
-module.exports=[53417,a=>{"use strict";function b(a){for(var b={},c=0;c<a.length;c++)b[a[c]]=!0;return b}a.s(["swift",()=>s]);var c=b(["_","var","let","actor","class","enum","extension","import","protocol","struct","func","typealias","associatedtype","open","public","internal","fileprivate","private","deinit","init","new","override","self","subscript","super","convenience","dynamic","final","indirect","lazy","required","static","unowned","unowned(safe)","unowned(unsafe)","weak","as","is","break","case","continue","default","else","fallthrough","for","guard","if","in","repeat","switch","where","while","defer","return","inout","mutating","nonmutating","isolated","nonisolated","catch","do","rethrows","throw","throws","async","await","try","didSet","get","set","willSet","assignment","associativity","infix","left","none","operator","postfix","precedence","precedencegroup","prefix","right","Any","AnyObject","Type","dynamicType","Self","Protocol","__COLUMN__","__FILE__","__FUNCTION__","__LINE__"]),d=b(["var","let","actor","class","enum","extension","import","protocol","struct","func","typealias","associatedtype","for"]),e=b(["true","false","nil","self","super","_"]),f=b(["Array","Bool","Character","Dictionary","Double","Float","Int","Int8","Int16","Int32","Int64","Never","Optional","Set","String","UInt8","UInt16","UInt32","UInt64","Void"]),g=/^\-?0b[01][01_]*/,h=/^\-?0o[0-7][0-7_]*/,i=/^\-?0x[\dA-Fa-f][\dA-Fa-f_]*(?:(?:\.[\dA-Fa-f][\dA-Fa-f_]*)?[Pp]\-?\d[\d_]*)?/,j=/^\-?\d[\d_]*(?:\.\d[\d_]*)?(?:[Ee]\-?\d[\d_]*)?/,k=/^\$\d+|(`?)[_A-Za-z][_A-Za-z$0-9]*\1/,l=/^\.(?:\$\d+|(`?)[_A-Za-z][_A-Za-z$0-9]*\1)/,m=/^\#[A-Za-z]+/,n=/^@(?:\$\d+|(`?)[_A-Za-z][_A-Za-z$0-9]*\1)/;function o(a,b,o){if(a.sol()&&(b.indented=a.indentation()),a.eatSpace())return null;var r,s=a.peek();if("/"==s){if(a.match("//"))return a.skipToEnd(),"comment";if(a.match("/*"))return b.tokenize.push(q),q(a,b)}if(a.match(m))return"builtin";if(a.match(n))return"attribute";if(a.match(g)||a.match(h)||a.match(i)||a.match(j))return"number";if(a.match(l))return"property";if("+-/*%=|&<>~^?!".indexOf(s)>-1)return a.next(),"operator";if(":;,.(){}[]".indexOf(s)>-1)return a.next(),a.match(".."),"punctuation";if(r=a.match(/("""|"|')/)){var t=p.bind(null,r[0]);return b.tokenize.push(t),t(a,b)}if(a.match(k)){var u=a.current();return f.hasOwnProperty(u)?"type":e.hasOwnProperty(u)?"atom":c.hasOwnProperty(u)?(d.hasOwnProperty(u)&&(b.prev="define"),"keyword"):"define"==o?"def":"variable"}return a.next(),null}function p(a,b,c){for(var d,e=1==a.length,f=!1;d=b.peek();)if(f){if(b.next(),"("==d)return c.tokenize.push(function(){var a=0;return function(b,c,d){var e=o(b,c,d);if("punctuation"==e){if("("==b.current())++a;else if(")"==b.current())if(0==a)return b.backUp(1),c.tokenize.pop(),c.tokenize[c.tokenize.length-1](b,c);else--a}return e}}()),"string";f=!1}else{if(b.match(a))return c.tokenize.pop(),"string";b.next(),f="\\"==d}return e&&c.tokenize.pop(),"string"}function q(a,b){for(var c;c=a.next();)if("/"===c&&a.eat("*"))b.tokenize.push(q);else if("*"===c&&a.eat("/")){b.tokenize.pop();break}return"comment"}function r(a,b,c){this.prev=a,this.align=b,this.indented=c}let s={name:"swift",startState:function(){return{prev:null,context:null,indented:0,tokenize:[]}},token:function(a,b){var c=b.prev;b.prev=null;var d=(b.tokenize[b.tokenize.length-1]||o)(a,b,c);if(d&&"comment"!=d?b.prev||(b.prev=d):b.prev=c,"punctuation"==d){var e=/[\(\[\{]|([\]\)\}])/.exec(a.current());e&&(e[1]?function(a){a.context&&(a.indented=a.context.indented,a.context=a.context.prev)}:function(a,b){var c=b.match(/^\s*($|\/[\/\*]|[)}\]])/,!1)?null:b.column()+1;a.context=new r(a.context,c,a.indented)})(b,a)}return d},indent:function(a,b,c){var d=a.context;if(!d)return 0;var e=/^[\]\}\)]/.test(b);return null!=d.align?d.align-!!e:d.indented+(e?0:c.unit)},languageData:{indentOnInput:/^\s*[\)\}\]]$/,commentTokens:{line:"//",block:{open:"/*",close:"*/"}},closeBrackets:{brackets:["(","[","{","'",'"',"`"]}}}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/swift.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "swift",
+    ()=>swift
+]);
+function wordSet(words) {
+    var set = {};
+    for(var i = 0; i < words.length; i++)set[words[i]] = true;
+    return set;
+}
+var keywords = wordSet([
+    "_",
+    "var",
+    "let",
+    "actor",
+    "class",
+    "enum",
+    "extension",
+    "import",
+    "protocol",
+    "struct",
+    "func",
+    "typealias",
+    "associatedtype",
+    "open",
+    "public",
+    "internal",
+    "fileprivate",
+    "private",
+    "deinit",
+    "init",
+    "new",
+    "override",
+    "self",
+    "subscript",
+    "super",
+    "convenience",
+    "dynamic",
+    "final",
+    "indirect",
+    "lazy",
+    "required",
+    "static",
+    "unowned",
+    "unowned(safe)",
+    "unowned(unsafe)",
+    "weak",
+    "as",
+    "is",
+    "break",
+    "case",
+    "continue",
+    "default",
+    "else",
+    "fallthrough",
+    "for",
+    "guard",
+    "if",
+    "in",
+    "repeat",
+    "switch",
+    "where",
+    "while",
+    "defer",
+    "return",
+    "inout",
+    "mutating",
+    "nonmutating",
+    "isolated",
+    "nonisolated",
+    "catch",
+    "do",
+    "rethrows",
+    "throw",
+    "throws",
+    "async",
+    "await",
+    "try",
+    "didSet",
+    "get",
+    "set",
+    "willSet",
+    "assignment",
+    "associativity",
+    "infix",
+    "left",
+    "none",
+    "operator",
+    "postfix",
+    "precedence",
+    "precedencegroup",
+    "prefix",
+    "right",
+    "Any",
+    "AnyObject",
+    "Type",
+    "dynamicType",
+    "Self",
+    "Protocol",
+    "__COLUMN__",
+    "__FILE__",
+    "__FUNCTION__",
+    "__LINE__"
+]);
+var definingKeywords = wordSet([
+    "var",
+    "let",
+    "actor",
+    "class",
+    "enum",
+    "extension",
+    "import",
+    "protocol",
+    "struct",
+    "func",
+    "typealias",
+    "associatedtype",
+    "for"
+]);
+var atoms = wordSet([
+    "true",
+    "false",
+    "nil",
+    "self",
+    "super",
+    "_"
+]);
+var types = wordSet([
+    "Array",
+    "Bool",
+    "Character",
+    "Dictionary",
+    "Double",
+    "Float",
+    "Int",
+    "Int8",
+    "Int16",
+    "Int32",
+    "Int64",
+    "Never",
+    "Optional",
+    "Set",
+    "String",
+    "UInt8",
+    "UInt16",
+    "UInt32",
+    "UInt64",
+    "Void"
+]);
+var operators = "+-/*%=|&<>~^?!";
+var punc = ":;,.(){}[]";
+var binary = /^\-?0b[01][01_]*/;
+var octal = /^\-?0o[0-7][0-7_]*/;
+var hexadecimal = /^\-?0x[\dA-Fa-f][\dA-Fa-f_]*(?:(?:\.[\dA-Fa-f][\dA-Fa-f_]*)?[Pp]\-?\d[\d_]*)?/;
+var decimal = /^\-?\d[\d_]*(?:\.\d[\d_]*)?(?:[Ee]\-?\d[\d_]*)?/;
+var identifier = /^\$\d+|(`?)[_A-Za-z][_A-Za-z$0-9]*\1/;
+var property = /^\.(?:\$\d+|(`?)[_A-Za-z][_A-Za-z$0-9]*\1)/;
+var instruction = /^\#[A-Za-z]+/;
+var attribute = /^@(?:\$\d+|(`?)[_A-Za-z][_A-Za-z$0-9]*\1)/;
+//var regexp = /^\/(?!\s)(?:\/\/)?(?:\\.|[^\/])+\//
+function tokenBase(stream, state, prev) {
+    if (stream.sol()) state.indented = stream.indentation();
+    if (stream.eatSpace()) return null;
+    var ch = stream.peek();
+    if (ch == "/") {
+        if (stream.match("//")) {
+            stream.skipToEnd();
+            return "comment";
+        }
+        if (stream.match("/*")) {
+            state.tokenize.push(tokenComment);
+            return tokenComment(stream, state);
+        }
+    }
+    if (stream.match(instruction)) return "builtin";
+    if (stream.match(attribute)) return "attribute";
+    if (stream.match(binary)) return "number";
+    if (stream.match(octal)) return "number";
+    if (stream.match(hexadecimal)) return "number";
+    if (stream.match(decimal)) return "number";
+    if (stream.match(property)) return "property";
+    if (operators.indexOf(ch) > -1) {
+        stream.next();
+        return "operator";
+    }
+    if (punc.indexOf(ch) > -1) {
+        stream.next();
+        stream.match("..");
+        return "punctuation";
+    }
+    var stringMatch;
+    if (stringMatch = stream.match(/("""|"|')/)) {
+        var tokenize = tokenString.bind(null, stringMatch[0]);
+        state.tokenize.push(tokenize);
+        return tokenize(stream, state);
+    }
+    if (stream.match(identifier)) {
+        var ident = stream.current();
+        if (types.hasOwnProperty(ident)) return "type";
+        if (atoms.hasOwnProperty(ident)) return "atom";
+        if (keywords.hasOwnProperty(ident)) {
+            if (definingKeywords.hasOwnProperty(ident)) state.prev = "define";
+            return "keyword";
+        }
+        if (prev == "define") return "def";
+        return "variable";
+    }
+    stream.next();
+    return null;
+}
+function tokenUntilClosingParen() {
+    var depth = 0;
+    return function(stream, state, prev) {
+        var inner = tokenBase(stream, state, prev);
+        if (inner == "punctuation") {
+            if (stream.current() == "(") ++depth;
+            else if (stream.current() == ")") {
+                if (depth == 0) {
+                    stream.backUp(1);
+                    state.tokenize.pop();
+                    return state.tokenize[state.tokenize.length - 1](stream, state);
+                } else --depth;
+            }
+        }
+        return inner;
+    };
+}
+function tokenString(openQuote, stream, state) {
+    var singleLine = openQuote.length == 1;
+    var ch, escaped = false;
+    while(ch = stream.peek()){
+        if (escaped) {
+            stream.next();
+            if (ch == "(") {
+                state.tokenize.push(tokenUntilClosingParen());
+                return "string";
+            }
+            escaped = false;
+        } else if (stream.match(openQuote)) {
+            state.tokenize.pop();
+            return "string";
+        } else {
+            stream.next();
+            escaped = ch == "\\";
+        }
+    }
+    if (singleLine) {
+        state.tokenize.pop();
+    }
+    return "string";
+}
+function tokenComment(stream, state) {
+    var ch;
+    while(ch = stream.next()){
+        if (ch === "/" && stream.eat("*")) {
+            state.tokenize.push(tokenComment);
+        } else if (ch === "*" && stream.eat("/")) {
+            state.tokenize.pop();
+            break;
+        }
+    }
+    return "comment";
+}
+function Context(prev, align, indented) {
+    this.prev = prev;
+    this.align = align;
+    this.indented = indented;
+}
+function pushContext(state, stream) {
+    var align = stream.match(/^\s*($|\/[\/\*]|[)}\]])/, false) ? null : stream.column() + 1;
+    state.context = new Context(state.context, align, state.indented);
+}
+function popContext(state) {
+    if (state.context) {
+        state.indented = state.context.indented;
+        state.context = state.context.prev;
+    }
+}
+const swift = {
+    name: "swift",
+    startState: function() {
+        return {
+            prev: null,
+            context: null,
+            indented: 0,
+            tokenize: []
+        };
+    },
+    token: function(stream, state) {
+        var prev = state.prev;
+        state.prev = null;
+        var tokenize = state.tokenize[state.tokenize.length - 1] || tokenBase;
+        var style = tokenize(stream, state, prev);
+        if (!style || style == "comment") state.prev = prev;
+        else if (!state.prev) state.prev = style;
+        if (style == "punctuation") {
+            var bracket = /[\(\[\{]|([\]\)\}])/.exec(stream.current());
+            if (bracket) (bracket[1] ? popContext : pushContext)(state, stream);
+        }
+        return style;
+    },
+    indent: function(state, textAfter, iCx) {
+        var cx = state.context;
+        if (!cx) return 0;
+        var closing = /^[\]\}\)]/.test(textAfter);
+        if (cx.align != null) return cx.align - (closing ? 1 : 0);
+        return cx.indented + (closing ? 0 : iCx.unit);
+    },
+    languageData: {
+        indentOnInput: /^\s*[\)\}\]]$/,
+        commentTokens: {
+            line: "//",
+            block: {
+                open: "/*",
+                close: "*/"
+            }
+        },
+        closeBrackets: {
+            brackets: [
+                "(",
+                "[",
+                "{",
+                "'",
+                '"',
+                "`"
+            ]
+        }
+    }
+};
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_swift_e0c9e867.js.map

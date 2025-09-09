@@ -1,3 +1,107 @@
-module.exports=[592779,a=>{"use strict";a.s(["spreadsheet",()=>b]);let b={name:"spreadsheet",startState:function(){return{stringType:null,stack:[]}},token:function(a,b){if(a){switch(0===b.stack.length&&('"'==a.peek()||"'"==a.peek())&&(b.stringType=a.peek(),a.next(),b.stack.unshift("string")),b.stack[0]){case"string":for(;"string"===b.stack[0]&&!a.eol();)a.peek()===b.stringType?(a.next(),b.stack.shift()):"\\"===a.peek()?(a.next(),a.next()):a.match(/^.[^\\\"\']*/);return"string";case"characterClass":for(;"characterClass"===b.stack[0]&&!a.eol();)a.match(/^[^\]\\]+/)||a.match(/^\\./)||b.stack.shift();return"operator"}var c=a.peek();switch(c){case"[":return a.next(),b.stack.unshift("characterClass"),"bracket";case":":return a.next(),"operator";case"\\":if(a.match(/\\[a-z]+/))return"string.special";return a.next(),"atom";case".":case",":case";":case"*":case"-":case"+":case"^":case"<":case"/":case"=":return a.next(),"atom";case"$":return a.next(),"builtin"}if(a.match(/\d+/))return a.match(/^\w+/)?"error":"number";if(a.match(/^[a-zA-Z_]\w*/))return a.match(/(?=[\(.])/,!1)?"keyword":"variable";if(-1!=["[","]","(",")","{","}"].indexOf(c))return a.next(),"bracket";a.eatSpace()||a.next();return null}}}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/spreadsheet.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "spreadsheet",
+    ()=>spreadsheet
+]);
+const spreadsheet = {
+    name: "spreadsheet",
+    startState: function() {
+        return {
+            stringType: null,
+            stack: []
+        };
+    },
+    token: function(stream, state) {
+        if (!stream) return;
+        //check for state changes
+        if (state.stack.length === 0) {
+            //strings
+            if (stream.peek() == '"' || stream.peek() == "'") {
+                state.stringType = stream.peek();
+                stream.next(); // Skip quote
+                state.stack.unshift("string");
+            }
+        }
+        //return state
+        //stack has
+        switch(state.stack[0]){
+            case "string":
+                while(state.stack[0] === "string" && !stream.eol()){
+                    if (stream.peek() === state.stringType) {
+                        stream.next(); // Skip quote
+                        state.stack.shift(); // Clear flag
+                    } else if (stream.peek() === "\\") {
+                        stream.next();
+                        stream.next();
+                    } else {
+                        stream.match(/^.[^\\\"\']*/);
+                    }
+                }
+                return "string";
+            case "characterClass":
+                while(state.stack[0] === "characterClass" && !stream.eol()){
+                    if (!(stream.match(/^[^\]\\]+/) || stream.match(/^\\./))) state.stack.shift();
+                }
+                return "operator";
+        }
+        var peek = stream.peek();
+        //no stack
+        switch(peek){
+            case "[":
+                stream.next();
+                state.stack.unshift("characterClass");
+                return "bracket";
+            case ":":
+                stream.next();
+                return "operator";
+            case "\\":
+                if (stream.match(/\\[a-z]+/)) return "string.special";
+                else {
+                    stream.next();
+                    return "atom";
+                }
+            case ".":
+            case ",":
+            case ";":
+            case "*":
+            case "-":
+            case "+":
+            case "^":
+            case "<":
+            case "/":
+            case "=":
+                stream.next();
+                return "atom";
+            case "$":
+                stream.next();
+                return "builtin";
+        }
+        if (stream.match(/\d+/)) {
+            if (stream.match(/^\w+/)) return "error";
+            return "number";
+        } else if (stream.match(/^[a-zA-Z_]\w*/)) {
+            if (stream.match(/(?=[\(.])/, false)) return "keyword";
+            return "variable";
+        } else if ([
+            "[",
+            "]",
+            "(",
+            ")",
+            "{",
+            "}"
+        ].indexOf(peek) != -1) {
+            stream.next();
+            return "bracket";
+        } else if (!stream.eatSpace()) {
+            stream.next();
+        }
+        return null;
+    }
+};
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_spreadsheet_0802ff7b.js.map

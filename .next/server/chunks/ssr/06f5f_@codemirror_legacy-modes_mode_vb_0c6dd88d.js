@@ -1,3 +1,408 @@
-module.exports=[281650,a=>{"use strict";a.s(["vb",()=>A]);var b="error";function c(a){return RegExp("^(("+a.join(")|(")+"))\\b","i")}var d=RegExp("^[\\+\\-\\*/%&\\\\|\\^~<>!]"),e=RegExp("^[\\(\\)\\[\\]\\{\\}@,:`=;\\.]"),f=RegExp("^((==)|(<>)|(<=)|(>=)|(<>)|(<<)|(>>)|(//)|(\\*\\*))"),g=RegExp("^((\\+=)|(\\-=)|(\\*=)|(%=)|(/=)|(&=)|(\\|=)|(\\^=))"),h=RegExp("^((//=)|(>>=)|(<<=)|(\\*\\*=))"),i=RegExp("^[_A-Za-z][_A-Za-z0-9]*"),j=["class","module","sub","enum","select","while","if","function","get","set","property","try","structure","synclock","using","with"],k=["else","elseif","case","catch","finally"],l=["next","loop"],m=["and","andalso","or","orelse","xor","in","not","is","isnot","like"],n=c(m),o=["#const","#else","#elseif","#end","#if","#region","addhandler","addressof","alias","as","byref","byval","cbool","cbyte","cchar","cdate","cdbl","cdec","cint","clng","cobj","compare","const","continue","csbyte","cshort","csng","cstr","cuint","culng","cushort","declare","default","delegate","dim","directcast","each","erase","error","event","exit","explicit","false","for","friend","gettype","goto","handles","implements","imports","infer","inherits","interface","isfalse","istrue","lib","me","mod","mustinherit","mustoverride","my","mybase","myclass","namespace","narrowing","new","nothing","notinheritable","notoverridable","of","off","on","operator","option","optional","out","overloads","overridable","overrides","paramarray","partial","private","protected","public","raiseevent","readonly","redim","removehandler","resume","return","shadows","shared","static","step","stop","strict","then","throw","to","true","trycast","typeof","until","until","when","widening","withevents","writeonly"],p=["object","boolean","char","string","byte","sbyte","short","ushort","int16","uint16","integer","uinteger","int32","uint32","long","ulong","int64","uint64","decimal","single","double","float","date","datetime","intptr","uintptr"],q=c(o),r=c(p),s=c(j),t=c(k),u=c(l),v=c(["end"]),w=c(["do"]);function x(a,b){b.currentIndent++}function y(a,b){b.currentIndent--}function z(a,c){if(a.eatSpace())return null;if("'"===a.peek())return a.skipToEnd(),"comment";if(a.match(/^((&H)|(&O))?[0-9\.a-f]/i,!1)){var j,k,l,m=!1;if(a.match(/^\d*\.\d+F?/i)||a.match(/^\d+\.\d*F?/)?m=!0:a.match(/^\.\d+F?/)&&(m=!0),m)return a.eat(/J/i),"number";var o=!1;if(a.match(/^&H[0-9a-f]+/i)||a.match(/^&O[0-7]+/i)?o=!0:a.match(/^[1-9]\d*F?/)?(a.eat(/J/i),o=!0):a.match(/^0(?![\dx])/i)&&(o=!0),o)return a.eat(/L/i),"number"}return a.match('"')?(k=1==(j=a.current()).length,l="string",c.tokenize=function(a,b){for(;!a.eol();){if(a.eatWhile(/[^'"]/),a.match(j))return b.tokenize=z,l;a.eat(/['"]/)}return k&&(b.tokenize=z),l},c.tokenize(a,c)):a.match(h)||a.match(g)?null:a.match(f)||a.match(d)||a.match(n)?"operator":a.match(e)?null:a.match(w)?(x(a,c),c.doInCurrentLine=!0,"keyword"):a.match(s)?(c.doInCurrentLine?c.doInCurrentLine=!1:x(a,c),"keyword"):a.match(t)?"keyword":a.match(v)?(y(a,c),y(a,c),"keyword"):a.match(u)?(y(a,c),"keyword"):a.match(r)||a.match(q)?"keyword":a.match(i)?"variable":(a.next(),b)}let A={name:"vb",startState:function(){return{tokenize:z,lastToken:null,currentIndent:0,nextLineIndent:0,doInCurrentLine:!1}},token:function(a,c){a.sol()&&(c.currentIndent+=c.nextLineIndent,c.nextLineIndent=0,c.doInCurrentLine=0);var d=function(a,c){var d=c.tokenize(a,c),e=a.current();if("."===e)return"variable"===(d=c.tokenize(a,c))?"variable":b;var f="[({".indexOf(e);return -1!==f&&x(a,c),-1!==(f="])}".indexOf(e))&&y(a,c),d}(a,c);return c.lastToken={style:d,content:a.current()},d},indent:function(a,b,c){var d=b.replace(/^\s+|\s+$/g,"");return d.match(u)||d.match(v)||d.match(t)?c.unit*(a.currentIndent-1):a.currentIndent<0?0:a.currentIndent*c.unit},languageData:{closeBrackets:{brackets:["(","[","{",'"']},commentTokens:{line:"'"},autocomplete:j.concat(k).concat(l).concat(m).concat(o).concat(p)}}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/vb.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "vb",
+    ()=>vb
+]);
+var ERRORCLASS = 'error';
+function wordRegexp(words) {
+    return new RegExp("^((" + words.join(")|(") + "))\\b", "i");
+}
+var singleOperators = new RegExp("^[\\+\\-\\*/%&\\\\|\\^~<>!]");
+var singleDelimiters = new RegExp('^[\\(\\)\\[\\]\\{\\}@,:`=;\\.]');
+var doubleOperators = new RegExp("^((==)|(<>)|(<=)|(>=)|(<>)|(<<)|(>>)|(//)|(\\*\\*))");
+var doubleDelimiters = new RegExp("^((\\+=)|(\\-=)|(\\*=)|(%=)|(/=)|(&=)|(\\|=)|(\\^=))");
+var tripleDelimiters = new RegExp("^((//=)|(>>=)|(<<=)|(\\*\\*=))");
+var identifiers = new RegExp("^[_A-Za-z][_A-Za-z0-9]*");
+var openingKeywords = [
+    'class',
+    'module',
+    'sub',
+    'enum',
+    'select',
+    'while',
+    'if',
+    'function',
+    'get',
+    'set',
+    'property',
+    'try',
+    'structure',
+    'synclock',
+    'using',
+    'with'
+];
+var middleKeywords = [
+    'else',
+    'elseif',
+    'case',
+    'catch',
+    'finally'
+];
+var endKeywords = [
+    'next',
+    'loop'
+];
+var operatorKeywords = [
+    'and',
+    "andalso",
+    'or',
+    'orelse',
+    'xor',
+    'in',
+    'not',
+    'is',
+    'isnot',
+    'like'
+];
+var wordOperators = wordRegexp(operatorKeywords);
+var commonKeywords = [
+    "#const",
+    "#else",
+    "#elseif",
+    "#end",
+    "#if",
+    "#region",
+    "addhandler",
+    "addressof",
+    "alias",
+    "as",
+    "byref",
+    "byval",
+    "cbool",
+    "cbyte",
+    "cchar",
+    "cdate",
+    "cdbl",
+    "cdec",
+    "cint",
+    "clng",
+    "cobj",
+    "compare",
+    "const",
+    "continue",
+    "csbyte",
+    "cshort",
+    "csng",
+    "cstr",
+    "cuint",
+    "culng",
+    "cushort",
+    "declare",
+    "default",
+    "delegate",
+    "dim",
+    "directcast",
+    "each",
+    "erase",
+    "error",
+    "event",
+    "exit",
+    "explicit",
+    "false",
+    "for",
+    "friend",
+    "gettype",
+    "goto",
+    "handles",
+    "implements",
+    "imports",
+    "infer",
+    "inherits",
+    "interface",
+    "isfalse",
+    "istrue",
+    "lib",
+    "me",
+    "mod",
+    "mustinherit",
+    "mustoverride",
+    "my",
+    "mybase",
+    "myclass",
+    "namespace",
+    "narrowing",
+    "new",
+    "nothing",
+    "notinheritable",
+    "notoverridable",
+    "of",
+    "off",
+    "on",
+    "operator",
+    "option",
+    "optional",
+    "out",
+    "overloads",
+    "overridable",
+    "overrides",
+    "paramarray",
+    "partial",
+    "private",
+    "protected",
+    "public",
+    "raiseevent",
+    "readonly",
+    "redim",
+    "removehandler",
+    "resume",
+    "return",
+    "shadows",
+    "shared",
+    "static",
+    "step",
+    "stop",
+    "strict",
+    "then",
+    "throw",
+    "to",
+    "true",
+    "trycast",
+    "typeof",
+    "until",
+    "until",
+    "when",
+    "widening",
+    "withevents",
+    "writeonly"
+];
+var commontypes = [
+    'object',
+    'boolean',
+    'char',
+    'string',
+    'byte',
+    'sbyte',
+    'short',
+    'ushort',
+    'int16',
+    'uint16',
+    'integer',
+    'uinteger',
+    'int32',
+    'uint32',
+    'long',
+    'ulong',
+    'int64',
+    'uint64',
+    'decimal',
+    'single',
+    'double',
+    'float',
+    'date',
+    'datetime',
+    'intptr',
+    'uintptr'
+];
+var keywords = wordRegexp(commonKeywords);
+var types = wordRegexp(commontypes);
+var stringPrefixes = '"';
+var opening = wordRegexp(openingKeywords);
+var middle = wordRegexp(middleKeywords);
+var closing = wordRegexp(endKeywords);
+var doubleClosing = wordRegexp([
+    'end'
+]);
+var doOpening = wordRegexp([
+    'do'
+]);
+var indentInfo = null;
+function indent(_stream, state) {
+    state.currentIndent++;
+}
+function dedent(_stream, state) {
+    state.currentIndent--;
+}
+// tokenizers
+function tokenBase(stream, state) {
+    if (stream.eatSpace()) {
+        return null;
+    }
+    var ch = stream.peek();
+    // Handle Comments
+    if (ch === "'") {
+        stream.skipToEnd();
+        return 'comment';
+    }
+    // Handle Number Literals
+    if (stream.match(/^((&H)|(&O))?[0-9\.a-f]/i, false)) {
+        var floatLiteral = false;
+        // Floats
+        if (stream.match(/^\d*\.\d+F?/i)) {
+            floatLiteral = true;
+        } else if (stream.match(/^\d+\.\d*F?/)) {
+            floatLiteral = true;
+        } else if (stream.match(/^\.\d+F?/)) {
+            floatLiteral = true;
+        }
+        if (floatLiteral) {
+            // Float literals may be "imaginary"
+            stream.eat(/J/i);
+            return 'number';
+        }
+        // Integers
+        var intLiteral = false;
+        // Hex
+        if (stream.match(/^&H[0-9a-f]+/i)) {
+            intLiteral = true;
+        } else if (stream.match(/^&O[0-7]+/i)) {
+            intLiteral = true;
+        } else if (stream.match(/^[1-9]\d*F?/)) {
+            // Decimal literals may be "imaginary"
+            stream.eat(/J/i);
+            // TODO - Can you have imaginary longs?
+            intLiteral = true;
+        } else if (stream.match(/^0(?![\dx])/i)) {
+            intLiteral = true;
+        }
+        if (intLiteral) {
+            // Integer literals may be "long"
+            stream.eat(/L/i);
+            return 'number';
+        }
+    }
+    // Handle Strings
+    if (stream.match(stringPrefixes)) {
+        state.tokenize = tokenStringFactory(stream.current());
+        return state.tokenize(stream, state);
+    }
+    // Handle operators and Delimiters
+    if (stream.match(tripleDelimiters) || stream.match(doubleDelimiters)) {
+        return null;
+    }
+    if (stream.match(doubleOperators) || stream.match(singleOperators) || stream.match(wordOperators)) {
+        return 'operator';
+    }
+    if (stream.match(singleDelimiters)) {
+        return null;
+    }
+    if (stream.match(doOpening)) {
+        indent(stream, state);
+        state.doInCurrentLine = true;
+        return 'keyword';
+    }
+    if (stream.match(opening)) {
+        if (!state.doInCurrentLine) indent(stream, state);
+        else state.doInCurrentLine = false;
+        return 'keyword';
+    }
+    if (stream.match(middle)) {
+        return 'keyword';
+    }
+    if (stream.match(doubleClosing)) {
+        dedent(stream, state);
+        dedent(stream, state);
+        return 'keyword';
+    }
+    if (stream.match(closing)) {
+        dedent(stream, state);
+        return 'keyword';
+    }
+    if (stream.match(types)) {
+        return 'keyword';
+    }
+    if (stream.match(keywords)) {
+        return 'keyword';
+    }
+    if (stream.match(identifiers)) {
+        return 'variable';
+    }
+    // Handle non-detected items
+    stream.next();
+    return ERRORCLASS;
+}
+function tokenStringFactory(delimiter) {
+    var singleline = delimiter.length == 1;
+    var OUTCLASS = 'string';
+    return function(stream, state) {
+        while(!stream.eol()){
+            stream.eatWhile(/[^'"]/);
+            if (stream.match(delimiter)) {
+                state.tokenize = tokenBase;
+                return OUTCLASS;
+            } else {
+                stream.eat(/['"]/);
+            }
+        }
+        if (singleline) {
+            state.tokenize = tokenBase;
+        }
+        return OUTCLASS;
+    };
+}
+function tokenLexer(stream, state) {
+    var style = state.tokenize(stream, state);
+    var current = stream.current();
+    // Handle '.' connected identifiers
+    if (current === '.') {
+        style = state.tokenize(stream, state);
+        if (style === 'variable') {
+            return 'variable';
+        } else {
+            return ERRORCLASS;
+        }
+    }
+    var delimiter_index = '[({'.indexOf(current);
+    if (delimiter_index !== -1) {
+        indent(stream, state);
+    }
+    if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
+    ;
+    delimiter_index = '])}'.indexOf(current);
+    if (delimiter_index !== -1) {
+        if (dedent(stream, state)) //TURBOPACK unreachable
+        ;
+    }
+    return style;
+}
+const vb = {
+    name: "vb",
+    startState: function() {
+        return {
+            tokenize: tokenBase,
+            lastToken: null,
+            currentIndent: 0,
+            nextLineIndent: 0,
+            doInCurrentLine: false
+        };
+    },
+    token: function(stream, state) {
+        if (stream.sol()) {
+            state.currentIndent += state.nextLineIndent;
+            state.nextLineIndent = 0;
+            state.doInCurrentLine = 0;
+        }
+        var style = tokenLexer(stream, state);
+        state.lastToken = {
+            style: style,
+            content: stream.current()
+        };
+        return style;
+    },
+    indent: function(state, textAfter, cx) {
+        var trueText = textAfter.replace(/^\s+|\s+$/g, '');
+        if (trueText.match(closing) || trueText.match(doubleClosing) || trueText.match(middle)) return cx.unit * (state.currentIndent - 1);
+        if (state.currentIndent < 0) return 0;
+        return state.currentIndent * cx.unit;
+    },
+    languageData: {
+        closeBrackets: {
+            brackets: [
+                "(",
+                "[",
+                "{",
+                '"'
+            ]
+        },
+        commentTokens: {
+            line: "'"
+        },
+        autocomplete: openingKeywords.concat(middleKeywords).concat(endKeywords).concat(operatorKeywords).concat(commonKeywords).concat(commontypes)
+    }
+};
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_vb_0c6dd88d.js.map

@@ -1,3 +1,168 @@
-module.exports=[993965,a=>{"use strict";function b(a){for(var b={},c=a.split(","),d=0;d<c.length;++d){var e=c[d].toUpperCase(),f=c[d].charAt(0).toUpperCase()+c[d].slice(1);b[c[d]]=!0,b[e]=!0,b[f]=!0}return b}function c(a){return a.eatWhile(/[\w\$_]/),"meta"}a.s(["vhdl",()=>n]);var d,e=b("null"),f={"`":c,$:c},g=b("abs,access,after,alias,all,and,architecture,array,assert,attribute,begin,block,body,buffer,bus,case,component,configuration,constant,disconnect,downto,else,elsif,end,end block,end case,end component,end for,end generate,end if,end loop,end process,end record,end units,entity,exit,file,for,function,generate,generic,generic map,group,guarded,if,impure,in,inertial,inout,is,label,library,linkage,literal,loop,map,mod,nand,new,next,nor,null,of,on,open,or,others,out,package,package body,port,port map,postponed,procedure,process,pure,range,record,register,reject,rem,report,return,rol,ror,select,severity,signal,sla,sll,sra,srl,subtype,then,to,transport,type,unaffected,units,until,use,variable,wait,when,while,with,xnor,xor"),h=b("architecture,entity,begin,case,port,else,elsif,end,for,function,if"),i=/[&|~><!\)\(*#%@+\/=?\:;}{,\.\^\-\[\]]/;function j(a,b){var c,k,l=a.next();if(f[l]){var m=f[l](a,b);if(!1!==m)return m}if('"'==l){return c=l,b.tokenize=function(a,b){for(var d,e=!1,f=!1;null!=(d=a.next());){if(d==c&&!e){f=!0;break}e=!e&&"--"==d}return(f||!e)&&(b.tokenize=j),"string.special"},b.tokenize(a,b)}if("'"==l){return k=l,b.tokenize=function(a,b){for(var c,d=!1,e=!1;null!=(c=a.next());){if(c==k&&!d){e=!0;break}d=!d&&"--"==c}return(e||!d)&&(b.tokenize=j),"string"},b.tokenize(a,b)}if(/[\[\]{}\(\),;\:\.]/.test(l))return d=l,null;if(/[\d']/.test(l))return a.eatWhile(/[\w\.']/),"number";if("-"==l&&a.eat("-"))return a.skipToEnd(),"comment";if(i.test(l))return a.eatWhile(i),"operator";a.eatWhile(/[\w\$_]/);var n=a.current();return g.propertyIsEnumerable(n.toLowerCase())?(h.propertyIsEnumerable(n)&&(d="newstatement"),"keyword"):e.propertyIsEnumerable(n)?"atom":"variable"}function k(a,b,c,d,e){this.indented=a,this.column=b,this.type=c,this.align=d,this.prev=e}function l(a,b,c){return a.context=new k(a.indented,b,c,null,a.context)}function m(a){var b=a.context.type;return(")"==b||"]"==b||"}"==b)&&(a.indented=a.context.indented),a.context=a.context.prev}let n={name:"vhdl",startState:function(a){return{tokenize:null,context:new k(-a,0,"top",!1),indented:0,startOfLine:!0}},token:function(a,b){var c=b.context;if(a.sol()&&(null==c.align&&(c.align=!1),b.indented=a.indentation(),b.startOfLine=!0),a.eatSpace())return null;d=null;var e=(b.tokenize||j)(a,b);if("comment"==e||"meta"==e)return e;if(null==c.align&&(c.align=!0),(";"==d||":"==d)&&"statement"==c.type)m(b);else if("{"==d)l(b,a.column(),"}");else if("["==d)l(b,a.column(),"]");else if("("==d)l(b,a.column(),")");else if("}"==d){for(;"statement"==c.type;)c=m(b);for("}"==c.type&&(c=m(b));"statement"==c.type;)c=m(b)}else d==c.type?m(b):("}"==c.type||"top"==c.type||"statement"==c.type&&"newstatement"==d)&&l(b,a.column(),"statement");return b.startOfLine=!1,e},indent:function(a,b,c){if(a.tokenize!=j&&null!=a.tokenize)return 0;var d=b&&b.charAt(0),e=a.context,f=d==e.type;return"statement"==e.type?e.indented+("{"==d?0:c.unit):e.align?e.column+ +!f:e.indented+(f?0:c.unit)},languageData:{indentOnInput:/^\s*[{}]$/,commentTokens:{line:"--"}}}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/vhdl.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "vhdl",
+    ()=>vhdl
+]);
+function words(str) {
+    var obj = {}, words = str.split(",");
+    for(var i = 0; i < words.length; ++i){
+        var allCaps = words[i].toUpperCase();
+        var firstCap = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+        obj[words[i]] = true;
+        obj[allCaps] = true;
+        obj[firstCap] = true;
+    }
+    return obj;
+}
+function metaHook(stream) {
+    stream.eatWhile(/[\w\$_]/);
+    return "meta";
+}
+var atoms = words("null"), hooks = {
+    "`": metaHook,
+    "$": metaHook
+}, multiLineStrings = false;
+var keywords = words("abs,access,after,alias,all,and,architecture,array,assert,attribute,begin,block," + "body,buffer,bus,case,component,configuration,constant,disconnect,downto,else,elsif,end,end block,end case," + "end component,end for,end generate,end if,end loop,end process,end record,end units,entity,exit,file,for," + "function,generate,generic,generic map,group,guarded,if,impure,in,inertial,inout,is,label,library,linkage," + "literal,loop,map,mod,nand,new,next,nor,null,of,on,open,or,others,out,package,package body,port,port map," + "postponed,procedure,process,pure,range,record,register,reject,rem,report,return,rol,ror,select,severity,signal," + "sla,sll,sra,srl,subtype,then,to,transport,type,unaffected,units,until,use,variable,wait,when,while,with,xnor,xor");
+var blockKeywords = words("architecture,entity,begin,case,port,else,elsif,end,for,function,if");
+var isOperatorChar = /[&|~><!\)\(*#%@+\/=?\:;}{,\.\^\-\[\]]/;
+var curPunc;
+function tokenBase(stream, state) {
+    var ch = stream.next();
+    if (hooks[ch]) {
+        var result = hooks[ch](stream, state);
+        if (result !== false) return result;
+    }
+    if (ch == '"') {
+        state.tokenize = tokenString2(ch);
+        return state.tokenize(stream, state);
+    }
+    if (ch == "'") {
+        state.tokenize = tokenString(ch);
+        return state.tokenize(stream, state);
+    }
+    if (/[\[\]{}\(\),;\:\.]/.test(ch)) {
+        curPunc = ch;
+        return null;
+    }
+    if (/[\d']/.test(ch)) {
+        stream.eatWhile(/[\w\.']/);
+        return "number";
+    }
+    if (ch == "-") {
+        if (stream.eat("-")) {
+            stream.skipToEnd();
+            return "comment";
+        }
+    }
+    if (isOperatorChar.test(ch)) {
+        stream.eatWhile(isOperatorChar);
+        return "operator";
+    }
+    stream.eatWhile(/[\w\$_]/);
+    var cur = stream.current();
+    if (keywords.propertyIsEnumerable(cur.toLowerCase())) {
+        if (blockKeywords.propertyIsEnumerable(cur)) curPunc = "newstatement";
+        return "keyword";
+    }
+    if (atoms.propertyIsEnumerable(cur)) return "atom";
+    return "variable";
+}
+function tokenString(quote) {
+    return function(stream, state) {
+        var escaped = false, next, end = false;
+        while((next = stream.next()) != null){
+            if (next == quote && !escaped) {
+                end = true;
+                break;
+            }
+            escaped = !escaped && next == "--";
+        }
+        if (end || !(escaped || multiLineStrings)) state.tokenize = tokenBase;
+        return "string";
+    };
+}
+function tokenString2(quote) {
+    return function(stream, state) {
+        var escaped = false, next, end = false;
+        while((next = stream.next()) != null){
+            if (next == quote && !escaped) {
+                end = true;
+                break;
+            }
+            escaped = !escaped && next == "--";
+        }
+        if (end || !(escaped || multiLineStrings)) state.tokenize = tokenBase;
+        return "string.special";
+    };
+}
+function Context(indented, column, type, align, prev) {
+    this.indented = indented;
+    this.column = column;
+    this.type = type;
+    this.align = align;
+    this.prev = prev;
+}
+function pushContext(state, col, type) {
+    return state.context = new Context(state.indented, col, type, null, state.context);
+}
+function popContext(state) {
+    var t = state.context.type;
+    if (t == ")" || t == "]" || t == "}") state.indented = state.context.indented;
+    return state.context = state.context.prev;
+}
+const vhdl = {
+    name: "vhdl",
+    startState: function(indentUnit) {
+        return {
+            tokenize: null,
+            context: new Context(-indentUnit, 0, "top", false),
+            indented: 0,
+            startOfLine: true
+        };
+    },
+    token: function(stream, state) {
+        var ctx = state.context;
+        if (stream.sol()) {
+            if (ctx.align == null) ctx.align = false;
+            state.indented = stream.indentation();
+            state.startOfLine = true;
+        }
+        if (stream.eatSpace()) return null;
+        curPunc = null;
+        var style = (state.tokenize || tokenBase)(stream, state);
+        if (style == "comment" || style == "meta") return style;
+        if (ctx.align == null) ctx.align = true;
+        if ((curPunc == ";" || curPunc == ":") && ctx.type == "statement") popContext(state);
+        else if (curPunc == "{") pushContext(state, stream.column(), "}");
+        else if (curPunc == "[") pushContext(state, stream.column(), "]");
+        else if (curPunc == "(") pushContext(state, stream.column(), ")");
+        else if (curPunc == "}") {
+            while(ctx.type == "statement")ctx = popContext(state);
+            if (ctx.type == "}") ctx = popContext(state);
+            while(ctx.type == "statement")ctx = popContext(state);
+        } else if (curPunc == ctx.type) popContext(state);
+        else if (ctx.type == "}" || ctx.type == "top" || ctx.type == "statement" && curPunc == "newstatement") pushContext(state, stream.column(), "statement");
+        state.startOfLine = false;
+        return style;
+    },
+    indent: function(state, textAfter, cx) {
+        if (state.tokenize != tokenBase && state.tokenize != null) return 0;
+        var firstChar = textAfter && textAfter.charAt(0), ctx = state.context, closing = firstChar == ctx.type;
+        if (ctx.type == "statement") return ctx.indented + (firstChar == "{" ? 0 : cx.unit);
+        else if (ctx.align) return ctx.column + (closing ? 0 : 1);
+        else return ctx.indented + (closing ? 0 : cx.unit);
+    },
+    languageData: {
+        indentOnInput: /^\s*[{}]$/,
+        commentTokens: {
+            line: "--"
+        }
+    }
+};
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_vhdl_5e5d8765.js.map

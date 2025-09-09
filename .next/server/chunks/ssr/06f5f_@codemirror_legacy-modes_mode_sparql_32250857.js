@@ -1,3 +1,255 @@
-module.exports=[401253,a=>{"use strict";function b(a){return RegExp("^(?:"+a.join("|")+")$","i")}a.s(["sparql",()=>n]);var c,d=b(["str","lang","langmatches","datatype","bound","sameterm","isiri","isuri","iri","uri","bnode","count","sum","min","max","avg","sample","group_concat","rand","abs","ceil","floor","round","concat","substr","strlen","replace","ucase","lcase","encode_for_uri","contains","strstarts","strends","strbefore","strafter","year","month","day","hours","minutes","seconds","timezone","tz","now","uuid","struuid","md5","sha1","sha256","sha384","sha512","coalesce","if","strlang","strdt","isnumeric","regex","exists","isblank","isliteral","a","bind"]),e=b(["base","prefix","select","distinct","reduced","construct","describe","ask","from","named","where","order","limit","offset","filter","optional","graph","by","asc","desc","as","having","undef","values","group","minus","in","not","service","silent","using","insert","delete","union","true","false","with","data","copy","to","move","add","create","drop","clear","load","into"]),f=/[*+\-<>=&|\^\/!\?]/,g="[A-Za-z_\\-0-9]",h=/[A-Za-z]/,i=RegExp("(("+g+"|\\.)*("+g+"))?:");function j(a,b){var g,l=a.next();if(c=null,"$"==l||"?"==l)return"?"==l&&a.match(/\s/,!1)?"operator":(a.match(/^[A-Za-z0-9_\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD][A-Za-z0-9_\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]*/),"variableName.local");if("<"==l&&!a.match(/^[\s\u00a0=]/,!1))return a.match(/^[^\s\u00a0>]*>?/),"atom";if('"'==l||"'"==l){return g=l,b.tokenize=function(a,b){for(var c,d=!1;null!=(c=a.next());){if(c==g&&!d){b.tokenize=j;break}d=!d&&"\\"==c}return"string"},b.tokenize(a,b)}if(/[{}\(\),\.;\[\]]/.test(l))return c=l,"bracket";if("#"==l)return a.skipToEnd(),"comment";else if(f.test(l))return"operator";else if(":"==l)return k(a),"atom";else if("@"==l)return a.eatWhile(/[a-z\d\-]/i),"meta";else if(h.test(l)&&a.match(i))return k(a),"atom";a.eatWhile(/[_\w\d]/);var m=a.current();return d.test(m)?"builtin":e.test(m)?"keyword":"variable"}function k(a){a.match(/(\.(?=[\w_\-\\%])|[:\w_-]|\\[-\\_~.!$&'()*+,;=/?#@%]|%[a-f\d][a-f\d])+/i)}function l(a,b,c){a.context={prev:a.context,indent:a.indent,col:c,type:b}}function m(a){a.indent=a.context.indent,a.context=a.context.prev}let n={name:"sparql",startState:function(){return{tokenize:j,context:null,indent:0,col:0}},token:function(a,b){if(a.sol()&&(b.context&&null==b.context.align&&(b.context.align=!1),b.indent=a.indentation()),a.eatSpace())return null;var d=b.tokenize(a,b);if("comment"!=d&&b.context&&null==b.context.align&&"pattern"!=b.context.type&&(b.context.align=!0),"("==c)l(b,")",a.column());else if("["==c)l(b,"]",a.column());else if("{"==c)l(b,"}",a.column());else if(/[\]\}\)]/.test(c)){for(;b.context&&"pattern"==b.context.type;)m(b);b.context&&c==b.context.type&&(m(b),"}"==c&&b.context&&"pattern"==b.context.type&&m(b))}else"."==c&&b.context&&"pattern"==b.context.type?m(b):/atom|string|variable/.test(d)&&b.context&&(/[\}\]]/.test(b.context.type)?l(b,"pattern",a.column()):"pattern"!=b.context.type||b.context.align||(b.context.align=!0,b.context.col=a.column()));return d},indent:function(a,b,c){var d=b&&b.charAt(0),e=a.context;if(/[\]\}]/.test(d))for(;e&&"pattern"==e.type;)e=e.prev;var f=e&&d==e.type;return e?"pattern"==e.type?e.col:e.align?e.col+ +!f:e.indent+(f?0:c.unit):0},languageData:{commentTokens:{line:"#"}}}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/sparql.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "sparql",
+    ()=>sparql
+]);
+var curPunc;
+function wordRegexp(words) {
+    return new RegExp("^(?:" + words.join("|") + ")$", "i");
+}
+var ops = wordRegexp([
+    "str",
+    "lang",
+    "langmatches",
+    "datatype",
+    "bound",
+    "sameterm",
+    "isiri",
+    "isuri",
+    "iri",
+    "uri",
+    "bnode",
+    "count",
+    "sum",
+    "min",
+    "max",
+    "avg",
+    "sample",
+    "group_concat",
+    "rand",
+    "abs",
+    "ceil",
+    "floor",
+    "round",
+    "concat",
+    "substr",
+    "strlen",
+    "replace",
+    "ucase",
+    "lcase",
+    "encode_for_uri",
+    "contains",
+    "strstarts",
+    "strends",
+    "strbefore",
+    "strafter",
+    "year",
+    "month",
+    "day",
+    "hours",
+    "minutes",
+    "seconds",
+    "timezone",
+    "tz",
+    "now",
+    "uuid",
+    "struuid",
+    "md5",
+    "sha1",
+    "sha256",
+    "sha384",
+    "sha512",
+    "coalesce",
+    "if",
+    "strlang",
+    "strdt",
+    "isnumeric",
+    "regex",
+    "exists",
+    "isblank",
+    "isliteral",
+    "a",
+    "bind"
+]);
+var keywords = wordRegexp([
+    "base",
+    "prefix",
+    "select",
+    "distinct",
+    "reduced",
+    "construct",
+    "describe",
+    "ask",
+    "from",
+    "named",
+    "where",
+    "order",
+    "limit",
+    "offset",
+    "filter",
+    "optional",
+    "graph",
+    "by",
+    "asc",
+    "desc",
+    "as",
+    "having",
+    "undef",
+    "values",
+    "group",
+    "minus",
+    "in",
+    "not",
+    "service",
+    "silent",
+    "using",
+    "insert",
+    "delete",
+    "union",
+    "true",
+    "false",
+    "with",
+    "data",
+    "copy",
+    "to",
+    "move",
+    "add",
+    "create",
+    "drop",
+    "clear",
+    "load",
+    "into"
+]);
+var operatorChars = /[*+\-<>=&|\^\/!\?]/;
+var PN_CHARS = "[A-Za-z_\\-0-9]";
+var PREFIX_START = new RegExp("[A-Za-z]");
+var PREFIX_REMAINDER = new RegExp("((" + PN_CHARS + "|\\.)*(" + PN_CHARS + "))?:");
+function tokenBase(stream, state) {
+    var ch = stream.next();
+    curPunc = null;
+    if (ch == "$" || ch == "?") {
+        if (ch == "?" && stream.match(/\s/, false)) {
+            return "operator";
+        }
+        stream.match(/^[A-Za-z0-9_\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD][A-Za-z0-9_\u00B7\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u037D\u037F-\u1FFF\u200C-\u200D\u203F-\u2040\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD]*/);
+        return "variableName.local";
+    } else if (ch == "<" && !stream.match(/^[\s\u00a0=]/, false)) {
+        stream.match(/^[^\s\u00a0>]*>?/);
+        return "atom";
+    } else if (ch == "\"" || ch == "'") {
+        state.tokenize = tokenLiteral(ch);
+        return state.tokenize(stream, state);
+    } else if (/[{}\(\),\.;\[\]]/.test(ch)) {
+        curPunc = ch;
+        return "bracket";
+    } else if (ch == "#") {
+        stream.skipToEnd();
+        return "comment";
+    } else if (operatorChars.test(ch)) {
+        return "operator";
+    } else if (ch == ":") {
+        eatPnLocal(stream);
+        return "atom";
+    } else if (ch == "@") {
+        stream.eatWhile(/[a-z\d\-]/i);
+        return "meta";
+    } else if (PREFIX_START.test(ch) && stream.match(PREFIX_REMAINDER)) {
+        eatPnLocal(stream);
+        return "atom";
+    }
+    stream.eatWhile(/[_\w\d]/);
+    var word = stream.current();
+    if (ops.test(word)) return "builtin";
+    else if (keywords.test(word)) return "keyword";
+    else return "variable";
+}
+function eatPnLocal(stream) {
+    stream.match(/(\.(?=[\w_\-\\%])|[:\w_-]|\\[-\\_~.!$&'()*+,;=/?#@%]|%[a-f\d][a-f\d])+/i);
+}
+function tokenLiteral(quote) {
+    return function(stream, state) {
+        var escaped = false, ch;
+        while((ch = stream.next()) != null){
+            if (ch == quote && !escaped) {
+                state.tokenize = tokenBase;
+                break;
+            }
+            escaped = !escaped && ch == "\\";
+        }
+        return "string";
+    };
+}
+function pushContext(state, type, col) {
+    state.context = {
+        prev: state.context,
+        indent: state.indent,
+        col: col,
+        type: type
+    };
+}
+function popContext(state) {
+    state.indent = state.context.indent;
+    state.context = state.context.prev;
+}
+const sparql = {
+    name: "sparql",
+    startState: function() {
+        return {
+            tokenize: tokenBase,
+            context: null,
+            indent: 0,
+            col: 0
+        };
+    },
+    token: function(stream, state) {
+        if (stream.sol()) {
+            if (state.context && state.context.align == null) state.context.align = false;
+            state.indent = stream.indentation();
+        }
+        if (stream.eatSpace()) return null;
+        var style = state.tokenize(stream, state);
+        if (style != "comment" && state.context && state.context.align == null && state.context.type != "pattern") {
+            state.context.align = true;
+        }
+        if (curPunc == "(") pushContext(state, ")", stream.column());
+        else if (curPunc == "[") pushContext(state, "]", stream.column());
+        else if (curPunc == "{") pushContext(state, "}", stream.column());
+        else if (/[\]\}\)]/.test(curPunc)) {
+            while(state.context && state.context.type == "pattern")popContext(state);
+            if (state.context && curPunc == state.context.type) {
+                popContext(state);
+                if (curPunc == "}" && state.context && state.context.type == "pattern") popContext(state);
+            }
+        } else if (curPunc == "." && state.context && state.context.type == "pattern") popContext(state);
+        else if (/atom|string|variable/.test(style) && state.context) {
+            if (/[\}\]]/.test(state.context.type)) pushContext(state, "pattern", stream.column());
+            else if (state.context.type == "pattern" && !state.context.align) {
+                state.context.align = true;
+                state.context.col = stream.column();
+            }
+        }
+        return style;
+    },
+    indent: function(state, textAfter, cx) {
+        var firstChar = textAfter && textAfter.charAt(0);
+        var context = state.context;
+        if (/[\]\}]/.test(firstChar)) while(context && context.type == "pattern")context = context.prev;
+        var closing = context && firstChar == context.type;
+        if (!context) return 0;
+        else if (context.type == "pattern") return context.col;
+        else if (context.align) return context.col + (closing ? 0 : 1);
+        else return context.indent + (closing ? 0 : cx.unit);
+    },
+    languageData: {
+        commentTokens: {
+            line: "#"
+        }
+    }
+};
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_sparql_32250857.js.map

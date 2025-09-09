@@ -29,6 +29,7 @@ import {
   thematicBreakPlugin,
   toolbarPlugin,
   UndoRedo,
+  InsertCodeBlock,
   type MDXEditorMethods,
 } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
@@ -149,6 +150,7 @@ const MDXEditorComponent = forwardRef<MDXEditorMethods, MDXEditorProps>(
                     <Separator />
                     <InsertTable />
                     <InsertThematicBreak />
+                    <InsertCodeBlock />
                   </>
                 ),
               }),
@@ -234,6 +236,7 @@ const MDXEditorComponent = forwardRef<MDXEditorMethods, MDXEditorProps>(
                       <Separator />
                       <InsertTable />
                       <InsertThematicBreak />
+                      <InsertCodeBlock />
                     </>
                   ),
                 }),

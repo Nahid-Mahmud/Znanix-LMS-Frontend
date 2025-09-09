@@ -1,3 +1,287 @@
-module.exports=[144871,a=>{"use strict";a.s(["sas",()=>g]);var b={},c={eq:"operator",lt:"operator",le:"operator",gt:"operator",ge:"operator",in:"operator",ne:"operator",or:"operator"},d=/(<=|>=|!=|<>)/,e=/[=\(:\),{}.*<>+\-\/^\[\]]/;function f(a,c,d){if(d)for(var e=c.split(" "),f=0;f<e.length;f++)b[e[f]]={style:a,state:d}}f("def","stack pgm view source debug nesting nolist",["inDataStep"]),f("def","if while until for do do; end end; then else cancel",["inDataStep"]),f("def","label format _n_ _error_",["inDataStep"]),f("def","ALTER BUFNO BUFSIZE CNTLLEV COMPRESS DLDMGACTION ENCRYPT ENCRYPTKEY EXTENDOBSCOUNTER GENMAX GENNUM INDEX LABEL OBSBUF OUTREP PW PWREQ READ REPEMPTY REPLACE REUSE ROLE SORTEDBY SPILL TOBSNO TYPE WRITE FILECLOSE FIRSTOBS IN OBS POINTOBS WHERE WHEREUP IDXNAME IDXWHERE DROP KEEP RENAME",["inDataStep"]),f("def","filevar finfo finv fipname fipnamel fipstate first firstobs floor",["inDataStep"]),f("def","varfmt varinfmt varlabel varlen varname varnum varray varrayx vartype verify vformat vformatd vformatdx vformatn vformatnx vformatw vformatwx vformatx vinarray vinarrayx vinformat vinformatd vinformatdx vinformatn vinformatnx vinformatw vinformatwx vinformatx vlabel vlabelx vlength vlengthx vname vnamex vnferr vtype vtypex weekday",["inDataStep"]),f("def","zipfips zipname zipnamel zipstate",["inDataStep"]),f("def","put putc putn",["inDataStep"]),f("builtin","data run",["inDataStep"]),f("def","data",["inProc"]),f("def","%if %end %end; %else %else; %do %do; %then",["inMacro"]),f("builtin","proc run; quit; libname filename %macro %mend option options",["ALL"]),f("def","footnote title libname ods",["ALL"]),f("def","%let %put %global %sysfunc %eval ",["ALL"]),f("variable","&sysbuffr &syscc &syscharwidth &syscmd &sysdate &sysdate9 &sysday &sysdevic &sysdmg &sysdsn &sysencoding &sysenv &syserr &syserrortext &sysfilrc &syshostname &sysindex &sysinfo &sysjobid &syslast &syslckrc &syslibrc &syslogapplname &sysmacroname &sysmenv &sysmsg &sysncpu &sysodspath &sysparm &syspbuff &sysprocessid &sysprocessname &sysprocname &sysrc &sysscp &sysscpl &sysscpl &syssite &sysstartid &sysstartname &systcpiphostname &systime &sysuserid &sysver &sysvlong &sysvlong4 &syswarningtext",["ALL"]),f("def","source2 nosource2 page pageno pagesize",["ALL"]),f("def","_all_ _character_ _cmd_ _freq_ _i_ _infile_ _last_ _msg_ _null_ _numeric_ _temporary_ _type_ abort abs addr adjrsq airy alpha alter altlog altprint and arcos array arsin as atan attrc attrib attrn authserver autoexec awscontrol awsdef awsmenu awsmenumerge awstitle backward band base betainv between blocksize blshift bnot bor brshift bufno bufsize bxor by byerr byline byte calculated call cards cards4 catcache cbufno cdf ceil center cexist change chisq cinv class cleanup close cnonct cntllev coalesce codegen col collate collin column comamid comaux1 comaux2 comdef compbl compound compress config continue convert cos cosh cpuid create cross crosstab css curobs cv daccdb daccdbsl daccsl daccsyd dacctab dairy datalines datalines4 datejul datepart datetime day dbcslang dbcstype dclose ddfm ddm delete delimiter depdb depdbsl depsl depsyd deptab dequote descending descript design= device dflang dhms dif digamma dim dinfo display distinct dkricond dkrocond dlm dnum do dopen doptname doptnum dread drop dropnote dsname dsnferr echo else emaildlg emailid emailpw emailserver emailsys encrypt end endsas engine eof eov erf erfc error errorcheck errors exist exp fappend fclose fcol fdelete feedback fetch fetchobs fexist fget file fileclose fileexist filefmt filename fileref  fmterr fmtsearch fnonct fnote font fontalias  fopen foptname foptnum force formatted formchar formdelim formdlim forward fpoint fpos fput fread frewind frlen from fsep fuzz fwrite gaminv gamma getoption getvarc getvarn go goto group gwindow hbar hbound helpenv helploc hms honorappearance hosthelp hostprint hour hpct html hvar ibessel ibr id if index indexc indexw initcmd initstmt inner input inputc inputn inr insert int intck intnx into intrr invaliddata irr is jbessel join juldate keep kentb kurtosis label lag last lbound leave left length levels lgamma lib  library libref line linesize link list log log10 log2 logpdf logpmf logsdf lostcard lowcase lrecl ls macro macrogen maps mautosource max maxdec maxr mdy mean measures median memtype merge merror min minute missing missover mlogic mod mode model modify month mopen mort mprint mrecall msglevel msymtabmax mvarsize myy n nest netpv new news nmiss no nobatch nobs nocaps nocardimage nocenter nocharcode nocmdmac nocol nocum nodate nodbcs nodetails nodmr nodms nodmsbatch nodup nodupkey noduplicates noechoauto noequals noerrorabend noexitwindows nofullstimer noicon noimplmac noint nolist noloadlist nomiss nomlogic nomprint nomrecall nomsgcase nomstored nomultenvappl nonotes nonumber noobs noovp nopad nopercent noprint noprintinit normal norow norsasuser nosetinit  nosplash nosymbolgen note notes notitle notitles notsorted noverbose noxsync noxwait npv null number numkeys nummousekeys nway obs  on open     order ordinal otherwise out outer outp= output over ovp p(1 5 10 25 50 75 90 95 99) pad pad2  paired parm parmcards path pathdll pathname pdf peek peekc pfkey pmf point poisson poke position printer probbeta probbnml probchi probf probgam probhypr probit probnegb probnorm probsig probt procleave prt ps  pw pwreq qtr quote r ranbin rancau random ranexp rangam range ranks rannor ranpoi rantbl rantri ranuni rcorr read recfm register regr remote remove rename repeat repeated replace resolve retain return reuse reverse rewind right round rsquare rtf rtrace rtraceloc s s2 samploc sasautos sascontrol sasfrscr sasmsg sasmstore sasscript sasuser saving scan sdf second select selection separated seq serror set setcomm setot sign simple sin sinh siteinfo skewness skip sle sls sortedby sortpgm sortseq sortsize soundex  spedis splashlocation split spool sqrt start std stderr stdin stfips stimer stname stnamel stop stopover sub subgroup subpopn substr sum sumwgt symbol symbolgen symget symput sysget sysin sysleave sysmsg sysparm sysprint sysprintfont sysprod sysrc system t table tables tan tanh tapeclose tbufsize terminal test then timepart tinv  tnonct to today tol tooldef totper transformout translate trantab tranwrd trigamma trim trimn trunc truncover type unformatted uniform union until upcase update user usericon uss validate value var  weight when where while wincharset window work workinit workterm write wsum xsync xwait yearcutoff yes yyq  min max",["inDataStep","inProc"]),f("operator","and not ",["inDataStep","inProc"]);let g={name:"sas",startState:function(){return{inDataStep:!1,inProc:!1,inMacro:!1,nextword:!1,continueString:null,continueComment:!1}},token:function(a,f){if(a.eatSpace())return null;var g,h=a.next();if("/"===h&&a.eat("*"))return f.continueComment=!0,"comment";if(!0===f.continueComment)return"*"===h&&"/"===a.peek()?(a.next(),f.continueComment=!1):a.skipTo("*")?(a.skipTo("*"),a.next(),a.eat("/")&&(f.continueComment=!1)):a.skipToEnd(),"comment";if("*"==h&&a.column()==a.indentation())return a.skipToEnd(),"comment";var i=h+a.peek();if(('"'===h||"'"===h)&&!f.continueString)return f.continueString=h,"string";if(f.continueString)return f.continueString==h?f.continueString=null:a.skipTo(f.continueString)?(a.next(),f.continueString=null):a.skipToEnd(),"string";if(null!==f.continueString&&a.eol())return a.skipTo(f.continueString)||a.skipToEnd(),"string";if(/[\d\.]/.test(h))return"."===h?a.match(/^[0-9]+([eE][\-+]?[0-9]+)?/):"0"===h?a.match(/^[xX][0-9a-fA-F]+/)||a.match(/^0[0-7]+/):a.match(/^[0-9]*\.?[0-9]*([eE][\-+]?[0-9]+)?/),"number";if(d.test(h+a.peek()))return a.next(),"operator";if(c.hasOwnProperty(i)){if(a.next()," "===a.peek())return c[i.toLowerCase()]}else if(e.test(h))return"operator";if(null!=a.match(/[%&;\w]+/,!1)){if(g=h+a.match(/[%&;\w]+/,!0),/&/.test(g))return"variable"}else g=h;if(f.nextword)return a.match(/[\w]+/),"."===a.peek()&&a.skipTo(" "),f.nextword=!1,"variableName.special";if(g=g.toLowerCase(),f.inDataStep){if("run;"===g||a.match(/run\s;/))return f.inDataStep=!1,"builtin";if(g&&"."===a.next())if(/\w/.test(a.peek()))return"variableName.special";else return"variable";if(g&&b.hasOwnProperty(g)&&(-1!==b[g].state.indexOf("inDataStep")||-1!==b[g].state.indexOf("ALL"))){a.start<a.pos&&a.backUp(a.pos-a.start);for(var j=0;j<g.length;++j)a.next();return b[g].style}}if(f.inProc){if("run;"===g||"quit;"===g)return f.inProc=!1,"builtin";if(g&&b.hasOwnProperty(g)&&(-1!==b[g].state.indexOf("inProc")||-1!==b[g].state.indexOf("ALL")))return a.match(/[\w]+/),b[g].style}if(f.inMacro)return"%mend"===g?(";"===a.peek()&&a.next(),f.inMacro=!1,"builtin"):g&&b.hasOwnProperty(g)&&(-1!==b[g].state.indexOf("inMacro")||-1!==b[g].state.indexOf("ALL"))?(a.match(/[\w]+/),b[g].style):"atom";if(g&&b.hasOwnProperty(g)){if(a.backUp(1),a.match(/[\w]+/),"data"===g&&!1===/=/.test(a.peek()))return f.inDataStep=!0,f.nextword=!0,"builtin";if("proc"===g)return f.inProc=!0,f.nextword=!0,"builtin";if("%macro"===g)return f.inMacro=!0,f.nextword=!0,"builtin";if(/title[1-9]/.test(g))return"def";if("footnote"===g)return a.eat(/[1-9]/),"def";if(!0===f.inDataStep&&-1!==b[g].state.indexOf("inDataStep")||!0===f.inProc&&-1!==b[g].state.indexOf("inProc")||!0===f.inMacro&&-1!==b[g].state.indexOf("inMacro")||-1!==b[g].state.indexOf("ALL"))return b[g].style}return null},languageData:{commentTokens:{block:{open:"/*",close:"*/"}}}}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/sas.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "sas",
+    ()=>sas
+]);
+var words = {};
+var isDoubleOperatorSym = {
+    eq: 'operator',
+    lt: 'operator',
+    le: 'operator',
+    gt: 'operator',
+    ge: 'operator',
+    "in": 'operator',
+    ne: 'operator',
+    or: 'operator'
+};
+var isDoubleOperatorChar = /(<=|>=|!=|<>)/;
+var isSingleOperatorChar = /[=\(:\),{}.*<>+\-\/^\[\]]/;
+// Takes a string of words separated by spaces and adds them as
+// keys with the value of the first argument 'style'
+function define(style, string, context) {
+    if (context) {
+        var split = string.split(' ');
+        for(var i = 0; i < split.length; i++){
+            words[split[i]] = {
+                style: style,
+                state: context
+            };
+        }
+    }
+}
+//datastep
+define('def', 'stack pgm view source debug nesting nolist', [
+    'inDataStep'
+]);
+define('def', 'if while until for do do; end end; then else cancel', [
+    'inDataStep'
+]);
+define('def', 'label format _n_ _error_', [
+    'inDataStep'
+]);
+define('def', 'ALTER BUFNO BUFSIZE CNTLLEV COMPRESS DLDMGACTION ENCRYPT ENCRYPTKEY EXTENDOBSCOUNTER GENMAX GENNUM INDEX LABEL OBSBUF OUTREP PW PWREQ READ REPEMPTY REPLACE REUSE ROLE SORTEDBY SPILL TOBSNO TYPE WRITE FILECLOSE FIRSTOBS IN OBS POINTOBS WHERE WHEREUP IDXNAME IDXWHERE DROP KEEP RENAME', [
+    'inDataStep'
+]);
+define('def', 'filevar finfo finv fipname fipnamel fipstate first firstobs floor', [
+    'inDataStep'
+]);
+define('def', 'varfmt varinfmt varlabel varlen varname varnum varray varrayx vartype verify vformat vformatd vformatdx vformatn vformatnx vformatw vformatwx vformatx vinarray vinarrayx vinformat vinformatd vinformatdx vinformatn vinformatnx vinformatw vinformatwx vinformatx vlabel vlabelx vlength vlengthx vname vnamex vnferr vtype vtypex weekday', [
+    'inDataStep'
+]);
+define('def', 'zipfips zipname zipnamel zipstate', [
+    'inDataStep'
+]);
+define('def', 'put putc putn', [
+    'inDataStep'
+]);
+define('builtin', 'data run', [
+    'inDataStep'
+]);
+//proc
+define('def', 'data', [
+    'inProc'
+]);
+// flow control for macros
+define('def', '%if %end %end; %else %else; %do %do; %then', [
+    'inMacro'
+]);
+//everywhere
+define('builtin', 'proc run; quit; libname filename %macro %mend option options', [
+    'ALL'
+]);
+define('def', 'footnote title libname ods', [
+    'ALL'
+]);
+define('def', '%let %put %global %sysfunc %eval ', [
+    'ALL'
+]);
+// automatic macro variables http://support.sas.com/documentation/cdl/en/mcrolref/61885/HTML/default/viewer.htm#a003167023.htm
+define('variable', '&sysbuffr &syscc &syscharwidth &syscmd &sysdate &sysdate9 &sysday &sysdevic &sysdmg &sysdsn &sysencoding &sysenv &syserr &syserrortext &sysfilrc &syshostname &sysindex &sysinfo &sysjobid &syslast &syslckrc &syslibrc &syslogapplname &sysmacroname &sysmenv &sysmsg &sysncpu &sysodspath &sysparm &syspbuff &sysprocessid &sysprocessname &sysprocname &sysrc &sysscp &sysscpl &sysscpl &syssite &sysstartid &sysstartname &systcpiphostname &systime &sysuserid &sysver &sysvlong &sysvlong4 &syswarningtext', [
+    'ALL'
+]);
+//footnote[1-9]? title[1-9]?
+//options statement
+define('def', 'source2 nosource2 page pageno pagesize', [
+    'ALL'
+]);
+//proc and datastep
+define('def', '_all_ _character_ _cmd_ _freq_ _i_ _infile_ _last_ _msg_ _null_ _numeric_ _temporary_ _type_ abort abs addr adjrsq airy alpha alter altlog altprint and arcos array arsin as atan attrc attrib attrn authserver autoexec awscontrol awsdef awsmenu awsmenumerge awstitle backward band base betainv between blocksize blshift bnot bor brshift bufno bufsize bxor by byerr byline byte calculated call cards cards4 catcache cbufno cdf ceil center cexist change chisq cinv class cleanup close cnonct cntllev coalesce codegen col collate collin column comamid comaux1 comaux2 comdef compbl compound compress config continue convert cos cosh cpuid create cross crosstab css curobs cv daccdb daccdbsl daccsl daccsyd dacctab dairy datalines datalines4 datejul datepart datetime day dbcslang dbcstype dclose ddfm ddm delete delimiter depdb depdbsl depsl depsyd deptab dequote descending descript design= device dflang dhms dif digamma dim dinfo display distinct dkricond dkrocond dlm dnum do dopen doptname doptnum dread drop dropnote dsname dsnferr echo else emaildlg emailid emailpw emailserver emailsys encrypt end endsas engine eof eov erf erfc error errorcheck errors exist exp fappend fclose fcol fdelete feedback fetch fetchobs fexist fget file fileclose fileexist filefmt filename fileref  fmterr fmtsearch fnonct fnote font fontalias  fopen foptname foptnum force formatted formchar formdelim formdlim forward fpoint fpos fput fread frewind frlen from fsep fuzz fwrite gaminv gamma getoption getvarc getvarn go goto group gwindow hbar hbound helpenv helploc hms honorappearance hosthelp hostprint hour hpct html hvar ibessel ibr id if index indexc indexw initcmd initstmt inner input inputc inputn inr insert int intck intnx into intrr invaliddata irr is jbessel join juldate keep kentb kurtosis label lag last lbound leave left length levels lgamma lib  library libref line linesize link list log log10 log2 logpdf logpmf logsdf lostcard lowcase lrecl ls macro macrogen maps mautosource max maxdec maxr mdy mean measures median memtype merge merror min minute missing missover mlogic mod mode model modify month mopen mort mprint mrecall msglevel msymtabmax mvarsize myy n nest netpv new news nmiss no nobatch nobs nocaps nocardimage nocenter nocharcode nocmdmac nocol nocum nodate nodbcs nodetails nodmr nodms nodmsbatch nodup nodupkey noduplicates noechoauto noequals noerrorabend noexitwindows nofullstimer noicon noimplmac noint nolist noloadlist nomiss nomlogic nomprint nomrecall nomsgcase nomstored nomultenvappl nonotes nonumber noobs noovp nopad nopercent noprint noprintinit normal norow norsasuser nosetinit  nosplash nosymbolgen note notes notitle notitles notsorted noverbose noxsync noxwait npv null number numkeys nummousekeys nway obs  on open     order ordinal otherwise out outer outp= output over ovp p(1 5 10 25 50 75 90 95 99) pad pad2  paired parm parmcards path pathdll pathname pdf peek peekc pfkey pmf point poisson poke position printer probbeta probbnml probchi probf probgam probhypr probit probnegb probnorm probsig probt procleave prt ps  pw pwreq qtr quote r ranbin rancau random ranexp rangam range ranks rannor ranpoi rantbl rantri ranuni rcorr read recfm register regr remote remove rename repeat repeated replace resolve retain return reuse reverse rewind right round rsquare rtf rtrace rtraceloc s s2 samploc sasautos sascontrol sasfrscr sasmsg sasmstore sasscript sasuser saving scan sdf second select selection separated seq serror set setcomm setot sign simple sin sinh siteinfo skewness skip sle sls sortedby sortpgm sortseq sortsize soundex  spedis splashlocation split spool sqrt start std stderr stdin stfips stimer stname stnamel stop stopover sub subgroup subpopn substr sum sumwgt symbol symbolgen symget symput sysget sysin sysleave sysmsg sysparm sysprint sysprintfont sysprod sysrc system t table tables tan tanh tapeclose tbufsize terminal test then timepart tinv  tnonct to today tol tooldef totper transformout translate trantab tranwrd trigamma trim trimn trunc truncover type unformatted uniform union until upcase update user usericon uss validate value var  weight when where while wincharset window work workinit workterm write wsum xsync xwait yearcutoff yes yyq  min max', [
+    'inDataStep',
+    'inProc'
+]);
+define('operator', 'and not ', [
+    'inDataStep',
+    'inProc'
+]);
+// Main function
+function tokenize(stream, state) {
+    // Finally advance the stream
+    var ch = stream.next();
+    // BLOCKCOMMENT
+    if (ch === '/' && stream.eat('*')) {
+        state.continueComment = true;
+        return "comment";
+    } else if (state.continueComment === true) {
+        //comment ends at the beginning of the line
+        if (ch === '*' && stream.peek() === '/') {
+            stream.next();
+            state.continueComment = false;
+        } else if (stream.skipTo('*')) {
+            stream.skipTo('*');
+            stream.next();
+            if (stream.eat('/')) state.continueComment = false;
+        } else {
+            stream.skipToEnd();
+        }
+        return "comment";
+    }
+    if (ch == "*" && stream.column() == stream.indentation()) {
+        stream.skipToEnd();
+        return "comment";
+    }
+    // DoubleOperator match
+    var doubleOperator = ch + stream.peek();
+    if ((ch === '"' || ch === "'") && !state.continueString) {
+        state.continueString = ch;
+        return "string";
+    } else if (state.continueString) {
+        if (state.continueString == ch) {
+            state.continueString = null;
+        } else if (stream.skipTo(state.continueString)) {
+            // quote found on this line
+            stream.next();
+            state.continueString = null;
+        } else {
+            stream.skipToEnd();
+        }
+        return "string";
+    } else if (state.continueString !== null && stream.eol()) {
+        stream.skipTo(state.continueString) || stream.skipToEnd();
+        return "string";
+    } else if (/[\d\.]/.test(ch)) {
+        if (ch === ".") stream.match(/^[0-9]+([eE][\-+]?[0-9]+)?/);
+        else if (ch === "0") stream.match(/^[xX][0-9a-fA-F]+/) || stream.match(/^0[0-7]+/);
+        else stream.match(/^[0-9]*\.?[0-9]*([eE][\-+]?[0-9]+)?/);
+        return "number";
+    } else if (isDoubleOperatorChar.test(ch + stream.peek())) {
+        stream.next();
+        return "operator";
+    } else if (isDoubleOperatorSym.hasOwnProperty(doubleOperator)) {
+        stream.next();
+        if (stream.peek() === ' ') return isDoubleOperatorSym[doubleOperator.toLowerCase()];
+    } else if (isSingleOperatorChar.test(ch)) {
+        return "operator";
+    }
+    // Matches one whole word -- even if the word is a character
+    var word;
+    if (stream.match(/[%&;\w]+/, false) != null) {
+        word = ch + stream.match(/[%&;\w]+/, true);
+        if (/&/.test(word)) return 'variable';
+    } else {
+        word = ch;
+    }
+    // the word after DATA PROC or MACRO
+    if (state.nextword) {
+        stream.match(/[\w]+/);
+        // match memname.libname
+        if (stream.peek() === '.') stream.skipTo(' ');
+        state.nextword = false;
+        return 'variableName.special';
+    }
+    word = word.toLowerCase();
+    // Are we in a DATA Step?
+    if (state.inDataStep) {
+        if (word === 'run;' || stream.match(/run\s;/)) {
+            state.inDataStep = false;
+            return 'builtin';
+        }
+        // variable formats
+        if (word && stream.next() === '.') {
+            //either a format or libname.memname
+            if (/\w/.test(stream.peek())) return 'variableName.special';
+            else return 'variable';
+        }
+        // do we have a DATA Step keyword
+        if (word && words.hasOwnProperty(word) && (words[word].state.indexOf("inDataStep") !== -1 || words[word].state.indexOf("ALL") !== -1)) {
+            //backup to the start of the word
+            if (stream.start < stream.pos) stream.backUp(stream.pos - stream.start);
+            //advance the length of the word and return
+            for(var i = 0; i < word.length; ++i)stream.next();
+            return words[word].style;
+        }
+    }
+    // Are we in an Proc statement?
+    if (state.inProc) {
+        if (word === 'run;' || word === 'quit;') {
+            state.inProc = false;
+            return 'builtin';
+        }
+        // do we have a proc keyword
+        if (word && words.hasOwnProperty(word) && (words[word].state.indexOf("inProc") !== -1 || words[word].state.indexOf("ALL") !== -1)) {
+            stream.match(/[\w]+/);
+            return words[word].style;
+        }
+    }
+    // Are we in a Macro statement?
+    if (state.inMacro) {
+        if (word === '%mend') {
+            if (stream.peek() === ';') stream.next();
+            state.inMacro = false;
+            return 'builtin';
+        }
+        if (word && words.hasOwnProperty(word) && (words[word].state.indexOf("inMacro") !== -1 || words[word].state.indexOf("ALL") !== -1)) {
+            stream.match(/[\w]+/);
+            return words[word].style;
+        }
+        return 'atom';
+    }
+    // Do we have Keywords specific words?
+    if (word && words.hasOwnProperty(word)) {
+        // Negates the initial next()
+        stream.backUp(1);
+        // Actually move the stream
+        stream.match(/[\w]+/);
+        if (word === 'data' && /=/.test(stream.peek()) === false) {
+            state.inDataStep = true;
+            state.nextword = true;
+            return 'builtin';
+        }
+        if (word === 'proc') {
+            state.inProc = true;
+            state.nextword = true;
+            return 'builtin';
+        }
+        if (word === '%macro') {
+            state.inMacro = true;
+            state.nextword = true;
+            return 'builtin';
+        }
+        if (/title[1-9]/.test(word)) return 'def';
+        if (word === 'footnote') {
+            stream.eat(/[1-9]/);
+            return 'def';
+        }
+        // Returns their value as state in the prior define methods
+        if (state.inDataStep === true && words[word].state.indexOf("inDataStep") !== -1) return words[word].style;
+        if (state.inProc === true && words[word].state.indexOf("inProc") !== -1) return words[word].style;
+        if (state.inMacro === true && words[word].state.indexOf("inMacro") !== -1) return words[word].style;
+        if (words[word].state.indexOf("ALL") !== -1) return words[word].style;
+        return null;
+    }
+    // Unrecognized syntax
+    return null;
+}
+const sas = {
+    name: "sas",
+    startState: function() {
+        return {
+            inDataStep: false,
+            inProc: false,
+            inMacro: false,
+            nextword: false,
+            continueString: null,
+            continueComment: false
+        };
+    },
+    token: function(stream, state) {
+        // Strip the spaces, but regex will account for them either way
+        if (stream.eatSpace()) return null;
+        // Go through the main process
+        return tokenize(stream, state);
+    },
+    languageData: {
+        commentTokens: {
+            block: {
+                open: "/*",
+                close: "*/"
+            }
+        }
+    }
+};
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_sas_2420aab7.js.map

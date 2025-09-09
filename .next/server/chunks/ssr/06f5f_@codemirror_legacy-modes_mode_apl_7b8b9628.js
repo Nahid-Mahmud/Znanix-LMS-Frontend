@@ -1,3 +1,299 @@
-module.exports=[779292,a=>{"use strict";a.s(["apl",()=>i]);var b={"+":["conjugate","add"],"−":["negate","subtract"],"×":["signOf","multiply"],"÷":["reciprocal","divide"],"⌈":["ceiling","greaterOf"],"⌊":["floor","lesserOf"],"∣":["absolute","residue"],"⍳":["indexGenerate","indexOf"],"?":["roll","deal"],"⋆":["exponentiate","toThePowerOf"],"⍟":["naturalLog","logToTheBase"],"○":["piTimes","circularFuncs"],"!":["factorial","binomial"],"⌹":["matrixInverse","matrixDivide"],"<":[null,"lessThan"],"≤":[null,"lessThanOrEqual"],"=":[null,"equals"],">":[null,"greaterThan"],"≥":[null,"greaterThanOrEqual"],"≠":[null,"notEqual"],"≡":["depth","match"],"≢":[null,"notMatch"],"∈":["enlist","membership"],"⍷":[null,"find"],"∪":["unique","union"],"∩":[null,"intersection"],"∼":["not","without"],"∨":[null,"or"],"∧":[null,"and"],"⍱":[null,"nor"],"⍲":[null,"nand"],"⍴":["shapeOf","reshape"],",":["ravel","catenate"],"⍪":[null,"firstAxisCatenate"],"⌽":["reverse","rotate"],"⊖":["axis1Reverse","axis1Rotate"],"⍉":["transpose",null],"↑":["first","take"],"↓":[null,"drop"],"⊂":["enclose","partitionWithAxis"],"⊃":["diclose","pick"],"⌷":[null,"index"],"⍋":["gradeUp",null],"⍒":["gradeDown",null],"⊤":["encode",null],"⊥":["decode",null],"⍕":["format","formatByExample"],"⍎":["execute",null],"⊣":["stop","left"],"⊢":["pass","right"]},c=/[\.\/⌿⍀¨⍣]/,d=/⍬/,e=/[\+−×÷⌈⌊∣⍳\?⋆⍟○!⌹<≤=>≥≠≡≢∈⍷∪∩∼∨∧⍱⍲⍴,⍪⌽⊖⍉↑↓⊂⊃⌷⍋⍒⊤⊥⍕⍎⊣⊢]/,f=/←/,g=/[⍝#].*$/,h=function(a){var b;return b=!1,function(c){return b=c,c!==a||"\\"===b}};let i={name:"apl",startState:function(){return{prev:!1,func:!1,op:!1,string:!1,escape:!1}},token:function(a,i){var j;return a.eatSpace()?null:'"'===(j=a.next())||"'"===j?(a.eatWhile(h(j)),a.next(),i.prev=!0,"string"):/[\[{\(]/.test(j)?(i.prev=!1,null):/[\]}\)]/.test(j)?(i.prev=!0,null):d.test(j)?(i.prev=!1,"atom"):/[¯\d]/.test(j)?(i.func?(i.func=!1,i.prev=!1):i.prev=!0,a.eatWhile(/[\w\.]/),"number"):c.test(j)||f.test(j)?"operator":e.test(j)?(i.func=!0,i.prev=!1,b[j]?"variableName.function.standard":"variableName.function"):g.test(j)?(a.skipToEnd(),"comment"):"∘"===j&&"."===a.peek()?(a.next(),"variableName.function"):(a.eatWhile(/[\w\$_]/),i.prev=!0,"keyword")}}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/apl.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "apl",
+    ()=>apl
+]);
+var builtInFuncs = {
+    "+": [
+        "conjugate",
+        "add"
+    ],
+    "−": [
+        "negate",
+        "subtract"
+    ],
+    "×": [
+        "signOf",
+        "multiply"
+    ],
+    "÷": [
+        "reciprocal",
+        "divide"
+    ],
+    "⌈": [
+        "ceiling",
+        "greaterOf"
+    ],
+    "⌊": [
+        "floor",
+        "lesserOf"
+    ],
+    "∣": [
+        "absolute",
+        "residue"
+    ],
+    "⍳": [
+        "indexGenerate",
+        "indexOf"
+    ],
+    "?": [
+        "roll",
+        "deal"
+    ],
+    "⋆": [
+        "exponentiate",
+        "toThePowerOf"
+    ],
+    "⍟": [
+        "naturalLog",
+        "logToTheBase"
+    ],
+    "○": [
+        "piTimes",
+        "circularFuncs"
+    ],
+    "!": [
+        "factorial",
+        "binomial"
+    ],
+    "⌹": [
+        "matrixInverse",
+        "matrixDivide"
+    ],
+    "<": [
+        null,
+        "lessThan"
+    ],
+    "≤": [
+        null,
+        "lessThanOrEqual"
+    ],
+    "=": [
+        null,
+        "equals"
+    ],
+    ">": [
+        null,
+        "greaterThan"
+    ],
+    "≥": [
+        null,
+        "greaterThanOrEqual"
+    ],
+    "≠": [
+        null,
+        "notEqual"
+    ],
+    "≡": [
+        "depth",
+        "match"
+    ],
+    "≢": [
+        null,
+        "notMatch"
+    ],
+    "∈": [
+        "enlist",
+        "membership"
+    ],
+    "⍷": [
+        null,
+        "find"
+    ],
+    "∪": [
+        "unique",
+        "union"
+    ],
+    "∩": [
+        null,
+        "intersection"
+    ],
+    "∼": [
+        "not",
+        "without"
+    ],
+    "∨": [
+        null,
+        "or"
+    ],
+    "∧": [
+        null,
+        "and"
+    ],
+    "⍱": [
+        null,
+        "nor"
+    ],
+    "⍲": [
+        null,
+        "nand"
+    ],
+    "⍴": [
+        "shapeOf",
+        "reshape"
+    ],
+    ",": [
+        "ravel",
+        "catenate"
+    ],
+    "⍪": [
+        null,
+        "firstAxisCatenate"
+    ],
+    "⌽": [
+        "reverse",
+        "rotate"
+    ],
+    "⊖": [
+        "axis1Reverse",
+        "axis1Rotate"
+    ],
+    "⍉": [
+        "transpose",
+        null
+    ],
+    "↑": [
+        "first",
+        "take"
+    ],
+    "↓": [
+        null,
+        "drop"
+    ],
+    "⊂": [
+        "enclose",
+        "partitionWithAxis"
+    ],
+    "⊃": [
+        "diclose",
+        "pick"
+    ],
+    "⌷": [
+        null,
+        "index"
+    ],
+    "⍋": [
+        "gradeUp",
+        null
+    ],
+    "⍒": [
+        "gradeDown",
+        null
+    ],
+    "⊤": [
+        "encode",
+        null
+    ],
+    "⊥": [
+        "decode",
+        null
+    ],
+    "⍕": [
+        "format",
+        "formatByExample"
+    ],
+    "⍎": [
+        "execute",
+        null
+    ],
+    "⊣": [
+        "stop",
+        "left"
+    ],
+    "⊢": [
+        "pass",
+        "right"
+    ]
+};
+var isOperator = /[\.\/⌿⍀¨⍣]/;
+var isNiladic = /⍬/;
+var isFunction = /[\+−×÷⌈⌊∣⍳\?⋆⍟○!⌹<≤=>≥≠≡≢∈⍷∪∩∼∨∧⍱⍲⍴,⍪⌽⊖⍉↑↓⊂⊃⌷⍋⍒⊤⊥⍕⍎⊣⊢]/;
+var isArrow = /←/;
+var isComment = /[⍝#].*$/;
+var stringEater = function(type) {
+    var prev;
+    prev = false;
+    return function(c) {
+        prev = c;
+        if (c === type) {
+            return prev === "\\";
+        }
+        return true;
+    };
+};
+const apl = {
+    name: "apl",
+    startState: function() {
+        return {
+            prev: false,
+            func: false,
+            op: false,
+            string: false,
+            escape: false
+        };
+    },
+    token: function(stream, state) {
+        var ch;
+        if (stream.eatSpace()) {
+            return null;
+        }
+        ch = stream.next();
+        if (ch === '"' || ch === "'") {
+            stream.eatWhile(stringEater(ch));
+            stream.next();
+            state.prev = true;
+            return "string";
+        }
+        if (/[\[{\(]/.test(ch)) {
+            state.prev = false;
+            return null;
+        }
+        if (/[\]}\)]/.test(ch)) {
+            state.prev = true;
+            return null;
+        }
+        if (isNiladic.test(ch)) {
+            state.prev = false;
+            return "atom";
+        }
+        if (/[¯\d]/.test(ch)) {
+            if (state.func) {
+                state.func = false;
+                state.prev = false;
+            } else {
+                state.prev = true;
+            }
+            stream.eatWhile(/[\w\.]/);
+            return "number";
+        }
+        if (isOperator.test(ch)) {
+            return "operator";
+        }
+        if (isArrow.test(ch)) {
+            return "operator";
+        }
+        if (isFunction.test(ch)) {
+            state.func = true;
+            state.prev = false;
+            return builtInFuncs[ch] ? "variableName.function.standard" : "variableName.function";
+        }
+        if (isComment.test(ch)) {
+            stream.skipToEnd();
+            return "comment";
+        }
+        if (ch === "∘" && stream.peek() === ".") {
+            stream.next();
+            return "variableName.function";
+        }
+        stream.eatWhile(/[\w\$_]/);
+        state.prev = true;
+        return "keyword";
+    }
+};
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_apl_7b8b9628.js.map

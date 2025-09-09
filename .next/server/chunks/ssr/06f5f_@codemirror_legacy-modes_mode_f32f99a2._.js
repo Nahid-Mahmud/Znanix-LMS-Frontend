@@ -1,3 +1,341 @@
-module.exports=[832816,a=>{"use strict";function b(a){c(a,"start");var b,e,f,g={},h=a.languageData||{},i=!1;for(var j in a)if(j!=h&&a.hasOwnProperty(j))for(var k=g[j]=[],l=a[j],m=0;m<l.length;m++){var n=l[m];k.push(new d(n,a)),(n.indent||n.dedent)&&(i=!0)}return{name:h.name,startState:function(){return{state:"start",pending:null,indent:i?[]:null}},copyState:function(a){var b={state:a.state,pending:a.pending,indent:a.indent&&a.indent.slice(0)};return a.stack&&(b.stack=a.stack.slice(0)),b},token:(b=g,function(a,c){if(c.pending){var d=c.pending.shift();return 0==c.pending.length&&(c.pending=null),a.pos+=d.text.length,d.token}for(var e=b[c.state],f=0;f<e.length;f++){var g=e[f],h=(!g.data.sol||a.sol())&&a.match(g.regex);if(h){g.data.next?c.state=g.data.next:g.data.push?((c.stack||(c.stack=[])).push(c.state),c.state=g.data.push):g.data.pop&&c.stack&&c.stack.length&&(c.state=c.stack.pop()),g.data.indent&&c.indent.push(a.indentation()+a.indentUnit),g.data.dedent&&c.indent.pop();var i=g.token;if(i&&i.apply&&(i=i(h)),h.length>2&&g.token&&"string"!=typeof g.token){c.pending=[];for(var j=2;j<h.length;j++)h[j]&&c.pending.push({text:h[j],token:g.token[j-1]});return a.backUp(h[0].length-(h[1]?h[1].length:0)),i[0]}if(i&&i.join)return i[0];return i}}return a.next(),null}),indent:(e=g,f=h,function(a,b){if(null==a.indent||f.dontIndentStates&&f.dontIndentStates.indexOf(a.state)>-1)return null;var c=a.indent.length-1,d=e[a.state];a:for(;;){for(var g=0;g<d.length;g++){var h=d[g];if(h.data.dedent&&!1!==h.data.dedentIfLineStart){var i=h.regex.exec(b);if(i&&i[0]){c--,(h.next||h.push)&&(d=e[h.next||h.push]),b=b.slice(i[0].length);continue a}}}break}return c<0?0:a.indent[c]}),mergeTokens:h.mergeTokens,languageData:h}}function c(a,b){if(!a.hasOwnProperty(b))throw Error("Undefined state "+b+" in simple mode")}function d(a,b){(a.next||a.push)&&c(b,a.next||a.push),this.regex=function(a,b){if(!a)return/(?:)/;var c="";return a instanceof RegExp?(a.ignoreCase&&(c="i"),a=a.source):a=String(a),RegExp("^(?:"+a+")",c)}(a.regex),this.token=function(a){if(!a)return null;if(a.apply)return a;if("string"==typeof a)return a.replace(/\./g," ");for(var b=[],c=0;c<a.length;c++)b.push(a[c]&&a[c].replace(/\./g," "));return b}(a.token),this.data=a}a.s(["simpleMode",()=>b])},552532,a=>{"use strict";a.s(["factor",()=>b]);let b=(0,a.i(832816).simpleMode)({start:[{regex:/#?!.*/,token:"comment"},{regex:/"""/,token:"string",next:"string3"},{regex:/(STRING:)(\s)/,token:["keyword",null],next:"string2"},{regex:/\S*?"/,token:"string",next:"string"},{regex:/(?:0x[\d,a-f]+)|(?:0o[0-7]+)|(?:0b[0,1]+)|(?:\-?\d+.?\d*)(?=\s)/,token:"number"},{regex:/((?:GENERIC)|\:?\:)(\s+)(\S+)(\s+)(\()/,token:["keyword",null,"def",null,"bracket"],next:"stack"},{regex:/(M\:)(\s+)(\S+)(\s+)(\S+)/,token:["keyword",null,"def",null,"tag"]},{regex:/USING\:/,token:"keyword",next:"vocabulary"},{regex:/(USE\:|IN\:)(\s+)(\S+)(?=\s|$)/,token:["keyword",null,"tag"]},{regex:/(\S+\:)(\s+)(\S+)(?=\s|$)/,token:["keyword",null,"def"]},{regex:/(?:;|\\|t|f|if|loop|while|until|do|PRIVATE>|<PRIVATE|\.|\S*\[|\]|\S*\{|\})(?=\s|$)/,token:"keyword"},{regex:/\S+[\)>\.\*\?]+(?=\s|$)/,token:"builtin"},{regex:/[\)><]+\S+(?=\s|$)/,token:"builtin"},{regex:/(?:[\+\-\=\/\*<>])(?=\s|$)/,token:"keyword"},{regex:/\S+/,token:"variable"},{regex:/\s+|./,token:null}],vocabulary:[{regex:/;/,token:"keyword",next:"start"},{regex:/\S+/,token:"tag"},{regex:/\s+|./,token:null}],string:[{regex:/(?:[^\\]|\\.)*?"/,token:"string",next:"start"},{regex:/.*/,token:"string"}],string2:[{regex:/^;/,token:"keyword",next:"start"},{regex:/.*/,token:"string"}],string3:[{regex:/(?:[^\\]|\\.)*?"""/,token:"string",next:"start"},{regex:/.*/,token:"string"}],stack:[{regex:/\)/,token:"bracket",next:"start"},{regex:/--/,token:"bracket"},{regex:/\S+/,token:"meta"},{regex:/\s+|./,token:null}],languageData:{name:"factor",dontIndentStates:["start","vocabulary","string","string3","stack"],commentTokens:{line:"!"}}})}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/simple-mode.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "simpleMode",
+    ()=>simpleMode
+]);
+function simpleMode(states) {
+    ensureState(states, "start");
+    var states_ = {}, meta = states.languageData || {}, hasIndentation = false;
+    for(var state in states)if (state != meta && states.hasOwnProperty(state)) {
+        var list = states_[state] = [], orig = states[state];
+        for(var i = 0; i < orig.length; i++){
+            var data = orig[i];
+            list.push(new Rule(data, states));
+            if (data.indent || data.dedent) hasIndentation = true;
+        }
+    }
+    return {
+        name: meta.name,
+        startState: function() {
+            return {
+                state: "start",
+                pending: null,
+                indent: hasIndentation ? [] : null
+            };
+        },
+        copyState: function(state) {
+            var s = {
+                state: state.state,
+                pending: state.pending,
+                indent: state.indent && state.indent.slice(0)
+            };
+            if (state.stack) s.stack = state.stack.slice(0);
+            return s;
+        },
+        token: tokenFunction(states_),
+        indent: indentFunction(states_, meta),
+        mergeTokens: meta.mergeTokens,
+        languageData: meta
+    };
+}
+;
+function ensureState(states, name) {
+    if (!states.hasOwnProperty(name)) throw new Error("Undefined state " + name + " in simple mode");
+}
+function toRegex(val, caret) {
+    if (!val) return /(?:)/;
+    var flags = "";
+    if (val instanceof RegExp) {
+        if (val.ignoreCase) flags = "i";
+        val = val.source;
+    } else {
+        val = String(val);
+    }
+    return new RegExp((caret === false ? "" : "^") + "(?:" + val + ")", flags);
+}
+function asToken(val) {
+    if (!val) return null;
+    if (val.apply) return val;
+    if (typeof val == "string") return val.replace(/\./g, " ");
+    var result = [];
+    for(var i = 0; i < val.length; i++)result.push(val[i] && val[i].replace(/\./g, " "));
+    return result;
+}
+function Rule(data, states) {
+    if (data.next || data.push) ensureState(states, data.next || data.push);
+    this.regex = toRegex(data.regex);
+    this.token = asToken(data.token);
+    this.data = data;
+}
+function tokenFunction(states) {
+    return function(stream, state) {
+        if (state.pending) {
+            var pend = state.pending.shift();
+            if (state.pending.length == 0) state.pending = null;
+            stream.pos += pend.text.length;
+            return pend.token;
+        }
+        var curState = states[state.state];
+        for(var i = 0; i < curState.length; i++){
+            var rule = curState[i];
+            var matches = (!rule.data.sol || stream.sol()) && stream.match(rule.regex);
+            if (matches) {
+                if (rule.data.next) {
+                    state.state = rule.data.next;
+                } else if (rule.data.push) {
+                    (state.stack || (state.stack = [])).push(state.state);
+                    state.state = rule.data.push;
+                } else if (rule.data.pop && state.stack && state.stack.length) {
+                    state.state = state.stack.pop();
+                }
+                if (rule.data.indent) state.indent.push(stream.indentation() + stream.indentUnit);
+                if (rule.data.dedent) state.indent.pop();
+                var token = rule.token;
+                if (token && token.apply) token = token(matches);
+                if (matches.length > 2 && rule.token && typeof rule.token != "string") {
+                    state.pending = [];
+                    for(var j = 2; j < matches.length; j++)if (matches[j]) state.pending.push({
+                        text: matches[j],
+                        token: rule.token[j - 1]
+                    });
+                    stream.backUp(matches[0].length - (matches[1] ? matches[1].length : 0));
+                    return token[0];
+                } else if (token && token.join) {
+                    return token[0];
+                } else {
+                    return token;
+                }
+            }
+        }
+        stream.next();
+        return null;
+    };
+}
+function indentFunction(states, meta) {
+    return function(state, textAfter) {
+        if (state.indent == null || meta.dontIndentStates && meta.dontIndentStates.indexOf(state.state) > -1) return null;
+        var pos = state.indent.length - 1, rules = states[state.state];
+        scan: for(;;){
+            for(var i = 0; i < rules.length; i++){
+                var rule = rules[i];
+                if (rule.data.dedent && rule.data.dedentIfLineStart !== false) {
+                    var m = rule.regex.exec(textAfter);
+                    if (m && m[0]) {
+                        pos--;
+                        if (rule.next || rule.push) rules = states[rule.next || rule.push];
+                        textAfter = textAfter.slice(m[0].length);
+                        continue scan;
+                    }
+                }
+            }
+            break;
+        }
+        return pos < 0 ? 0 : state.indent[pos];
+    };
+}
+}),
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/factor.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "factor",
+    ()=>factor
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$codemirror$2b$legacy$2d$modes$40$6$2e$5$2e$1$2f$node_modules$2f40$codemirror$2f$legacy$2d$modes$2f$mode$2f$simple$2d$mode$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/simple-mode.js [app-ssr] (ecmascript)");
+;
+const factor = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$codemirror$2b$legacy$2d$modes$40$6$2e$5$2e$1$2f$node_modules$2f40$codemirror$2f$legacy$2d$modes$2f$mode$2f$simple$2d$mode$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["simpleMode"])({
+    start: [
+        // comments
+        {
+            regex: /#?!.*/,
+            token: "comment"
+        },
+        // strings """, multiline --> state
+        {
+            regex: /"""/,
+            token: "string",
+            next: "string3"
+        },
+        {
+            regex: /(STRING:)(\s)/,
+            token: [
+                "keyword",
+                null
+            ],
+            next: "string2"
+        },
+        {
+            regex: /\S*?"/,
+            token: "string",
+            next: "string"
+        },
+        // numbers: dec, hex, unicode, bin, fractional, complex
+        {
+            regex: /(?:0x[\d,a-f]+)|(?:0o[0-7]+)|(?:0b[0,1]+)|(?:\-?\d+.?\d*)(?=\s)/,
+            token: "number"
+        },
+        //{regex: /[+-]?/} //fractional
+        // definition: defining word, defined word, etc
+        {
+            regex: /((?:GENERIC)|\:?\:)(\s+)(\S+)(\s+)(\()/,
+            token: [
+                "keyword",
+                null,
+                "def",
+                null,
+                "bracket"
+            ],
+            next: "stack"
+        },
+        // method definition: defining word, type, defined word, etc
+        {
+            regex: /(M\:)(\s+)(\S+)(\s+)(\S+)/,
+            token: [
+                "keyword",
+                null,
+                "def",
+                null,
+                "tag"
+            ]
+        },
+        // vocabulary using --> state
+        {
+            regex: /USING\:/,
+            token: "keyword",
+            next: "vocabulary"
+        },
+        // vocabulary definition/use
+        {
+            regex: /(USE\:|IN\:)(\s+)(\S+)(?=\s|$)/,
+            token: [
+                "keyword",
+                null,
+                "tag"
+            ]
+        },
+        // definition: a defining word, defined word
+        {
+            regex: /(\S+\:)(\s+)(\S+)(?=\s|$)/,
+            token: [
+                "keyword",
+                null,
+                "def"
+            ]
+        },
+        // "keywords", incl. ; t f . [ ] { } defining words
+        {
+            regex: /(?:;|\\|t|f|if|loop|while|until|do|PRIVATE>|<PRIVATE|\.|\S*\[|\]|\S*\{|\})(?=\s|$)/,
+            token: "keyword"
+        },
+        // <constructors> and the like
+        {
+            regex: /\S+[\)>\.\*\?]+(?=\s|$)/,
+            token: "builtin"
+        },
+        {
+            regex: /[\)><]+\S+(?=\s|$)/,
+            token: "builtin"
+        },
+        // operators
+        {
+            regex: /(?:[\+\-\=\/\*<>])(?=\s|$)/,
+            token: "keyword"
+        },
+        // any id (?)
+        {
+            regex: /\S+/,
+            token: "variable"
+        },
+        {
+            regex: /\s+|./,
+            token: null
+        }
+    ],
+    vocabulary: [
+        {
+            regex: /;/,
+            token: "keyword",
+            next: "start"
+        },
+        {
+            regex: /\S+/,
+            token: "tag"
+        },
+        {
+            regex: /\s+|./,
+            token: null
+        }
+    ],
+    string: [
+        {
+            regex: /(?:[^\\]|\\.)*?"/,
+            token: "string",
+            next: "start"
+        },
+        {
+            regex: /.*/,
+            token: "string"
+        }
+    ],
+    string2: [
+        {
+            regex: /^;/,
+            token: "keyword",
+            next: "start"
+        },
+        {
+            regex: /.*/,
+            token: "string"
+        }
+    ],
+    string3: [
+        {
+            regex: /(?:[^\\]|\\.)*?"""/,
+            token: "string",
+            next: "start"
+        },
+        {
+            regex: /.*/,
+            token: "string"
+        }
+    ],
+    stack: [
+        {
+            regex: /\)/,
+            token: "bracket",
+            next: "start"
+        },
+        {
+            regex: /--/,
+            token: "bracket"
+        },
+        {
+            regex: /\S+/,
+            token: "meta"
+        },
+        {
+            regex: /\s+|./,
+            token: null
+        }
+    ],
+    languageData: {
+        name: "factor",
+        dontIndentStates: [
+            "start",
+            "vocabulary",
+            "string",
+            "string3",
+            "stack"
+        ],
+        commentTokens: {
+            line: "!"
+        }
+    }
+});
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_f32f99a2._.js.map

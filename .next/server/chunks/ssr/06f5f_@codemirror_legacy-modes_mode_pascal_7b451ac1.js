@@ -1,3 +1,121 @@
-module.exports=[825738,a=>{"use strict";a.s(["pascal",()=>g]);var b=function(a){for(var b={},c=a.split(" "),d=0;d<c.length;++d)b[c[d]]=!0;return b}("absolute and array asm begin case const constructor destructor div do downto else end file for function goto if implementation in inherited inline interface label mod nil not object of operator or packed procedure program record reintroduce repeat self set shl shr string then to type unit until uses var while with xor as class dispinterface except exports finalization finally initialization inline is library on out packed property raise resourcestring threadvar try absolute abstract alias assembler bitpacked break cdecl continue cppdecl cvar default deprecated dynamic enumerator experimental export external far far16 forward generic helper implements index interrupt iocheck local message name near nodefault noreturn nostackframe oldfpccall otherwise overload override pascal platform private protected public published read register reintroduce result safecall saveregisters softfloat specialize static stdcall stored strict unaligned unimplemented varargs virtual write"),c={null:!0},d=/[+\-*&%=<>!?|\/]/;function e(a,b){for(var c,d=!1;c=a.next();){if(")"==c&&d){b.tokenize=null;break}d="*"==c}return"comment"}function f(a,b){for(var c;c=a.next();)if("}"==c){b.tokenize=null;break}return"comment"}let g={name:"pascal",startState:function(){return{tokenize:null}},token:function(a,g){if(a.eatSpace())return null;var h=(g.tokenize||function(a,g){var h,i=a.next();if("#"==i&&g.startOfLine)return a.skipToEnd(),"meta";if('"'==i||"'"==i){return h=i,g.tokenize=function(a,b){for(var c,d=!1,e=!1;null!=(c=a.next());){if(c==h&&!d){e=!0;break}d=!d&&"\\"==c}return(e||!d)&&(b.tokenize=null),"string"},g.tokenize(a,g)}if("("==i&&a.eat("*"))return g.tokenize=e,e(a,g);if("{"==i)return g.tokenize=f,f(a,g);if(/[\[\]\(\),;\:\.]/.test(i))return null;if(/\d/.test(i))return a.eatWhile(/[\w\.]/),"number";if("/"==i&&a.eat("/"))return a.skipToEnd(),"comment";if(d.test(i))return a.eatWhile(d),"operator";a.eatWhile(/[\w\$_]/);var j=a.current().toLowerCase();return b.propertyIsEnumerable(j)?"keyword":c.propertyIsEnumerable(j)?"atom":"variable"})(a,g);return h},languageData:{indentOnInput:/^\s*[{}]$/,commentTokens:{block:{open:"(*",close:"*)"}}}}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/pascal.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "pascal",
+    ()=>pascal
+]);
+function words(str) {
+    var obj = {}, words = str.split(" ");
+    for(var i = 0; i < words.length; ++i)obj[words[i]] = true;
+    return obj;
+}
+var keywords = words("absolute and array asm begin case const constructor destructor div do " + "downto else end file for function goto if implementation in inherited " + "inline interface label mod nil not object of operator or packed procedure " + "program record reintroduce repeat self set shl shr string then to type " + "unit until uses var while with xor as class dispinterface except exports " + "finalization finally initialization inline is library on out packed " + "property raise resourcestring threadvar try absolute abstract alias " + "assembler bitpacked break cdecl continue cppdecl cvar default deprecated " + "dynamic enumerator experimental export external far far16 forward generic " + "helper implements index interrupt iocheck local message name near " + "nodefault noreturn nostackframe oldfpccall otherwise overload override " + "pascal platform private protected public published read register " + "reintroduce result safecall saveregisters softfloat specialize static " + "stdcall stored strict unaligned unimplemented varargs virtual write");
+var atoms = {
+    "null": true
+};
+var isOperatorChar = /[+\-*&%=<>!?|\/]/;
+function tokenBase(stream, state) {
+    var ch = stream.next();
+    if (ch == "#" && state.startOfLine) {
+        stream.skipToEnd();
+        return "meta";
+    }
+    if (ch == '"' || ch == "'") {
+        state.tokenize = tokenString(ch);
+        return state.tokenize(stream, state);
+    }
+    if (ch == "(" && stream.eat("*")) {
+        state.tokenize = tokenComment;
+        return tokenComment(stream, state);
+    }
+    if (ch == "{") {
+        state.tokenize = tokenCommentBraces;
+        return tokenCommentBraces(stream, state);
+    }
+    if (/[\[\]\(\),;\:\.]/.test(ch)) {
+        return null;
+    }
+    if (/\d/.test(ch)) {
+        stream.eatWhile(/[\w\.]/);
+        return "number";
+    }
+    if (ch == "/") {
+        if (stream.eat("/")) {
+            stream.skipToEnd();
+            return "comment";
+        }
+    }
+    if (isOperatorChar.test(ch)) {
+        stream.eatWhile(isOperatorChar);
+        return "operator";
+    }
+    stream.eatWhile(/[\w\$_]/);
+    var cur = stream.current().toLowerCase();
+    if (keywords.propertyIsEnumerable(cur)) return "keyword";
+    if (atoms.propertyIsEnumerable(cur)) return "atom";
+    return "variable";
+}
+function tokenString(quote) {
+    return function(stream, state) {
+        var escaped = false, next, end = false;
+        while((next = stream.next()) != null){
+            if (next == quote && !escaped) {
+                end = true;
+                break;
+            }
+            escaped = !escaped && next == "\\";
+        }
+        if (end || !escaped) state.tokenize = null;
+        return "string";
+    };
+}
+function tokenComment(stream, state) {
+    var maybeEnd = false, ch;
+    while(ch = stream.next()){
+        if (ch == ")" && maybeEnd) {
+            state.tokenize = null;
+            break;
+        }
+        maybeEnd = ch == "*";
+    }
+    return "comment";
+}
+function tokenCommentBraces(stream, state) {
+    var ch;
+    while(ch = stream.next()){
+        if (ch == "}") {
+            state.tokenize = null;
+            break;
+        }
+    }
+    return "comment";
+}
+const pascal = {
+    name: "pascal",
+    startState: function() {
+        return {
+            tokenize: null
+        };
+    },
+    token: function(stream, state) {
+        if (stream.eatSpace()) return null;
+        var style = (state.tokenize || tokenBase)(stream, state);
+        if (style == "comment" || style == "meta") return style;
+        return style;
+    },
+    languageData: {
+        indentOnInput: /^\s*[{}]$/,
+        commentTokens: {
+            block: {
+                open: "(*",
+                close: "*)"
+            }
+        }
+    }
+};
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_pascal_7b451ac1.js.map

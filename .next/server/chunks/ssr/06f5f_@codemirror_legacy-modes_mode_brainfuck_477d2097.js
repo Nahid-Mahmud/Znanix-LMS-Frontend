@@ -1,3 +1,62 @@
-module.exports=[182537,a=>{"use strict";a.s(["brainfuck",()=>c]);var b="><+-.,[]".split("");let c={name:"brainfuck",startState:function(){return{commentLine:!1,left:0,right:0,commentLoop:!1}},token:function(a,c){if(a.eatSpace())return null;a.sol()&&(c.commentLine=!1);var d=a.next().toString();if(-1===b.indexOf(d))return c.commentLine=!0,a.eol()&&(c.commentLine=!1),"comment";if(!0===c.commentLine)return a.eol()&&(c.commentLine=!1),"comment";if("]"===d||"["===d)return"["===d?c.left++:c.right++,"bracket";if("+"===d||"-"===d)return"keyword";if("<"===d||">"===d)return"atom";if("."===d||","===d)return"def";a.eol()&&(c.commentLine=!1)}}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/brainfuck.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "brainfuck",
+    ()=>brainfuck
+]);
+var reserve = "><+-.,[]".split("");
+const brainfuck = {
+    name: "brainfuck",
+    startState: function() {
+        return {
+            commentLine: false,
+            left: 0,
+            right: 0,
+            commentLoop: false
+        };
+    },
+    token: function(stream, state) {
+        if (stream.eatSpace()) return null;
+        if (stream.sol()) {
+            state.commentLine = false;
+        }
+        var ch = stream.next().toString();
+        if (reserve.indexOf(ch) !== -1) {
+            if (state.commentLine === true) {
+                if (stream.eol()) {
+                    state.commentLine = false;
+                }
+                return "comment";
+            }
+            if (ch === "]" || ch === "[") {
+                if (ch === "[") {
+                    state.left++;
+                } else {
+                    state.right++;
+                }
+                return "bracket";
+            } else if (ch === "+" || ch === "-") {
+                return "keyword";
+            } else if (ch === "<" || ch === ">") {
+                return "atom";
+            } else if (ch === "." || ch === ",") {
+                return "def";
+            }
+        } else {
+            state.commentLine = true;
+            if (stream.eol()) {
+                state.commentLine = false;
+            }
+            return "comment";
+        }
+        if (stream.eol()) {
+            state.commentLine = false;
+        }
+    }
+};
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_brainfuck_477d2097.js.map

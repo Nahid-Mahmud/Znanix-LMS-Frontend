@@ -1,3 +1,68 @@
-module.exports=[341840,a=>{"use strict";function b(a){var b=a.match(/^\s*\S/);return a.skipToEnd(),b?"error":null}a.s(["asciiArmor",()=>c]);let c={name:"asciiarmor",token:function(a,c){var d;if("top"==c.state)return a.sol()&&(d=a.match(/^-----BEGIN (.*)?-----\s*$/))?(c.state="headers",c.type=d[1],"tag"):b(a);if("headers"==c.state)if(a.sol()&&a.match(/^\w+:/))return c.state="header","atom";else{var e=b(a);return e&&(c.state="body"),e}if("header"==c.state)return a.skipToEnd(),c.state="headers","string";if("body"==c.state)if(a.sol()&&(d=a.match(/^-----END (.*)?-----\s*$/)))return d[1]!=c.type?"error":(c.state="end","tag");else return a.eatWhile(/[A-Za-z0-9+\/=]/)?null:(a.next(),"error");if("end"==c.state)return b(a)},blankLine:function(a){"headers"==a.state&&(a.state="body")},startState:function(){return{state:"top",type:null}}}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/asciiarmor.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "asciiArmor",
+    ()=>asciiArmor
+]);
+function errorIfNotEmpty(stream) {
+    var nonWS = stream.match(/^\s*\S/);
+    stream.skipToEnd();
+    return nonWS ? "error" : null;
+}
+const asciiArmor = {
+    name: "asciiarmor",
+    token: function(stream, state) {
+        var m;
+        if (state.state == "top") {
+            if (stream.sol() && (m = stream.match(/^-----BEGIN (.*)?-----\s*$/))) {
+                state.state = "headers";
+                state.type = m[1];
+                return "tag";
+            }
+            return errorIfNotEmpty(stream);
+        } else if (state.state == "headers") {
+            if (stream.sol() && stream.match(/^\w+:/)) {
+                state.state = "header";
+                return "atom";
+            } else {
+                var result = errorIfNotEmpty(stream);
+                if (result) state.state = "body";
+                return result;
+            }
+        } else if (state.state == "header") {
+            stream.skipToEnd();
+            state.state = "headers";
+            return "string";
+        } else if (state.state == "body") {
+            if (stream.sol() && (m = stream.match(/^-----END (.*)?-----\s*$/))) {
+                if (m[1] != state.type) return "error";
+                state.state = "end";
+                return "tag";
+            } else {
+                if (stream.eatWhile(/[A-Za-z0-9+\/=]/)) {
+                    return null;
+                } else {
+                    stream.next();
+                    return "error";
+                }
+            }
+        } else if (state.state == "end") {
+            return errorIfNotEmpty(stream);
+        }
+    },
+    blankLine: function(state) {
+        if (state.state == "headers") state.state = "body";
+    },
+    startState: function() {
+        return {
+            state: "top",
+            type: null
+        };
+    }
+};
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_asciiarmor_ac151a70.js.map

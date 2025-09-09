@@ -1,3 +1,280 @@
-module.exports=[987513,a=>{"use strict";function b(a){function b(a,b){a.cmdState.push(b)}function c(a){return a.cmdState.length>0?a.cmdState[a.cmdState.length-1]:null}function d(a,b,c){return function(){this.name=a,this.bracketNo=0,this.style=b,this.styles=c,this.argument=null,this.styleIdentifier=function(){return this.styles[this.bracketNo-1]||null},this.openBracket=function(){return this.bracketNo++,"bracket"},this.closeBracket=function(){}}}var e={};function f(a,d){if(a.match(/^\\[a-zA-Z@\xc0-\u1fff\u2060-\uffff]+/)){var f,i=a.current().slice(1);return b(d,f=new(f=e.hasOwnProperty(i)?e[i]:e.DEFAULT)),d.f=h,f.style}if(a.match(/^\\[$&%#{}_]/)||a.match(/^\\[,;!\/\\]/))return"tag";if(a.match("\\["))return d.f=function(a,b){return g(a,b,"\\]")},"keyword";if(a.match("\\("))return d.f=function(a,b){return g(a,b,"\\)")},"keyword";if(a.match("$$"))return d.f=function(a,b){return g(a,b,"$$")},"keyword";if(a.match("$"))return d.f=function(a,b){return g(a,b,"$")},"keyword";var j=a.next();if("%"==j)return a.skipToEnd(),"comment";if("}"==j||"]"==j)return(f=c(d))?(f.closeBracket(j),d.f=h,"bracket"):"error";return"{"==j||"["==j?(b(d,f=new(f=e.DEFAULT)),"bracket"):/\d/.test(j)?(a.eatWhile(/[\w.%]/),"atom"):(a.eatWhile(/[\w\-_]/),"begin"==(f=function(a){for(var b=a.cmdState,c=b.length-1;c>=0;c--){var d=b[c];if("DEFAULT"!=d.name)return d}return{styleIdentifier:function(){return null}}}(d)).name&&(f.argument=a.current()),f.styleIdentifier())}function g(a,b,c){if(a.eatSpace())return null;if(c&&a.match(c))return b.f=f,"keyword";if(a.match(/^\\[a-zA-Z@]+/))return"tag";if(a.match(/^[a-zA-Z]+/))return"variableName.special";if(a.match(/^\\[$&%#{}_]/)||a.match(/^\\[,;!\/]/)||a.match(/^[\^_&]/))return"tag";if(a.match(/^[+\-<>|=,\/@!*:;'"`~#?]/))return null;if(a.match(/^(\d+\.\d*|\d*\.\d+|\d+)/))return"number";var d=a.next();return"{"==d||"}"==d||"["==d||"]"==d||"("==d||")"==d?"bracket":"%"==d?(a.skipToEnd(),"comment"):"error"}function h(a,b){var d,e=a.peek();return"{"==e||"["==e?(c(b).openBracket(e),a.eat(e),b.f=f,"bracket"):/[ \t\r]/.test(e)?(a.eat(e),null):(b.f=f,(d=b.cmdState.pop())&&d.closeBracket(),f(a,b))}return e.importmodule=d("importmodule","tag",["string","builtin"]),e.documentclass=d("documentclass","tag",["","atom"]),e.usepackage=d("usepackage","tag",["atom"]),e.begin=d("begin","tag",["atom"]),e.end=d("end","tag",["atom"]),e.label=d("label","tag",["atom"]),e.ref=d("ref","tag",["atom"]),e.eqref=d("eqref","tag",["atom"]),e.cite=d("cite","tag",["atom"]),e.bibitem=d("bibitem","tag",["atom"]),e.Bibitem=d("Bibitem","tag",["atom"]),e.RBibitem=d("RBibitem","tag",["atom"]),e.DEFAULT=function(){this.name="DEFAULT",this.style="tag",this.styleIdentifier=this.openBracket=this.closeBracket=function(){}},{name:"stex",startState:function(){return{cmdState:[],f:a?function(a,b){return g(a,b)}:f}},copyState:function(a){return{cmdState:a.cmdState.slice(),f:a.f}},token:function(a,b){return b.f(a,b)},blankLine:function(a){a.f=f,a.cmdState.length=0},languageData:{commentTokens:{line:"%"}}}}a.s(["stex",()=>c,"stexMath",()=>d]);let c=b(!1),d=b(!0)}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/stex.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "stex",
+    ()=>stex,
+    "stexMath",
+    ()=>stexMath
+]);
+function mkStex(mathMode) {
+    function pushCommand(state, command) {
+        state.cmdState.push(command);
+    }
+    function peekCommand(state) {
+        if (state.cmdState.length > 0) {
+            return state.cmdState[state.cmdState.length - 1];
+        } else {
+            return null;
+        }
+    }
+    function popCommand(state) {
+        var plug = state.cmdState.pop();
+        if (plug) {
+            plug.closeBracket();
+        }
+    }
+    // returns the non-default plugin closest to the end of the list
+    function getMostPowerful(state) {
+        var context = state.cmdState;
+        for(var i = context.length - 1; i >= 0; i--){
+            var plug = context[i];
+            if (plug.name == "DEFAULT") {
+                continue;
+            }
+            return plug;
+        }
+        return {
+            styleIdentifier: function() {
+                return null;
+            }
+        };
+    }
+    function addPluginPattern(pluginName, cmdStyle, styles) {
+        return function() {
+            this.name = pluginName;
+            this.bracketNo = 0;
+            this.style = cmdStyle;
+            this.styles = styles;
+            this.argument = null; // \begin and \end have arguments that follow. These are stored in the plugin
+            this.styleIdentifier = function() {
+                return this.styles[this.bracketNo - 1] || null;
+            };
+            this.openBracket = function() {
+                this.bracketNo++;
+                return "bracket";
+            };
+            this.closeBracket = function() {};
+        };
+    }
+    var plugins = {};
+    plugins["importmodule"] = addPluginPattern("importmodule", "tag", [
+        "string",
+        "builtin"
+    ]);
+    plugins["documentclass"] = addPluginPattern("documentclass", "tag", [
+        "",
+        "atom"
+    ]);
+    plugins["usepackage"] = addPluginPattern("usepackage", "tag", [
+        "atom"
+    ]);
+    plugins["begin"] = addPluginPattern("begin", "tag", [
+        "atom"
+    ]);
+    plugins["end"] = addPluginPattern("end", "tag", [
+        "atom"
+    ]);
+    plugins["label"] = addPluginPattern("label", "tag", [
+        "atom"
+    ]);
+    plugins["ref"] = addPluginPattern("ref", "tag", [
+        "atom"
+    ]);
+    plugins["eqref"] = addPluginPattern("eqref", "tag", [
+        "atom"
+    ]);
+    plugins["cite"] = addPluginPattern("cite", "tag", [
+        "atom"
+    ]);
+    plugins["bibitem"] = addPluginPattern("bibitem", "tag", [
+        "atom"
+    ]);
+    plugins["Bibitem"] = addPluginPattern("Bibitem", "tag", [
+        "atom"
+    ]);
+    plugins["RBibitem"] = addPluginPattern("RBibitem", "tag", [
+        "atom"
+    ]);
+    plugins["DEFAULT"] = function() {
+        this.name = "DEFAULT";
+        this.style = "tag";
+        this.styleIdentifier = this.openBracket = this.closeBracket = function() {};
+    };
+    function setState(state, f) {
+        state.f = f;
+    }
+    // called when in a normal (no environment) context
+    function normal(source, state) {
+        var plug;
+        // Do we look like '\command' ?  If so, attempt to apply the plugin 'command'
+        if (source.match(/^\\[a-zA-Z@\xc0-\u1fff\u2060-\uffff]+/)) {
+            var cmdName = source.current().slice(1);
+            plug = plugins.hasOwnProperty(cmdName) ? plugins[cmdName] : plugins["DEFAULT"];
+            plug = new plug();
+            pushCommand(state, plug);
+            setState(state, beginParams);
+            return plug.style;
+        }
+        // escape characters
+        if (source.match(/^\\[$&%#{}_]/)) {
+            return "tag";
+        }
+        // white space control characters
+        if (source.match(/^\\[,;!\/\\]/)) {
+            return "tag";
+        }
+        // find if we're starting various math modes
+        if (source.match("\\[")) {
+            setState(state, function(source, state) {
+                return inMathMode(source, state, "\\]");
+            });
+            return "keyword";
+        }
+        if (source.match("\\(")) {
+            setState(state, function(source, state) {
+                return inMathMode(source, state, "\\)");
+            });
+            return "keyword";
+        }
+        if (source.match("$$")) {
+            setState(state, function(source, state) {
+                return inMathMode(source, state, "$$");
+            });
+            return "keyword";
+        }
+        if (source.match("$")) {
+            setState(state, function(source, state) {
+                return inMathMode(source, state, "$");
+            });
+            return "keyword";
+        }
+        var ch = source.next();
+        if (ch == "%") {
+            source.skipToEnd();
+            return "comment";
+        } else if (ch == '}' || ch == ']') {
+            plug = peekCommand(state);
+            if (plug) {
+                plug.closeBracket(ch);
+                setState(state, beginParams);
+            } else {
+                return "error";
+            }
+            return "bracket";
+        } else if (ch == '{' || ch == '[') {
+            plug = plugins["DEFAULT"];
+            plug = new plug();
+            pushCommand(state, plug);
+            return "bracket";
+        } else if (/\d/.test(ch)) {
+            source.eatWhile(/[\w.%]/);
+            return "atom";
+        } else {
+            source.eatWhile(/[\w\-_]/);
+            plug = getMostPowerful(state);
+            if (plug.name == 'begin') {
+                plug.argument = source.current();
+            }
+            return plug.styleIdentifier();
+        }
+    }
+    function inMathMode(source, state, endModeSeq) {
+        if (source.eatSpace()) {
+            return null;
+        }
+        if (endModeSeq && source.match(endModeSeq)) {
+            setState(state, normal);
+            return "keyword";
+        }
+        if (source.match(/^\\[a-zA-Z@]+/)) {
+            return "tag";
+        }
+        if (source.match(/^[a-zA-Z]+/)) {
+            return "variableName.special";
+        }
+        // escape characters
+        if (source.match(/^\\[$&%#{}_]/)) {
+            return "tag";
+        }
+        // white space control characters
+        if (source.match(/^\\[,;!\/]/)) {
+            return "tag";
+        }
+        // special math-mode characters
+        if (source.match(/^[\^_&]/)) {
+            return "tag";
+        }
+        // non-special characters
+        if (source.match(/^[+\-<>|=,\/@!*:;'"`~#?]/)) {
+            return null;
+        }
+        if (source.match(/^(\d+\.\d*|\d*\.\d+|\d+)/)) {
+            return "number";
+        }
+        var ch = source.next();
+        if (ch == "{" || ch == "}" || ch == "[" || ch == "]" || ch == "(" || ch == ")") {
+            return "bracket";
+        }
+        if (ch == "%") {
+            source.skipToEnd();
+            return "comment";
+        }
+        return "error";
+    }
+    function beginParams(source, state) {
+        var ch = source.peek(), lastPlug;
+        if (ch == '{' || ch == '[') {
+            lastPlug = peekCommand(state);
+            lastPlug.openBracket(ch);
+            source.eat(ch);
+            setState(state, normal);
+            return "bracket";
+        }
+        if (/[ \t\r]/.test(ch)) {
+            source.eat(ch);
+            return null;
+        }
+        setState(state, normal);
+        popCommand(state);
+        return normal(source, state);
+    }
+    return {
+        name: "stex",
+        startState: function() {
+            var f = mathMode ? function(source, state) {
+                return inMathMode(source, state);
+            } : normal;
+            return {
+                cmdState: [],
+                f: f
+            };
+        },
+        copyState: function(s) {
+            return {
+                cmdState: s.cmdState.slice(),
+                f: s.f
+            };
+        },
+        token: function(stream, state) {
+            return state.f(stream, state);
+        },
+        blankLine: function(state) {
+            state.f = normal;
+            state.cmdState.length = 0;
+        },
+        languageData: {
+            commentTokens: {
+                line: "%"
+            }
+        }
+    };
+}
+;
+const stex = mkStex(false);
+const stexMath = mkStex(true);
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_stex_22d370c5.js.map

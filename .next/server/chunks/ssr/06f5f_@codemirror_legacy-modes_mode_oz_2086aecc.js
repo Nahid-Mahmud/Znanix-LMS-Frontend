@@ -1,3 +1,258 @@
-module.exports=[541027,a=>{"use strict";function b(a){return RegExp("^(("+a.join(")|(")+"))\\b")}a.s(["oz",()=>r]);var c=/[\^@!\|<>#~\.\*\-\+\\/,=]/,d=/(<-)|(:=)|(=<)|(>=)|(<=)|(<:)|(>:)|(=:)|(\\=)|(\\=:)|(!!)|(==)|(::)/,e=/(:::)|(\.\.\.)|(=<:)|(>=:)/,f=["in","then","else","of","elseof","elsecase","elseif","catch","finally","with","require","prepare","import","export","define","do"],g=["end"],h=b(["true","false","nil","unit"]),i=b(["andthen","at","attr","declare","feat","from","lex","mod","div","mode","orelse","parser","prod","prop","scanner","self","syn","token"]),j=b(["local","proc","fun","case","class","if","cond","or","dis","choice","not","thread","try","raise","lock","for","suchthat","meth","functor"]),k=b(f),l=b(g);function m(a,b){if(a.eatSpace())return null;if(a.match(/[{}]/))return"bracket";if(a.match("[]"))return"keyword";if(a.match(e)||a.match(d))return"operator";if(a.match(h))return"atom";var f,g=a.match(j);if(g)return b.doInCurrentLine?b.doInCurrentLine=!1:b.currentIndent++,"proc"==g[0]||"fun"==g[0]?b.tokenize=p:"class"==g[0]?b.tokenize=n:"meth"==g[0]&&(b.tokenize=o),"keyword";if(a.match(k)||a.match(i))return"keyword";if(a.match(l))return b.currentIndent--,"keyword";var r=a.next();if('"'==r||"'"==r){return f=r,b.tokenize=function(a,b){for(var c,d=!1,e=!1;null!=(c=a.next());){if(c==f&&!d){e=!0;break}d=!d&&"\\"==c}return(e||!d)&&(b.tokenize=m),"string"},b.tokenize(a,b)}if(/[~\d]/.test(r)){if("~"==r){if(!/^[0-9]/.test(a.peek()))return null;else if("0"==a.next()&&a.match(/^[xX][0-9a-fA-F]+/)||a.match(/^[0-9]*(\.[0-9]+)?([eE][~+]?[0-9]+)?/))return"number"}return"0"==r&&a.match(/^[xX][0-9a-fA-F]+/)||a.match(/^[0-9]*(\.[0-9]+)?([eE][~+]?[0-9]+)?/)?"number":null}return"%"==r?(a.skipToEnd(),"comment"):"/"==r&&a.eat("*")?(b.tokenize=q,q(a,b)):c.test(r)?"operator":(a.eatWhile(/\w/),"variable")}function n(a,b){return a.eatSpace()?null:(a.match(/([A-Z][A-Za-z0-9_]*)|(`.+`)/),b.tokenize=m,"type")}function o(a,b){return a.eatSpace()?null:(a.match(/([a-zA-Z][A-Za-z0-9_]*)|(`.+`)/),b.tokenize=m,"def")}function p(a,b){return a.eatSpace()?null:!b.hasPassedFirstStage&&a.eat("{")?(b.hasPassedFirstStage=!0,"bracket"):b.hasPassedFirstStage?(a.match(/([A-Z][A-Za-z0-9_]*)|(`.+`)|\$/),b.hasPassedFirstStage=!1,b.tokenize=m,"def"):(b.tokenize=m,null)}function q(a,b){for(var c,d=!1;c=a.next();){if("/"==c&&d){b.tokenize=m;break}d="*"==c}return"comment"}let r={name:"oz",startState:function(){return{tokenize:m,currentIndent:0,doInCurrentLine:!1,hasPassedFirstStage:!1}},token:function(a,b){return a.sol()&&(b.doInCurrentLine=0),b.tokenize(a,b)},indent:function(a,b,c){var d=b.replace(/^\s+|\s+$/g,"");return d.match(l)||d.match(k)||d.match(/(\[])/)?c.unit*(a.currentIndent-1):a.currentIndent<0?0:a.currentIndent*c.unit},languageData:{indentOnInut:RegExp("[\\[\\]]|("+f.concat(g).join("|")+")$"),commentTokens:{line:"%",block:{open:"/*",close:"*/"}}}}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/oz.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "oz",
+    ()=>oz
+]);
+function wordRegexp(words) {
+    return new RegExp("^((" + words.join(")|(") + "))\\b");
+}
+var singleOperators = /[\^@!\|<>#~\.\*\-\+\\/,=]/;
+var doubleOperators = /(<-)|(:=)|(=<)|(>=)|(<=)|(<:)|(>:)|(=:)|(\\=)|(\\=:)|(!!)|(==)|(::)/;
+var tripleOperators = /(:::)|(\.\.\.)|(=<:)|(>=:)/;
+var middle = [
+    "in",
+    "then",
+    "else",
+    "of",
+    "elseof",
+    "elsecase",
+    "elseif",
+    "catch",
+    "finally",
+    "with",
+    "require",
+    "prepare",
+    "import",
+    "export",
+    "define",
+    "do"
+];
+var end = [
+    "end"
+];
+var atoms = wordRegexp([
+    "true",
+    "false",
+    "nil",
+    "unit"
+]);
+var commonKeywords = wordRegexp([
+    "andthen",
+    "at",
+    "attr",
+    "declare",
+    "feat",
+    "from",
+    "lex",
+    "mod",
+    "div",
+    "mode",
+    "orelse",
+    "parser",
+    "prod",
+    "prop",
+    "scanner",
+    "self",
+    "syn",
+    "token"
+]);
+var openingKeywords = wordRegexp([
+    "local",
+    "proc",
+    "fun",
+    "case",
+    "class",
+    "if",
+    "cond",
+    "or",
+    "dis",
+    "choice",
+    "not",
+    "thread",
+    "try",
+    "raise",
+    "lock",
+    "for",
+    "suchthat",
+    "meth",
+    "functor"
+]);
+var middleKeywords = wordRegexp(middle);
+var endKeywords = wordRegexp(end);
+// Tokenizers
+function tokenBase(stream, state) {
+    if (stream.eatSpace()) {
+        return null;
+    }
+    // Brackets
+    if (stream.match(/[{}]/)) {
+        return "bracket";
+    }
+    // Special [] keyword
+    if (stream.match('[]')) {
+        return "keyword";
+    }
+    // Operators
+    if (stream.match(tripleOperators) || stream.match(doubleOperators)) {
+        return "operator";
+    }
+    // Atoms
+    if (stream.match(atoms)) {
+        return 'atom';
+    }
+    // Opening keywords
+    var matched = stream.match(openingKeywords);
+    if (matched) {
+        if (!state.doInCurrentLine) state.currentIndent++;
+        else state.doInCurrentLine = false;
+        // Special matching for signatures
+        if (matched[0] == "proc" || matched[0] == "fun") state.tokenize = tokenFunProc;
+        else if (matched[0] == "class") state.tokenize = tokenClass;
+        else if (matched[0] == "meth") state.tokenize = tokenMeth;
+        return 'keyword';
+    }
+    // Middle and other keywords
+    if (stream.match(middleKeywords) || stream.match(commonKeywords)) {
+        return "keyword";
+    }
+    // End keywords
+    if (stream.match(endKeywords)) {
+        state.currentIndent--;
+        return 'keyword';
+    }
+    // Eat the next char for next comparisons
+    var ch = stream.next();
+    // Strings
+    if (ch == '"' || ch == "'") {
+        state.tokenize = tokenString(ch);
+        return state.tokenize(stream, state);
+    }
+    // Numbers
+    if (/[~\d]/.test(ch)) {
+        if (ch == "~") {
+            if (!/^[0-9]/.test(stream.peek())) return null;
+            else if (stream.next() == "0" && stream.match(/^[xX][0-9a-fA-F]+/) || stream.match(/^[0-9]*(\.[0-9]+)?([eE][~+]?[0-9]+)?/)) return "number";
+        }
+        if (ch == "0" && stream.match(/^[xX][0-9a-fA-F]+/) || stream.match(/^[0-9]*(\.[0-9]+)?([eE][~+]?[0-9]+)?/)) return "number";
+        return null;
+    }
+    // Comments
+    if (ch == "%") {
+        stream.skipToEnd();
+        return 'comment';
+    } else if (ch == "/") {
+        if (stream.eat("*")) {
+            state.tokenize = tokenComment;
+            return tokenComment(stream, state);
+        }
+    }
+    // Single operators
+    if (singleOperators.test(ch)) {
+        return "operator";
+    }
+    // If nothing match, we skip the entire alphanumerical block
+    stream.eatWhile(/\w/);
+    return "variable";
+}
+function tokenClass(stream, state) {
+    if (stream.eatSpace()) {
+        return null;
+    }
+    stream.match(/([A-Z][A-Za-z0-9_]*)|(`.+`)/);
+    state.tokenize = tokenBase;
+    return "type";
+}
+function tokenMeth(stream, state) {
+    if (stream.eatSpace()) {
+        return null;
+    }
+    stream.match(/([a-zA-Z][A-Za-z0-9_]*)|(`.+`)/);
+    state.tokenize = tokenBase;
+    return "def";
+}
+function tokenFunProc(stream, state) {
+    if (stream.eatSpace()) {
+        return null;
+    }
+    if (!state.hasPassedFirstStage && stream.eat("{")) {
+        state.hasPassedFirstStage = true;
+        return "bracket";
+    } else if (state.hasPassedFirstStage) {
+        stream.match(/([A-Z][A-Za-z0-9_]*)|(`.+`)|\$/);
+        state.hasPassedFirstStage = false;
+        state.tokenize = tokenBase;
+        return "def";
+    } else {
+        state.tokenize = tokenBase;
+        return null;
+    }
+}
+function tokenComment(stream, state) {
+    var maybeEnd = false, ch;
+    while(ch = stream.next()){
+        if (ch == "/" && maybeEnd) {
+            state.tokenize = tokenBase;
+            break;
+        }
+        maybeEnd = ch == "*";
+    }
+    return "comment";
+}
+function tokenString(quote) {
+    return function(stream, state) {
+        var escaped = false, next, end = false;
+        while((next = stream.next()) != null){
+            if (next == quote && !escaped) {
+                end = true;
+                break;
+            }
+            escaped = !escaped && next == "\\";
+        }
+        if (end || !escaped) state.tokenize = tokenBase;
+        return "string";
+    };
+}
+function buildElectricInputRegEx() {
+    // Reindentation should occur on [] or on a match of any of
+    // the block closing keywords, at the end of a line.
+    var allClosings = middle.concat(end);
+    return new RegExp("[\\[\\]]|(" + allClosings.join("|") + ")$");
+}
+const oz = {
+    name: "oz",
+    startState: function() {
+        return {
+            tokenize: tokenBase,
+            currentIndent: 0,
+            doInCurrentLine: false,
+            hasPassedFirstStage: false
+        };
+    },
+    token: function(stream, state) {
+        if (stream.sol()) state.doInCurrentLine = 0;
+        return state.tokenize(stream, state);
+    },
+    indent: function(state, textAfter, cx) {
+        var trueText = textAfter.replace(/^\s+|\s+$/g, '');
+        if (trueText.match(endKeywords) || trueText.match(middleKeywords) || trueText.match(/(\[])/)) return cx.unit * (state.currentIndent - 1);
+        if (state.currentIndent < 0) return 0;
+        return state.currentIndent * cx.unit;
+    },
+    languageData: {
+        indentOnInut: buildElectricInputRegEx(),
+        commentTokens: {
+            line: "%",
+            block: {
+                open: "/*",
+                close: "*/"
+            }
+        }
+    }
+};
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_oz_2086aecc.js.map

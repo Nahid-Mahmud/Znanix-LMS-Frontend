@@ -1,3 +1,120 @@
-module.exports=[26502,a=>{"use strict";function b(a){for(var b={},c=a.split(" "),d=0;d<c.length;++d)b[c[d]]=!0;return b}a.s(["tcl",()=>j]);var c=b("Tcl safe after append array auto_execok auto_import auto_load auto_mkindex auto_mkindex_old auto_qualify auto_reset bgerror binary break catch cd close concat continue dde eof encoding error eval exec exit expr fblocked fconfigure fcopy file fileevent filename filename flush for foreach format gets glob global history http if incr info interp join lappend lindex linsert list llength load lrange lreplace lsearch lset lsort memory msgcat namespace open package parray pid pkg::create pkg_mkIndex proc puts pwd re_syntax read regex regexp registry regsub rename resource return scan seek set socket source split string subst switch tcl_endOfWord tcl_findLibrary tcl_startOfNextWord tcl_wordBreakAfter tcl_startOfPreviousWord tcl_wordBreakBefore tcltest tclvars tell time trace unknown unset update uplevel upvar variable vwait"),d=b("if elseif else and not or eq ne in ni for foreach while switch"),e=/[+\-*&%=<>!?^\/\|]/;function f(a,b,c){return b.tokenize=c,c(a,b)}function g(a,b){var j,k=b.beforeParams;b.beforeParams=!1;var l=a.next();if(('"'==l||"'"==l)&&b.inParams){return f(a,b,(j=l,function(a,b){for(var c,d=!1,e=!1;null!=(c=a.next());){if(c==j&&!d){e=!0;break}d=!d&&"\\"==c}return e&&(b.tokenize=g),"string"}))}if(/[\[\]{}\(\),;\.]/.test(l))return"("==l&&k?b.inParams=!0:")"==l&&(b.inParams=!1),null;if(/\d/.test(l))return a.eatWhile(/[\w\.]/),"number";if("#"==l)return a.eat("*")?f(a,b,h):"#"==l&&a.match(/ *\[ *\[/)?f(a,b,i):(a.skipToEnd(),"comment");if('"'==l)return a.skipTo(/"/),"comment";if("$"==l)return a.eatWhile(/[$_a-z0-9A-Z\.{:]/),a.eatWhile(/}/),b.beforeParams=!0,"builtin";if(e.test(l))return a.eatWhile(e),"comment";a.eatWhile(/[\w\$_{}\xa1-\uffff]/);var m=a.current().toLowerCase();return c&&c.propertyIsEnumerable(m)?"keyword":d&&d.propertyIsEnumerable(m)?(b.beforeParams=!0,"keyword"):null}function h(a,b){for(var c,d=!1;c=a.next();){if("#"==c&&d){b.tokenize=g;break}d="*"==c}return"comment"}function i(a,b){for(var c,d=0;c=a.next();){if("#"==c&&2==d){b.tokenize=g;break}"]"==c?d++:" "!=c&&(d=0)}return"meta"}let j={name:"tcl",startState:function(){return{tokenize:g,beforeParams:!1,inParams:!1}},token:function(a,b){return a.eatSpace()?null:b.tokenize(a,b)},languageData:{commentTokens:{line:"#"}}}}];
+module.exports = [
+"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/tcl.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "tcl",
+    ()=>tcl
+]);
+function parseWords(str) {
+    var obj = {}, words = str.split(" ");
+    for(var i = 0; i < words.length; ++i)obj[words[i]] = true;
+    return obj;
+}
+var keywords = parseWords("Tcl safe after append array auto_execok auto_import auto_load " + "auto_mkindex auto_mkindex_old auto_qualify auto_reset bgerror " + "binary break catch cd close concat continue dde eof encoding error " + "eval exec exit expr fblocked fconfigure fcopy file fileevent filename " + "filename flush for foreach format gets glob global history http if " + "incr info interp join lappend lindex linsert list llength load lrange " + "lreplace lsearch lset lsort memory msgcat namespace open package parray " + "pid pkg::create pkg_mkIndex proc puts pwd re_syntax read regex regexp " + "registry regsub rename resource return scan seek set socket source split " + "string subst switch tcl_endOfWord tcl_findLibrary tcl_startOfNextWord " + "tcl_wordBreakAfter tcl_startOfPreviousWord tcl_wordBreakBefore tcltest " + "tclvars tell time trace unknown unset update uplevel upvar variable " + "vwait");
+var functions = parseWords("if elseif else and not or eq ne in ni for foreach while switch");
+var isOperatorChar = /[+\-*&%=<>!?^\/\|]/;
+function chain(stream, state, f) {
+    state.tokenize = f;
+    return f(stream, state);
+}
+function tokenBase(stream, state) {
+    var beforeParams = state.beforeParams;
+    state.beforeParams = false;
+    var ch = stream.next();
+    if ((ch == '"' || ch == "'") && state.inParams) {
+        return chain(stream, state, tokenString(ch));
+    } else if (/[\[\]{}\(\),;\.]/.test(ch)) {
+        if (ch == "(" && beforeParams) state.inParams = true;
+        else if (ch == ")") state.inParams = false;
+        return null;
+    } else if (/\d/.test(ch)) {
+        stream.eatWhile(/[\w\.]/);
+        return "number";
+    } else if (ch == "#") {
+        if (stream.eat("*")) return chain(stream, state, tokenComment);
+        if (ch == "#" && stream.match(/ *\[ *\[/)) return chain(stream, state, tokenUnparsed);
+        stream.skipToEnd();
+        return "comment";
+    } else if (ch == '"') {
+        stream.skipTo(/"/);
+        return "comment";
+    } else if (ch == "$") {
+        stream.eatWhile(/[$_a-z0-9A-Z\.{:]/);
+        stream.eatWhile(/}/);
+        state.beforeParams = true;
+        return "builtin";
+    } else if (isOperatorChar.test(ch)) {
+        stream.eatWhile(isOperatorChar);
+        return "comment";
+    } else {
+        stream.eatWhile(/[\w\$_{}\xa1-\uffff]/);
+        var word = stream.current().toLowerCase();
+        if (keywords && keywords.propertyIsEnumerable(word)) return "keyword";
+        if (functions && functions.propertyIsEnumerable(word)) {
+            state.beforeParams = true;
+            return "keyword";
+        }
+        return null;
+    }
+}
+function tokenString(quote) {
+    return function(stream, state) {
+        var escaped = false, next, end = false;
+        while((next = stream.next()) != null){
+            if (next == quote && !escaped) {
+                end = true;
+                break;
+            }
+            escaped = !escaped && next == "\\";
+        }
+        if (end) state.tokenize = tokenBase;
+        return "string";
+    };
+}
+function tokenComment(stream, state) {
+    var maybeEnd = false, ch;
+    while(ch = stream.next()){
+        if (ch == "#" && maybeEnd) {
+            state.tokenize = tokenBase;
+            break;
+        }
+        maybeEnd = ch == "*";
+    }
+    return "comment";
+}
+function tokenUnparsed(stream, state) {
+    var maybeEnd = 0, ch;
+    while(ch = stream.next()){
+        if (ch == "#" && maybeEnd == 2) {
+            state.tokenize = tokenBase;
+            break;
+        }
+        if (ch == "]") maybeEnd++;
+        else if (ch != " ") maybeEnd = 0;
+    }
+    return "meta";
+}
+const tcl = {
+    name: "tcl",
+    startState: function() {
+        return {
+            tokenize: tokenBase,
+            beforeParams: false,
+            inParams: false
+        };
+    },
+    token: function(stream, state) {
+        if (stream.eatSpace()) return null;
+        return state.tokenize(stream, state);
+    },
+    languageData: {
+        commentTokens: {
+            line: "#"
+        }
+    }
+};
+}),
+];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_tcl_a9fd1cf3.js.map
