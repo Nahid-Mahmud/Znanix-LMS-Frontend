@@ -1,0 +1,3 @@
+{
+  "/(dashboard)/admin-dashboard/manage-courses/page": "app/(dashboard)/admin-dashboard/manage-courses/page.js"
+}

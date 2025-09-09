@@ -1,6 +1,10 @@
 var R=require("../../chunks/[turbopack]_runtime.js")("server/app/favicon.ico/route.js")
-R.c("server/chunks/b8cd5_next_ef340918._.js")
-R.c("server/chunks/[root-of-the-server]__f547b805._.js")
-R.m("[project]/.next-internal/server/app/favicon.ico/route/actions.js [app-rsc] (server actions loader, ecmascript)")
-R.m("[project]/node_modules/.pnpm/next@15.5.2_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/src/app/favicon--route-entry.js [app-rsc] (ecmascript)\" } [app-rsc] (ecmascript)")
-module.exports=R.m("[project]/node_modules/.pnpm/next@15.5.2_react-dom@19.1.0_react@19.1.0__react@19.1.0/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/src/app/favicon--route-entry.js [app-rsc] (ecmascript)\" } [app-rsc] (ecmascript)").exports
+R.c("server/chunks/[root-of-the-server]__7044fd21._.js")
+R.c("server/chunks/b8cd5_next_dist_13e8e1ed._.js")
+R.c("server/chunks/[root-of-the-server]__727ad041._.js")
+R.c("server/chunks/b8cd5_next_dist_c8a9c3ec._.js")
+R.c("server/chunks/[root-of-the-server]__f6a682b8._.js")
+R.c("server/chunks/b8cd5_next_dist_a0c660b5._.js")
+R.m(415934)
+R.m(728139)
+module.exports=R.m(728139).exports

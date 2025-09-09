@@ -1,34 +1,3 @@
-module.exports = [
-"[project]/node_modules/.pnpm/@codemirror+legacy-modes@6.5.1/node_modules/@codemirror/legacy-modes/mode/diff.js [app-ssr] (ecmascript)", ((__turbopack_context__) => {
-"use strict";
-
-__turbopack_context__.s([
-    "diff",
-    ()=>diff
-]);
-var TOKEN_NAMES = {
-    '+': 'inserted',
-    '-': 'deleted',
-    '@': 'meta'
-};
-const diff = {
-    name: "diff",
-    token: function(stream) {
-        var tw_pos = stream.string.search(/[\t ]+?$/);
-        if (!stream.sol() || tw_pos === 0) {
-            stream.skipToEnd();
-            return ("error " + (TOKEN_NAMES[stream.string.charAt(0)] || '')).replace(/ $/, '');
-        }
-        var token_name = TOKEN_NAMES[stream.peek()] || stream.skipToEnd();
-        if (tw_pos === -1) {
-            stream.skipToEnd();
-        } else {
-            stream.pos = tw_pos;
-        }
-        return token_name;
-    }
-};
-}),
-];
+module.exports=[466804,a=>{"use strict";a.s(["diff",()=>c]);var b={"+":"inserted","-":"deleted","@":"meta"};let c={name:"diff",token:function(a){var c=a.string.search(/[\t ]+?$/);if(!a.sol()||0===c)return a.skipToEnd(),("error "+(b[a.string.charAt(0)]||"")).replace(/ $/,"");var d=b[a.peek()]||a.skipToEnd();return -1===c?a.skipToEnd():a.pos=c,d}}}];
 
 //# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_diff_c697016b.js.map

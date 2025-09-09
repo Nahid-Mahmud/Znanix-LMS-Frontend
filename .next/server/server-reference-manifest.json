@@ -1,16 +1,179 @@
 {
   "node": {
+    "7f53030eefbb34816a38bce1d69479fdec45f74f67": {
+      "workers": {
+        "app/(commonLayout)/auth/signin/page": {
+          "moduleId": "900914",
+          "async": false,
+          "exportedName": "default",
+          "filename": "src/service/SetAccessToken.ts"
+        }
+      },
+      "layer": {
+        "app/(commonLayout)/auth/signin/page": "action-browser"
+      },
+      "filename": "src/service/SetAccessToken.ts",
+      "exportedName": "default"
+    },
+    "7f25522d36189344d68f5a50a38efd0c5963b5bd4e": {
+      "workers": {
+        "app/(commonLayout)/checkout/page": {
+          "moduleId": "776854",
+          "async": false,
+          "exportedName": "default",
+          "filename": "src/service/checkCookie.tsx"
+        }
+      },
+      "layer": {
+        "app/(commonLayout)/checkout/page": "action-browser"
+      },
+      "filename": "src/service/checkCookie.tsx",
+      "exportedName": "default"
+    },
     "7f44f435c407e9f29f5c95feebe4a899adcc196466": {
       "workers": {
+        "app/(dashboard)/admin-dashboard/courses/page": {
+          "moduleId": "468812",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        },
+        "app/(dashboard)/admin-dashboard/manage-courses/page": {
+          "moduleId": "894109",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        },
+        "app/(dashboard)/admin-dashboard/page": {
+          "moduleId": "745855",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        },
+        "app/(dashboard)/admin-dashboard/profile/page": {
+          "moduleId": "359695",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        },
+        "app/(dashboard)/admin-dashboard/users/page": {
+          "moduleId": "726331",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        },
+        "app/(dashboard)/instructor-dashboard/courses/[slug]/edit/page": {
+          "moduleId": "962229",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        },
+        "app/(dashboard)/instructor-dashboard/courses/[slug]/modules/[moduleId]/edit/page": {
+          "moduleId": "557604",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        },
+        "app/(dashboard)/instructor-dashboard/courses/[slug]/modules/[moduleId]/videos/[videoId]/edit/page": {
+          "moduleId": "506559",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        },
+        "app/(dashboard)/instructor-dashboard/courses/[slug]/modules/[moduleId]/videos/create/page": {
+          "moduleId": "199244",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        },
+        "app/(dashboard)/instructor-dashboard/courses/[slug]/modules/page": {
+          "moduleId": "937131",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        },
+        "app/(dashboard)/instructor-dashboard/courses/[slug]/page": {
+          "moduleId": "514557",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        },
         "app/(dashboard)/instructor-dashboard/courses/create/page": {
-          "moduleId": "[project]/.next-internal/server/app/(dashboard)/instructor-dashboard/courses/create/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/service/DeleteCookies.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "moduleId": "153431",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        },
+        "app/(dashboard)/instructor-dashboard/page": {
+          "moduleId": "19286",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        },
+        "app/(dashboard)/instructor-dashboard/profile/page": {
+          "moduleId": "364955",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        },
+        "app/(dashboard)/moderator-dashboard/courses/page": {
+          "moduleId": "72499",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        },
+        "app/(dashboard)/moderator-dashboard/page": {
+          "moduleId": "861683",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        },
+        "app/(dashboard)/moderator-dashboard/profile/page": {
+          "moduleId": "166232",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        },
+        "app/(dashboard)/student-dashboard/courses/[id]/page": {
+          "moduleId": "513441",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        },
+        "app/(dashboard)/student-dashboard/page": {
+          "moduleId": "357041",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        },
+        "app/(dashboard)/student-dashboard/profile/page": {
+          "moduleId": "921984",
           "async": false,
           "exportedName": "deleteCookies",
           "filename": "src/service/DeleteCookies.ts"
         }
       },
       "layer": {
-        "app/(dashboard)/instructor-dashboard/courses/create/page": "action-browser"
+        "app/(dashboard)/admin-dashboard/courses/page": "action-browser",
+        "app/(dashboard)/admin-dashboard/manage-courses/page": "action-browser",
+        "app/(dashboard)/admin-dashboard/page": "action-browser",
+        "app/(dashboard)/admin-dashboard/profile/page": "action-browser",
+        "app/(dashboard)/admin-dashboard/users/page": "action-browser",
+        "app/(dashboard)/instructor-dashboard/courses/[slug]/edit/page": "action-browser",
+        "app/(dashboard)/instructor-dashboard/courses/[slug]/modules/[moduleId]/edit/page": "action-browser",
+        "app/(dashboard)/instructor-dashboard/courses/[slug]/modules/[moduleId]/videos/[videoId]/edit/page": "action-browser",
+        "app/(dashboard)/instructor-dashboard/courses/[slug]/modules/[moduleId]/videos/create/page": "action-browser",
+        "app/(dashboard)/instructor-dashboard/courses/[slug]/modules/page": "action-browser",
+        "app/(dashboard)/instructor-dashboard/courses/[slug]/page": "action-browser",
+        "app/(dashboard)/instructor-dashboard/courses/create/page": "action-browser",
+        "app/(dashboard)/instructor-dashboard/page": "action-browser",
+        "app/(dashboard)/instructor-dashboard/profile/page": "action-browser",
+        "app/(dashboard)/moderator-dashboard/courses/page": "action-browser",
+        "app/(dashboard)/moderator-dashboard/page": "action-browser",
+        "app/(dashboard)/moderator-dashboard/profile/page": "action-browser",
+        "app/(dashboard)/student-dashboard/courses/[id]/page": "action-browser",
+        "app/(dashboard)/student-dashboard/page": "action-browser",
+        "app/(dashboard)/student-dashboard/profile/page": "action-browser"
       },
       "filename": "src/service/DeleteCookies.ts",
       "exportedName": "deleteCookies"

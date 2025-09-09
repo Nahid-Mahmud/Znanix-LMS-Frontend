@@ -1,0 +1,20 @@
+{
+  "node": {
+    "7f44f435c407e9f29f5c95feebe4a899adcc196466": {
+      "workers": {
+        "app/(dashboard)/admin-dashboard/courses/page": {
+          "moduleId": "468812",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        }
+      },
+      "layer": {
+        "app/(dashboard)/admin-dashboard/courses/page": "action-browser"
+      },
+      "exportedName": "deleteCookies",
+      "filename": "src/service/DeleteCookies.ts"
+    }
+  },
+  "edge": {}
+}
