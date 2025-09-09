@@ -6,5 +6,5 @@ export const logoutUser = (router: AppRouterInstance) => {
   deleteCookies(["accessToken", "refreshToken"]);
   router.push("/auth/signin");
   router.refresh();
-  
+  // hello
 };
