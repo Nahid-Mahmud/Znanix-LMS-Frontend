@@ -41,7 +41,12 @@ export default function ForgotPasswordPage() {
       }
     } catch (error) {
       toast.error("Failed to send reset link. Please try again.");
-      console.log(error);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      console.log(error as any);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if (typeof error === "object" && error !== null && "statusCode" in error && (error as any).statusCode === 429) {
+        toast.error("Too many requests. Please try again later.");
+      }
     }
   };
 
