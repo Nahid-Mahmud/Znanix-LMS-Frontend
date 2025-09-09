@@ -32,6 +32,7 @@ export function HeroSection() {
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>View a course detail!</TooltipContent>
+                
               </Tooltip>
             </div>
 
