@@ -48,9 +48,8 @@ export default function SignInPage() {
       if (res.success) {
         const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
         document.cookie = `user=true; path=/; expires=${expires.toUTCString()}`;
-
-        setAccessToken(res.data?.accessToken, "accessToken");
-        setAccessToken(res.data.refreshToken, "refreshToken");
+        await setAccessToken(res.data.refreshToken, "refreshToken");
+        await setAccessToken(res.data?.accessToken, "accessToken");
 
         // router.push("/"); // Redirect to home page
 
@@ -105,16 +104,16 @@ export default function SignInPage() {
         if ((error as any).data.message === "User is not verified") {
           // router.push("/auth/verify-email");
 
-          // toast.error("Please verify your email before logging in.", {
-          //   duration: 8000,
-          // });
+          toast.error("Please verify your email before logging in.", {
+            duration: 8000,
+          });
           return;
         }
-        // toast.error("Login failed. Please check your credentials.");
+        toast.error("Login failed. Please check your credentials.");
         router.refresh();
         console.log(error);
       } else {
-        // toast.error("Login failed. Please check your credentials.");
+        toast.error("Login failed. Please check your credentials.");
         console.log(error);
         router.refresh();
       }

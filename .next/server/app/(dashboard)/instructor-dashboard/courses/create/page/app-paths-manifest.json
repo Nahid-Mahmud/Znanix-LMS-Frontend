@@ -1,0 +1,3 @@
+{
+  "/(dashboard)/instructor-dashboard/courses/create/page": "app/(dashboard)/instructor-dashboard/courses/create/page.js"
+}
