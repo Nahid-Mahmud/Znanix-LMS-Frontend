@@ -1,0 +1,3 @@
+{
+  "/(commonLayout)/courses/[slug]/page": "app/(commonLayout)/courses/[slug]/page.js"
+}
