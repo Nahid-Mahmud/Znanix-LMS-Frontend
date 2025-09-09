@@ -1,0 +1,3 @@
+{
+  "/(commonLayout)/auth/resend-verification/page": "app/(commonLayout)/auth/resend-verification/page.js"
+}

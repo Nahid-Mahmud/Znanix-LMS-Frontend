@@ -1,0 +1,20 @@
+{
+  "node": {
+    "7fa8241eff38a4e271456788d2219a9703ec36165f": {
+      "workers": {
+        "app/(dashboard)/instructor-dashboard/courses/create/page": {
+          "moduleId": "153431",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        }
+      },
+      "layer": {
+        "app/(dashboard)/instructor-dashboard/courses/create/page": "action-browser"
+      },
+      "exportedName": "deleteCookies",
+      "filename": "src/service/DeleteCookies.ts"
+    }
+  },
+  "edge": {}
+}
