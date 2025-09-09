@@ -14,6 +14,7 @@ import { useGetCoursesDetailBySlugQuery } from "@/redux/features/courses/courses
 import { usePurchaseCourseMutation } from "@/redux/features/user-courses/userCourses.api";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
+import checkCookie from "@/service/checkCookie";
 
 function CheckoutContent() {
   const searchParams = useSearchParams();
@@ -41,13 +42,20 @@ function CheckoutContent() {
 
   const handlePurchase = async () => {
     try {
+      const token = await checkCookie("accessToken");
+      if (!token) {
+        toast.error("You must be logged in to purchase a course.");
+        router.push("/auth/signin");
+        return;
+      }
+
       const res = await purchaseCourseFn(courseData._id).unwrap();
       console.log(res);
       router.push("student-dashboard");
       toast.success("Course purchased successfully!");
     } catch (error) {
       console.error("Failed to purchase course:", error);
-      toast.error("Failed to purchase course. Please try again.");
+      toast.error("Have you already purchased this course?");
     }
   };
 
