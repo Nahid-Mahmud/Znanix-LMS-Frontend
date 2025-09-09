@@ -2,7 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Play, Star, Users, BookOpen } from "lucide-react";
 import Image from "next/image";
 import { studentsLearningOnlineWithLaptopsAndBooksIn } from "@/assets";
-
+import Link from "next/link";
+import { Tooltip, TooltipTrigger, TooltipContent } from "../ui/tooltip";
 export function HeroSection() {
   return (
     <section className="relative py-20 lg:py-32 overflow-hidden">
@@ -20,13 +21,18 @@ export function HeroSection() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="text-base">
-                Explore Courses
+              <Button size="lg" asChild className="text-base">
+                <Link href="/courses">Explore Courses</Link>
               </Button>
-              <Button variant="outline" size="lg" className="text-base bg-transparent">
-                <Play className="mr-2 h-4 w-4" />
-                Watch Demo
-              </Button>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="outline" size="lg" className="text-base bg-transparent">
+                    <Play className="mr-2 h-4 w-4" />
+                    Watch Demo
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>View a course detail!</TooltipContent>
+              </Tooltip>
             </div>
 
             <div className="flex items-center gap-8 pt-4">

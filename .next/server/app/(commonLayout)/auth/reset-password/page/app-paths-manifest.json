@@ -1,0 +1,3 @@
+{
+  "/(commonLayout)/auth/reset-password/page": "app/(commonLayout)/auth/reset-password/page.js"
+}
