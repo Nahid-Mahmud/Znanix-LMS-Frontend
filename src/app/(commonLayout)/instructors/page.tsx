@@ -9,6 +9,7 @@ import instructorAlex from "@/assets/instructor-alex.jpg";
 import instructorEmma from "@/assets/instructor-emma.jpg";
 import instructorJessica from "@/assets/instructor-jessica.jpg";
 import instructorRobert from "@/assets/instructor-robert.jpg";
+import Link from "next/link";
 
 const instructors = [
   {
@@ -135,9 +136,9 @@ export default function InstructorsPage() {
                   ))}
                 </div>
 
-                <Button className="w-full bg-transparent" variant="outline">
+                {/* <Button className="w-full bg-transparent" variant="outline">
                   View Courses
-                </Button>
+                </Button> */}
               </CardContent>
             </Card>
           ))}
@@ -150,7 +151,11 @@ export default function InstructorsPage() {
             Share your expertise with millions of learners worldwide. Join our community of instructors and make an
             impact.
           </p>
-          <Button size="lg">Start Teaching Today</Button>
+          <Button size="lg">
+            <Link href="/auth/signup" className="w-full">
+              Start Teaching Today
+            </Link>
+          </Button>
         </div>
       </main>
     </div>

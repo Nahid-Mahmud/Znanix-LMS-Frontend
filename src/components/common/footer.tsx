@@ -1,4 +1,4 @@
-import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
+import { Facebook, Twitter, Instagram, Linkedin, Github } from "lucide-react";
 import Link from "next/link";
 import { logo } from "@/assets";
 import Image from "next/image";
@@ -15,10 +15,16 @@ export function Footer() {
               Empowering learners worldwide with high-quality, accessible education from industry experts.
             </p>
             <div className="flex space-x-4">
-              <Facebook className="h-5 w-5 text-muted-foreground hover:text-primary cursor-pointer" />
-              <Twitter className="h-5 w-5 text-muted-foreground hover:text-primary cursor-pointer" />
-              <Instagram className="h-5 w-5 text-muted-foreground hover:text-primary cursor-pointer" />
-              <Linkedin className="h-5 w-5 text-muted-foreground hover:text-primary cursor-pointer" />
+              <Link href="https://www.facebook.com/nahidmahmudd/" target="_blank" rel="noopener noreferrer">
+                <Facebook className="h-5 w-5 text-muted-foreground hover:text-primary cursor-pointer" />
+              </Link>
+              <Link href="https://github.com/Nahid-Mahmud" target="_blank" rel="noopener noreferrer">
+                <Github className="h-5 w-5 text-muted-foreground hover:text-primary cursor-pointer" />
+              </Link>
+
+              <Link href="https://www.linkedin.com/in/md-nahid-mahmud/" target="_blank" rel="noopener noreferrer">
+                <Linkedin className="h-5 w-5 text-muted-foreground hover:text-primary cursor-pointer" />
+              </Link>
             </div>
           </div>
 
@@ -57,19 +63,19 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground">
+                <Link href="#" className="hover:text-foreground">
                   Careers
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground">
+                <Link href="#" className="hover:text-foreground">
                   Press
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-foreground">
+                <Link href="#" className="hover:text-foreground">
                   Blog
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
