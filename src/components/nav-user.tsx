@@ -21,6 +21,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { logoutUser } from "@/service/logoutUser";
+import { useLogoutMutation } from "@/redux/features/auth/auth.api";
 
 export function NavUser({
   user,
@@ -33,7 +34,7 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
-  // const [logout] = useLogoutMutation();
+  const [logout] = useLogoutMutation();
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -75,6 +76,7 @@ export function NavUser({
         });
       });
     });
+    await logout(undefined);
 
     await logoutUser(router);
 
