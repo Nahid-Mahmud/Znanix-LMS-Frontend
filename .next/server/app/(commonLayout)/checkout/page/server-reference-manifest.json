@@ -1,0 +1,20 @@
+{
+  "node": {
+    "7f25522d36189344d68f5a50a38efd0c5963b5bd4e": {
+      "workers": {
+        "app/(commonLayout)/checkout/page": {
+          "moduleId": "776854",
+          "async": false,
+          "exportedName": "default",
+          "filename": "src/service/checkCookie.tsx"
+        }
+      },
+      "layer": {
+        "app/(commonLayout)/checkout/page": "action-browser"
+      },
+      "exportedName": "default",
+      "filename": "src/service/checkCookie.tsx"
+    }
+  },
+  "edge": {}
+}

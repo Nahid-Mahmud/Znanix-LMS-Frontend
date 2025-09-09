@@ -1,0 +1,3 @@
+module.exports=[182537,a=>{"use strict";a.s(["brainfuck",()=>c]);var b="><+-.,[]".split("");let c={name:"brainfuck",startState:function(){return{commentLine:!1,left:0,right:0,commentLoop:!1}},token:function(a,c){if(a.eatSpace())return null;a.sol()&&(c.commentLine=!1);var d=a.next().toString();if(-1===b.indexOf(d))return c.commentLine=!0,a.eol()&&(c.commentLine=!1),"comment";if(!0===c.commentLine)return a.eol()&&(c.commentLine=!1),"comment";if("]"===d||"["===d)return"["===d?c.left++:c.right++,"bracket";if("+"===d||"-"===d)return"keyword";if("<"===d||">"===d)return"atom";if("."===d||","===d)return"def";a.eol()&&(c.commentLine=!1)}}}];
+
+//# sourceMappingURL=06f5f_%40codemirror_legacy-modes_mode_brainfuck_477d2097.js.map

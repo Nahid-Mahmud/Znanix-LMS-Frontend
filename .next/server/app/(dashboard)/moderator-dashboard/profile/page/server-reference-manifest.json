@@ -1,0 +1,20 @@
+{
+  "node": {
+    "7f44f435c407e9f29f5c95feebe4a899adcc196466": {
+      "workers": {
+        "app/(dashboard)/moderator-dashboard/profile/page": {
+          "moduleId": "166232",
+          "async": false,
+          "exportedName": "deleteCookies",
+          "filename": "src/service/DeleteCookies.ts"
+        }
+      },
+      "layer": {
+        "app/(dashboard)/moderator-dashboard/profile/page": "action-browser"
+      },
+      "exportedName": "deleteCookies",
+      "filename": "src/service/DeleteCookies.ts"
+    }
+  },
+  "edge": {}
+}
