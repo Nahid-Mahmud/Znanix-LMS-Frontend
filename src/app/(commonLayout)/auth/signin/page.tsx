@@ -29,6 +29,14 @@ const signInSchema = z.object({
 
 type SignInFormData = z.infer<typeof signInSchema>;
 
+const defaultLogins = [
+  { role: "Admin", email: "admin@gmaill.com", password: "12345678aaA@1" },
+  // { role: "Super Admin", email: "superadmin@zanix.com", password: "super123" },
+  { role: "Instructor", email: "instructor1@expnmnahid.com", password: "Pa$$w0rd!" },
+  { role: "Student", email: "student1@expnmnahid.com", password: "Pa$$w0rd!" },
+  // { role: "Moderator", email: "moderator@zanix.com", password: "moderator123" },
+];
+
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [loginFn, { isLoading }] = useLoginMutation();
@@ -41,6 +49,11 @@ export default function SignInPage() {
       password: "",
     },
   });
+
+  const fillDefaultLogin = (email: string, password: string) => {
+    form.setValue("email", email);
+    form.setValue("password", password);
+  };
 
   const onSubmit = async (data: SignInFormData) => {
     try {
@@ -130,6 +143,22 @@ export default function SignInPage() {
           </CardHeader>
 
           <CardContent>
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold mb-4 text-center">Quick Login</h3>
+              <div className="flex gap-2 items-center justify-center">
+                {defaultLogins.map((login) => (
+                  <Button
+                    type="button"
+                    key={login.role}
+                    className="text-sm"
+                    variant="outline"
+                    onClick={() => fillDefaultLogin(login.email, login.password)}
+                  >
+                    {login.role}
+                  </Button>
+                ))}
+              </div>
+            </div>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <FormField

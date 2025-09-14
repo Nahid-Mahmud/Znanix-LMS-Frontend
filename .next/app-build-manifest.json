@@ -3,7 +3,7 @@
     "/(commonLayout)/about/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -26,7 +26,7 @@
     "/(commonLayout)/auth/forgot-password/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -52,7 +52,7 @@
     "/(commonLayout)/auth/resend-verification/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -76,7 +76,7 @@
     "/(commonLayout)/auth/reset-password/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -102,7 +102,7 @@
     "/(commonLayout)/auth/signin/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -114,7 +114,7 @@
       "static/chunks/bdf241845408335e.js",
       "static/chunks/3c097e892ee10127.js",
       "static/chunks/2b68ae97ad71c77b.js",
-      "static/chunks/45c7361e3131ca7d.js",
+      "static/chunks/139ea1f05c22b33b.js",
       "static/chunks/ed5ba84a0cad246f.js",
       "static/chunks/62ff5dfdb693ee19.js",
       "static/chunks/e380ed3a09c1e295.js",
@@ -128,7 +128,7 @@
     "/(commonLayout)/auth/signup/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -155,7 +155,7 @@
     "/(commonLayout)/checkout/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -179,7 +179,7 @@
     "/(commonLayout)/contact/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -203,7 +203,7 @@
     "/(commonLayout)/courses/[slug]/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -228,7 +228,7 @@
     "/(commonLayout)/courses/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -253,7 +253,7 @@
     "/(commonLayout)/help/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -276,7 +276,7 @@
     "/(commonLayout)/instructors/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -299,7 +299,7 @@
     "/(commonLayout)/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -323,7 +323,7 @@
     "/(commonLayout)/pricing/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -346,7 +346,7 @@
     "/(commonLayout)/privacy/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -369,7 +369,7 @@
     "/(commonLayout)/terms/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -392,7 +392,7 @@
     "/(commonLayout)/unauthorized/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -416,7 +416,7 @@
     "/(commonLayout)/verify-account/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -440,7 +440,7 @@
     "/(dashboard)/admin-dashboard/courses/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -466,7 +466,7 @@
     "/(dashboard)/admin-dashboard/manage-courses/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -489,7 +489,7 @@
     "/(dashboard)/admin-dashboard/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -514,7 +514,7 @@
     "/(dashboard)/admin-dashboard/profile/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -540,7 +540,7 @@
     "/(dashboard)/admin-dashboard/users/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -566,7 +566,7 @@
     "/(dashboard)/instructor-dashboard/courses/[slug]/edit/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -600,7 +600,7 @@
     "/(dashboard)/instructor-dashboard/courses/[slug]/modules/[moduleId]/edit/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -626,7 +626,7 @@
     "/(dashboard)/instructor-dashboard/courses/[slug]/modules/[moduleId]/videos/[videoId]/edit/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -652,7 +652,7 @@
     "/(dashboard)/instructor-dashboard/courses/[slug]/modules/[moduleId]/videos/create/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -678,7 +678,7 @@
     "/(dashboard)/instructor-dashboard/courses/[slug]/modules/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -704,7 +704,7 @@
     "/(dashboard)/instructor-dashboard/courses/[slug]/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -728,7 +728,7 @@
     "/(dashboard)/instructor-dashboard/courses/create/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -762,7 +762,7 @@
     "/(dashboard)/instructor-dashboard/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -786,7 +786,7 @@
     "/(dashboard)/instructor-dashboard/profile/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -812,7 +812,7 @@
     "/(dashboard)/moderator-dashboard/courses/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -838,7 +838,7 @@
     "/(dashboard)/moderator-dashboard/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -861,7 +861,7 @@
     "/(dashboard)/moderator-dashboard/profile/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -887,7 +887,7 @@
     "/(dashboard)/student-dashboard/courses/[id]/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -912,7 +912,7 @@
     "/(dashboard)/student-dashboard/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -936,7 +936,7 @@
     "/(dashboard)/student-dashboard/profile/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
@@ -962,7 +962,7 @@
     "/_not-found/page": [
       "static/chunks/0cbcc24b9e7d2807.js",
       "static/chunks/01f1c4dcf5e33b5f.js",
-      "static/chunks/7289f9fde5078b75.css",
+      "static/chunks/2473c16c0c2f6b5f.css",
       "static/chunks/2af75e69fab42e19.css",
       "static/chunks/01a893b22283e922.css",
       "static/chunks/ad4dcdf4dd997e6e.js",
