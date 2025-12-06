@@ -27,6 +27,14 @@ import {
   Eye,
   EyeOff,
   Loader2,
+  Briefcase,
+  Plus,
+  Trash2,
+  Linkedin,
+  Twitter,
+  Github,
+  Instagram,
+  Facebook,
 } from "lucide-react";
 import { useUpdateUserMutation, useUserInfoQuery } from "@/redux/features/user/user.api";
 import { ProfileSkeleton } from "@/components/ProfileSkeleton";
@@ -41,6 +49,16 @@ interface UserData {
   profilePicture: string;
   createdAt: string;
   uid: string;
+  bio?: string;
+  experience?: string;
+  skills?: string[];
+  socialLinks?: {
+    linkedin?: string;
+    twitter?: string;
+    facebook?: string;
+    instagram?: string;
+    github?: string;
+  };
 }
 
 interface UserProfileProps {
@@ -72,6 +90,18 @@ const profileUpdateSchema = z.object({
   lastName: z.string().min(2, {
     message: "Last name must be at least 2 characters.",
   }),
+  bio: z.string().optional(),
+  experience: z.string().optional(),
+  skills: z.array(z.string()).optional(),
+  socialLinks: z
+    .object({
+      linkedin: z.string().optional(),
+      twitter: z.string().optional(),
+      facebook: z.string().optional(),
+      instagram: z.string().optional(),
+      github: z.string().optional(),
+    })
+    .optional(),
   profilePicture: z.string().optional(),
 });
 
@@ -104,6 +134,16 @@ export function UserProfile({ user }: UserProfileProps) {
     defaultValues: {
       firstName: user.firstName,
       lastName: user.lastName,
+      bio: user.bio || "",
+      experience: user.experience || "",
+      skills: user.skills || [],
+      socialLinks: user.socialLinks || {
+        linkedin: "",
+        twitter: "",
+        facebook: "",
+        instagram: "",
+        github: "",
+      },
     },
   });
 
@@ -150,6 +190,10 @@ export function UserProfile({ user }: UserProfileProps) {
       const updateData = {
         firstName: data.firstName,
         lastName: data.lastName,
+        bio: data.bio,
+        experience: data.experience,
+        skills: data.skills,
+        socialLinks: data.socialLinks,
         // Only include deletedFiles if there's an existing profile picture AND we're uploading a new one
         ...(user.profilePicture && profileImageFile && { deletedFiles: [user.profilePicture] }),
       };
@@ -204,6 +248,16 @@ export function UserProfile({ user }: UserProfileProps) {
     form.reset({
       firstName: user.firstName,
       lastName: user.lastName,
+      bio: user.bio || "",
+      experience: user.experience || "",
+      skills: user.skills || [],
+      socialLinks: user.socialLinks || {
+        linkedin: "",
+        twitter: "",
+        facebook: "",
+        instagram: "",
+        github: "",
+      },
     });
     setProfileImage(user.profilePicture);
     setProfileImageFile(null);
@@ -378,6 +432,343 @@ export function UserProfile({ user }: UserProfileProps) {
                   </div>
                 </div>
               </div>
+
+              {/* Bio Section - Only for Instructors */}
+              {user.role === "INSTRUCTOR" && (
+                <div className="border-t pt-6">
+                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <Users className="w-5 h-5" />
+                    About You
+                  </h3>
+                  <FormField
+                    control={form.control}
+                    name="bio"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Bio</FormLabel>
+                        {isEditing ? (
+                          <FormControl>
+                            <textarea
+                              placeholder="Write a short bio about yourself"
+                              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none min-h-24"
+                              {...field}
+                            />
+                          </FormControl>
+                        ) : (
+                          <div className="mt-1 p-2 bg-muted rounded-md min-h-24">
+                            {field.value || "No bio added yet"}
+                          </div>
+                        )}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              )}
+
+              {/* Experience Section - Only for Instructors */}
+              {user.role === "INSTRUCTOR" && (
+                <div className="border-t pt-6">
+                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <Briefcase className="w-5 h-5" />
+                    Experience
+                  </h3>
+                  <FormField
+                    control={form.control}
+                    name="experience"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Experience</FormLabel>
+                        {isEditing ? (
+                          <FormControl>
+                            <textarea
+                              placeholder="Describe your professional experience"
+                              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none min-h-24"
+                              {...field}
+                            />
+                          </FormControl>
+                        ) : (
+                          <div className="mt-1 p-2 bg-muted rounded-md min-h-24">
+                            {field.value || "No experience added yet"}
+                          </div>
+                        )}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              )}
+
+              {/* Skills Section - Only for Instructors */}
+              {user.role === "INSTRUCTOR" && (
+                <div className="border-t pt-6">
+                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <GraduationCap className="w-5 h-5" />
+                    Skills
+                  </h3>
+                  {isEditing ? (
+                    <div className="space-y-2">
+                      <FormField
+                        control={form.control}
+                        name="skills"
+                        render={({ field }) => (
+                          <FormItem>
+                            <div className="space-y-2">
+                              {field.value && field.value.length > 0 && (
+                                <div className="flex flex-wrap gap-2">
+                                  {field.value.map((skill, index) => (
+                                    <Badge key={index} variant="secondary" className="flex items-center gap-2">
+                                      {skill}
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          field.onChange([...(field.value || []).filter((_, i) => i !== index)]);
+                                        }}
+                                        className="ml-1 hover:text-destructive"
+                                      >
+                                        <X className="w-3 h-3" />
+                                      </button>
+                                    </Badge>
+                                  ))}
+                                </div>
+                              )}
+                              <div className="flex gap-2">
+                                <Input
+                                  placeholder="Add a skill"
+                                  onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                      e.preventDefault();
+                                      const input = e.currentTarget;
+                                      const value = input.value.trim();
+                                      if (value && !field.value?.includes(value)) {
+                                        field.onChange([...(field.value || []), value]);
+                                        input.value = "";
+                                      }
+                                    }
+                                  }}
+                                />
+                                <Button
+                                  type="button"
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    const input = document.querySelector(
+                                      'input[placeholder="Add a skill"]'
+                                    ) as HTMLInputElement;
+                                    if (input) {
+                                      const value = input.value.trim();
+                                      if (value && !field.value?.includes(value)) {
+                                        field.onChange([...(field.value || []), value]);
+                                        input.value = "";
+                                      }
+                                    }
+                                  }}
+                                >
+                                  <Plus className="w-4 h-4" />
+                                </Button>
+                              </div>
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  ) : (
+                    <div className="mt-1 p-2 bg-muted rounded-md">
+                      {form.watch("skills") && (form.watch("skills") || []).length > 0 ? (
+                        <div className="flex flex-wrap gap-2">
+                          {(form.watch("skills") || []).map((skill, index) => (
+                            <Badge key={index} variant="secondary">
+                              {skill}
+                            </Badge>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-muted-foreground">No skills added yet</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Social Links Section - Only for Instructors */}
+              {user.role === "INSTRUCTOR" && (
+                <div className="border-t pt-6">
+                  <h3 className="text-lg font-semibold mb-4">Social Links</h3>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <FormField
+                      control={form.control}
+                      name="socialLinks.linkedin"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex items-center gap-2">
+                            <Linkedin className="w-4 h-4" />
+                            LinkedIn
+                          </FormLabel>
+                          {isEditing ? (
+                            <FormControl>
+                              <Input placeholder="https://linkedin.com/in/yourprofile" {...field} />
+                            </FormControl>
+                          ) : (
+                            <div className="mt-1 p-2 bg-muted rounded-md">
+                              {field.value ? (
+                                <a
+                                  href={field.value}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-primary hover:underline"
+                                >
+                                  View Profile
+                                </a>
+                              ) : (
+                                <span className="text-muted-foreground">Not added</span>
+                              )}
+                            </div>
+                          )}
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="socialLinks.github"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex items-center gap-2">
+                            <Github className="w-4 h-4" />
+                            GitHub
+                          </FormLabel>
+                          {isEditing ? (
+                            <FormControl>
+                              <Input placeholder="https://github.com/yourprofile" {...field} />
+                            </FormControl>
+                          ) : (
+                            <div className="mt-1 p-2 bg-muted rounded-md">
+                              {field.value ? (
+                                <a
+                                  href={field.value}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-primary hover:underline"
+                                >
+                                  View Profile
+                                </a>
+                              ) : (
+                                <span className="text-muted-foreground">Not added</span>
+                              )}
+                            </div>
+                          )}
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="socialLinks.twitter"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex items-center gap-2">
+                            <Twitter className="w-4 h-4" />
+                            Twitter/X
+                          </FormLabel>
+                          {isEditing ? (
+                            <FormControl>
+                              <Input placeholder="https://twitter.com/yourprofile" {...field} />
+                            </FormControl>
+                          ) : (
+                            <div className="mt-1 p-2 bg-muted rounded-md">
+                              {field.value ? (
+                                <a
+                                  href={field.value}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-primary hover:underline"
+                                >
+                                  View Profile
+                                </a>
+                              ) : (
+                                <span className="text-muted-foreground">Not added</span>
+                              )}
+                            </div>
+                          )}
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="socialLinks.instagram"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex items-center gap-2">
+                            <Instagram className="w-4 h-4" />
+                            Instagram
+                          </FormLabel>
+                          {isEditing ? (
+                            <FormControl>
+                              <Input placeholder="https://instagram.com/yourprofile" {...field} />
+                            </FormControl>
+                          ) : (
+                            <div className="mt-1 p-2 bg-muted rounded-md">
+                              {field.value ? (
+                                <a
+                                  href={field.value}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-primary hover:underline"
+                                >
+                                  View Profile
+                                </a>
+                              ) : (
+                                <span className="text-muted-foreground">Not added</span>
+                              )}
+                            </div>
+                          )}
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="socialLinks.facebook"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex items-center gap-2">
+                            <Facebook className="w-4 h-4" />
+                            Facebook
+                          </FormLabel>
+                          {isEditing ? (
+                            <FormControl>
+                              <Input placeholder="https://facebook.com/yourprofile" {...field} />
+                            </FormControl>
+                          ) : (
+                            <div className="mt-1 p-2 bg-muted rounded-md">
+                              {field.value ? (
+                                <a
+                                  href={field.value}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-primary hover:underline"
+                                >
+                                  View Profile
+                                </a>
+                              ) : (
+                                <span className="text-muted-foreground">Not added</span>
+                              )}
+                            </div>
+                          )}
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+              )}
             </form>
           </Form>
         </CardContent>
