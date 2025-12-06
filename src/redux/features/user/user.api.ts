@@ -44,8 +44,21 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+
+    getPublicInstructorProfile: builder.query({
+      query: (uid) => ({
+        url: `/user/public-profile/${uid}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useRegisterMutation, useUserInfoQuery, useGetAllUsersQuery, useUpdateUserMutation, useSetPinMutation } =
-  userApi;
+export const {
+  useRegisterMutation,
+  useUserInfoQuery,
+  useGetAllUsersQuery,
+  useUpdateUserMutation,
+  useSetPinMutation,
+  useGetPublicInstructorProfileQuery,
+} = userApi;
