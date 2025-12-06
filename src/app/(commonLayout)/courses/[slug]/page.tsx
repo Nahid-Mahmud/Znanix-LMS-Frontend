@@ -31,7 +31,7 @@ export default function CourseDetailsPage() {
     skip: !slug,
   });
 
-  console.log(courseDetails?.data?._id);
+  console.log(courseDetails?.data);
 
   const [activeTab, setActiveTab] = useState("course-details");
   const [processedDescription, setProcessedDescription] = useState("");
@@ -275,6 +275,12 @@ export default function CourseDetailsPage() {
                           {courseData.instructor?.firstName} {courseData.instructor?.lastName}
                         </h3>{" "}
                         <p className="text-muted-foreground text-pretty">{courseData.instructor?.bio}</p>
+                        <Link
+                          href={`/instructor/${courseData.instructor?.uid}`}
+                          className="text-sm text-primary hover:underline mt-2"
+                        >
+                          View Public Profile
+                        </Link>
                       </div>
                     </div>
                   </CardContent>
