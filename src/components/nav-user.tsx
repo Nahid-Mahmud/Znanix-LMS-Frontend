@@ -1,6 +1,6 @@
 "use client";
 
-import { BadgeCheck, ChevronsUpDown, CreditCard, LogOut } from "lucide-react";
+import { BadgeCheck, ChevronsUpDown, LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -14,14 +14,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
 import { baseApi } from "@/redux/baseApi";
+import { useLogoutMutation } from "@/redux/features/auth/auth.api";
 import { useAppDispatch } from "@/redux/hooks";
-import { deleteCookies } from "@/service/DeleteCookies";
+import { logoutUser } from "@/service/logoutUser";
 import { UserRole } from "@/types/user.types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { logoutUser } from "@/service/logoutUser";
-import { useLogoutMutation } from "@/redux/features/auth/auth.api";
 
 export function NavUser({
   user,
@@ -139,27 +138,27 @@ export function NavUser({
             </DropdownMenuGroup> */}
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem asChild>
+              <DropdownMenuItem asChild className="cursor-pointer">
                 <Link href={getProfilePageLink()}>
                   <BadgeCheck />
                   Account
                 </Link>
               </DropdownMenuItem>
-              {user?.role === UserRole.STUDENT && (
-                <DropdownMenuItem asChild>
+              {/* {user?.role === UserRole.STUDENT && (
+                <DropdownMenuItem asChild className="cursor-pointer">
                   <Link href="/#">
                     <CreditCard />
                     Billing
                   </Link>
                 </DropdownMenuItem>
-              )}
+              )} */}
               {/* <DropdownMenuItem>
                 <Bell />
                 Notifications
               </DropdownMenuItem> */}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
               <LogOut />
               Log out
             </DropdownMenuItem>

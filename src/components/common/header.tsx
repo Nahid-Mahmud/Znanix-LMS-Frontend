@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useState } from "react";
 import NavConditionalButton from "../NavConditionalButton";
 import { ModeToggle } from "../ui/ModeToggle";
+import { MobileMenu } from "./MobileMenu";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -59,25 +60,7 @@ export function Header() {
           </button>
         </div>
 
-        {isMenuOpen && (
-          <div className="md:hidden py-4 border-t">
-            <nav className="flex flex-col space-y-4">
-              <Link href="/courses" className="text-sm font-medium text-muted-foreground hover:text-foreground">
-                Courses
-              </Link>
-              <Link href="/instructors" className="text-sm font-medium text-muted-foreground hover:text-foreground">
-                Instructors
-              </Link>
-              <Link href="/pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground">
-                Pricing
-              </Link>
-              <Link href="/about" className="text-sm font-medium text-muted-foreground hover:text-foreground">
-                About
-              </Link>
-              <NavConditionalButton />
-            </nav>
-          </div>
-        )}
+        <MobileMenu setIsMenuOpen={setIsMenuOpen} isOpen={isMenuOpen} />
       </div>
     </header>
   );
